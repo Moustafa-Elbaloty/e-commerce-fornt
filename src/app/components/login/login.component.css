@@ -198,3 +198,11 @@
 .container.active .toggle-right {
   transform: translateX(200%);
 }
+.icon {
+  cursor: pointer;
+  transition: 0.2s;
+}
+
+.icon:hover {
+  transform: scale(1.1);
+}
