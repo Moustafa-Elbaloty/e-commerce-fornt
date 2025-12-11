@@ -1,9 +1,9 @@
 import { Component, ElementRef, ViewChild } from '@angular/core';
 import { AuthService } from '../../services/auth.service';
 import { Router } from '@angular/router';
-
-import { auth, googleProvider } from '../../firebase.config';
+import { auth, googleProvider, facebookProvider } from '../../firebase.config';
 import { signInWithPopup } from 'firebase/auth';
+
 
 @Component({
   selector: 'app-login',
@@ -14,7 +14,9 @@ export class LoginComponent {
 
   @ViewChild('container') container!: ElementRef;
 
-  registerData = { name: '', email: '', password: '' };
+  registerData = { name: '', email: '', password: '',   isVendor: false, storeName: '',
+  address: '',
+  phone: '' };
   loginData = { email: '', password: '' };
 
   constructor(private auth: AuthService, private router: Router) {}
@@ -86,4 +88,17 @@ export class LoginComponent {
   showRegister() {
     this.container.nativeElement.classList.add('active');
   }
+  /// facebook login
+
+  loginWithFacebook() {
+  signInWithPopup(auth, facebookProvider)
+    .then((result) => {
+      console.log("Facebook Login Success:", result.user);
+    })
+    .catch((error) => {
+      console.log("Facebook Login Error:", error);
+    });
 }
+
+}
+ 
