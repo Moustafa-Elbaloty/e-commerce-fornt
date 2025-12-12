@@ -4,9 +4,7 @@
     <form (ngSubmit)="register()" #registerForm="ngForm">
       <h1>Create Account</h1>
       <div class="social-icons">
-        <a class="icon" (click)="loginWithGoogle()">
-          <i class="fa-brands fa-google-plus-g"></i>
-        </a>
+        <a href="#" class="icon"><i class="fa-brands fa-google-plus-g"></i></a>
         <a href="#" class="icon"><i class="fa-brands fa-facebook-f"></i></a>
         <a href="#" class="icon"><i class="fa-brands fa-github"></i></a>
         <a href="#" class="icon"><i class="fa-brands fa-linkedin-in"></i></a>
@@ -26,9 +24,7 @@
     <form (ngSubmit)="login()" #loginForm="ngForm">
       <h1>Sign In</h1>
       <div class="social-icons">
-        <a class="icon" (click)="loginWithGoogle()">
-          <i class="fa-brands fa-google-plus-g"></i>
-        </a>
+        <a href="#" class="icon"><i class="fa-brands fa-google-plus-g"></i></a>
         <a href="#" class="icon"><i class="fa-brands fa-facebook-f"></i></a>
         <a href="#" class="icon"><i class="fa-brands fa-github"></i></a>
         <a href="#" class="icon"><i class="fa-brands fa-linkedin-in"></i></a>
@@ -43,19 +39,19 @@
     </form>
   </div>
 
-  <!-- ✅ Panels -->
-  <div class="toggle-container">
-    <div class="toggle">
-      <div class="toggle-panel toggle-left">
-        <h1>Welcome Back!</h1>
-        <p>Enter your personal details to use all of site features</p>
-        <button class="hidden" id="login" (click)="showLogin()">Sign In</button>
-      </div>
-      <div class="toggle-panel toggle-right">
-        <h1>Hello, Friend!</h1>
-        <p>Register with your personal details to use all of site features</p>
-        <button class="hidden" id="register" (click)="showRegister()">Sign Up</button>
-      </div>
+  <!-- TOGGLE / PANELS -->
+  <div class="toggle-box">
+    <div class="toggle-panel toggle-left">
+      <h1>Welcome Back!</h1>
+      <p>Enter your personal details to use all site features</p>
+      <button class="btn register-btn" (click)="showRegister()">Register</button>
+    </div>
+    <div class="toggle-panel toggle-right">
+      <h1>Hello, Friend!</h1>
+      <p>Register with your personal details to use all site features</p>
+      <button class="btn login-btn" (click)="showLogin()">Login</button>
     </div>
   </div>
+
+</div>
 </div>
