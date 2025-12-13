@@ -4,7 +4,6 @@ import { Router } from '@angular/router';
 import { auth, googleProvider, facebookProvider } from '../../firebase.config';
 import { signInWithPopup } from 'firebase/auth';
 
-
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
@@ -14,27 +13,67 @@ export class LoginComponent {
 
   @ViewChild('container') container!: ElementRef;
 
-  registerData = { name: '', email: '', password: '',   isVendor: false, storeName: '',
-  address: '',
-  phone: '' };
-  loginData = { email: '', password: '' };
+  registerData = { 
+    name: '', 
+    email: '', 
+    password: '', 
+    isVendor: false, 
+    storeName: '',
+    address: '',
+    phone: '' 
+  };
+  
+  loginData = { 
+    email: '', 
+    password: '' 
+  };
 
   constructor(private auth: AuthService, private router: Router) {}
 
   // ---------------------------------------
   // Google Login
   // ---------------------------------------
-  loginWithGoogle() {
+  loginWithGoogle(event?: Event) {
+    if (event) {
+      event.preventDefault();
+    }
+    
     signInWithPopup(auth, googleProvider)
       .then(async (result) => {
         const user = result.user;
         const token = await user.getIdToken();
 
         localStorage.setItem('token', token);
-
+        console.log('Google login successful');
         this.router.navigate(['/']);
       })
-      .catch((error) => console.error("Google Login Error:", error));
+      .catch((error) => {
+        console.error("Google Login Error:", error);
+        alert('Google login failed: ' + error.message);
+      });
+  }
+
+  // ---------------------------------------
+  // Facebook Login
+  // ---------------------------------------
+  loginWithFacebook(event?: Event) {
+    if (event) {
+      event.preventDefault();
+    }
+    
+    signInWithPopup(auth, facebookProvider)
+      .then(async (result) => {
+        const user = result.user;
+        const token = await user.getIdToken();
+        
+        localStorage.setItem('token', token);
+        console.log("Facebook Login Success:", user);
+        this.router.navigate(['/']);
+      })
+      .catch((error) => {
+        console.error("Facebook Login Error:", error);
+        alert('Facebook login failed: ' + error.message);
+      });
   }
 
   // ---------------------------------------
@@ -88,17 +127,4 @@ export class LoginComponent {
   showRegister() {
     this.container.nativeElement.classList.add('active');
   }
-  /// facebook login
-
-  loginWithFacebook() {
-  signInWithPopup(auth, facebookProvider)
-    .then((result) => {
-      console.log("Facebook Login Success:", result.user);
-    })
-    .catch((error) => {
-      console.log("Facebook Login Error:", error);
-    });
 }
-
-}
- 

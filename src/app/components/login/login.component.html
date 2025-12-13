@@ -5,8 +5,12 @@
       <form (ngSubmit)="login()" #loginForm="ngForm">
         <h1>Sign In</h1>
         <div class="social-icons">
-          <a href="#" class="icon google" (click)="loginWithGoogle()"><i class="fa-brands fa-google-plus-g"></i></a>
-          <a href="#" class="icon facebook"><i class="fa-brands fa-facebook-f"></i></a>
+          <a class="icon google" (click)="loginWithGoogle($event)">
+            <i class="fa-brands fa-google-plus-g"></i>
+          </a>
+          <a class="icon facebook" (click)="loginWithFacebook($event)">
+            <i class="fa-brands fa-facebook-f"></i>
+          </a>
         </div>
         <span>or use your email and password</span>
         <div class="input-box">
@@ -27,8 +31,12 @@
       <form (ngSubmit)="register()" #registerForm="ngForm">
         <h1>Create Account</h1>
         <div class="social-icons">
-          <a href="#" class="icon google" (click)="loginWithGoogle()"> <i class="fa-brands fa-google-plus-g"></i></a>
-          <a href="#" class="icon facebook" (click)="loginWithFacebook()"><i class="fa-brands fa-facebook-f"></i></a>
+          <a class="icon google" (click)="loginWithGoogle($event)">
+            <i class="fa-brands fa-google-plus-g"></i>
+          </a>
+          <a class="icon facebook" (click)="loginWithFacebook($event)">
+            <i class="fa-brands fa-facebook-f"></i>
+          </a>
         </div>
         <p>or use your email for registration</p>
         <div class="input-box">

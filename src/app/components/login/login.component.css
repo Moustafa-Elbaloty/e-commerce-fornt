@@ -103,7 +103,7 @@ form {
 
 .input-box {
   position: relative;
-  margin: 15px 0;
+  margin: 10px 0;
 }
 
 .input-box input {
@@ -137,7 +137,7 @@ form {
 }
 
 .forgot-link {
-  margin: -15px 0 15px;
+  margin:  15px;
 }
 
 .forgot-link a {
@@ -169,7 +169,7 @@ form {
 .social-icons {
   display: flex;
   justify-content: center;
-    margin: 20px 0;
+    margin: 10px 0;
 }
 
 
