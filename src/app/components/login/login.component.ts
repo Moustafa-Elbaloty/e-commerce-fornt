@@ -1,9 +1,6 @@
 import { Component, ElementRef, ViewChild } from '@angular/core';
 import { AuthService } from '../../services/auth.service';
 import { Router } from '@angular/router';
-import { auth, googleProvider, facebookProvider } from '../../firebase.config';
-import { signInWithPopup } from 'firebase/auth';
-
 
 @Component({
   selector: 'app-login',
@@ -14,32 +11,28 @@ export class LoginComponent {
 
   @ViewChild('container') container!: ElementRef;
 
-  registerData = { name: '', email: '', password: '',   isVendor: false, storeName: '',
-  address: '',
-  phone: '' };
+  registerData = {
+    name: '', email: '', password: '', isVendor: false, storeName: '',
+    address: '',
+    phone: ''
+  };
   loginData = { email: '', password: '' };
 
-  constructor(private auth: AuthService, private router: Router) {}
+  constructor(private auth: AuthService, private router: Router) { }
 
-  // ---------------------------------------
-  // Google Login
-  // ---------------------------------------
-  loginWithGoogle() {
-    signInWithPopup(auth, googleProvider)
-      .then(async (result) => {
-        const user = result.user;
-        const token = await user.getIdToken();
+  ngOnInit() {
+    // 🔄 أكواد التحريك بين الـ forms
+    const container = document.getElementById('container');
+    const registerBtn = document.getElementById('register');
+    const loginBtn = document.getElementById('login');
 
-        localStorage.setItem('token', token);
-
-        this.router.navigate(['/']);
-      })
-      .catch((error) => console.error("Google Login Error:", error));
+    if (registerBtn && loginBtn && container) {
+      registerBtn.addEventListener('click', () => container.classList.add('active'));
+      loginBtn.addEventListener('click', () => container.classList.remove('active'));
+    }
   }
 
-  // ---------------------------------------
-  // Manual Register
-  // ---------------------------------------
+  // ✅ دالة التسجيل
   register() {
     if (!this.registerData.name || !this.registerData.email || !this.registerData.password) {
       alert('Please fill all fields');
@@ -48,18 +41,18 @@ export class LoginComponent {
 
     this.auth.register(this.registerData).subscribe({
       next: (res: any) => {
+        console.log('✅ Registered:', res);
         alert('Registration successful!');
         this.showLogin();
       },
       error: (err: any) => {
+        console.error('❌ Register error:', err);
         alert(err.error?.message || 'Registration failed');
       }
     });
   }
 
-  // ---------------------------------------
-  // Manual Login
-  // ---------------------------------------
+  // ✅ دالة تسجيل الدخول
   login() {
     if (!this.loginData.email || !this.loginData.password) {
       alert('Please fill all fields');
@@ -68,11 +61,13 @@ export class LoginComponent {
 
     this.auth.login(this.loginData).subscribe({
       next: (res: any) => {
+        console.log('✅ Login:', res);
         localStorage.setItem('token', res.token);
         alert('Login successful!');
         this.router.navigate(['/']);
       },
       error: (err: any) => {
+        console.error('❌ Login error:', err);
         alert(err.error?.message || 'Login failed');
       }
     });
@@ -91,14 +86,14 @@ export class LoginComponent {
   /// facebook login
 
   loginWithFacebook() {
-  signInWithPopup(auth, facebookProvider)
-    .then((result) => {
-      console.log("Facebook Login Success:", result.user);
-    })
-    .catch((error) => {
-      console.log("Facebook Login Error:", error);
-    });
-}
+    signInWithPopup(auth, facebookProvider)
+      .then((result) => {
+        console.log("Facebook Login Success:", result.user);
+      })
+      .catch((error) => {
+        console.log("Facebook Login Error:", error);
+      });
+  }
 
 }
- 
+
