@@ -1,0 +1,18 @@
+
+/* Promo */
+.promo {
+    background: linear-gradient(90deg, #3a1c71 0%, #512da8 100%);
+    padding: 80px 0;
+    text-align: center;
+    color: var(--white);
+}
+
+.promo h2 {
+    font-size: 2.2rem;
+    margin-bottom: 15px;
+}
+
+.promo p {
+    margin-bottom: 30px;
+    opacity: 0.9;
+}

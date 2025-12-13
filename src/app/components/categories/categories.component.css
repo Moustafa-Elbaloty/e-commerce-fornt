@@ -1,0 +1,29 @@
+
+/* Categories */
+.cat-card {
+    text-align: center;
+    border: 1px solid #eee;
+    border-radius: var(--radius);
+    padding-bottom: 20px;
+    overflow: hidden;
+}
+
+.cat-card img {
+    width: 100%;
+    height: 180px;
+    object-fit: cover;
+}
+
+.cat-info {
+    padding: 20px;
+}
+
+.cat-info h3 {
+    margin-bottom: 10px;
+}
+
+.cat-info p {
+    font-size: 0.9rem;
+    color: var(--text-light);
+    margin-bottom: 15px;
+}

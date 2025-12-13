@@ -1,6 +1,108 @@
-/* You can add global styles to this file, and also import other style files */
-html, body {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
+
+:root {
+    --primary: #512da8;
+    --primary-hover: #7b3eb8;
+    --dark-bg: #1a0b2e;
+    --light-bg: #f9f9f9;
+    --text-color: #333;
+    --text-light: #666;
+    --white: #ffffff;
+    --radius: 12px;
+    --transition: 0.3s ease;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Poppins', sans-serif;
+}
+
+body {
+    background-color: var(--white);
+    color: var(--text-color);
+    overflow-x: hidden;
+}
+a {
+    text-decoration: none;
+    color: inherit;
+}
+
+ul {
+    list-style: none;
+}
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px;
+}
+
+
+/* Buttons */
+.btn {
+    padding: 10px 24px;
+    border-radius: 30px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: var(--transition);
+    border: none;
+    display: inline-block;
+}
+
+.btn-primary {
+    background-color: var(--primary);
+    color: var(--white);
+}
+
+.btn-primary:hover {
+    background-color: var(--primary-hover);
+}
+
+.btn-hero {
+    background: var(--white);
+    color: var(--primary);
+    font-size: 1.1rem;
+    padding: 12px 30px;
+}
+
+.btn-outline {
+    border: 1px solid #ddd;
+    padding: 8px 16px;
+    font-size: 0.9rem;
+    border-radius: 6px;
+    color: var(--text-color);
+}
+
+.btn-outline:hover {
+    background: #f0f0f0;
+}
+
+.btn-white {
+    background: var(--white);
+    color: var(--primary);
+    font-weight: bold;
+}
+/* Sections General */
+.section {
+    padding: 60px 0;
+}
+
+.section-title {
+    text-align: center;
+    font-size: 2rem;
+    margin-bottom: 10px;
+}
+
+.section-subtitle {
+    text-align: center;
+    color: var(--text-light);
+    margin-bottom: 40px;
+    font-size: 0.95rem;
+}
+
+/* Grid Layouts */
+.grid-3 {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 30px;
 }

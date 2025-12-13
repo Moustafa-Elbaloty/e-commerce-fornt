@@ -1,0 +1,32 @@
+<nav class="navbar">
+    <div class="container nav-container">
+        <div class="logo">
+            <i class="fas fa-cube"></i> name
+        </div>
+        <div class="search-box-mobile">
+            <i class="fas fa-search"></i>
+            <input type="text" placeholder="Search products...">
+        </div>
+        <ul class="nav-links" [class.mobile-active]="isOpen">
+            <li><a href="#" class="active">Home</a></li>
+            <li><a href="#">Products</a></li>
+            <li><a href="#">Categories</a></li>
+            <li><a href="#">About</a></li>
+            <li class="nav-mobile-actions">
+                <div class="mobile-buttons">
+                    <a href="#" class="login-btn-mobile">Login / Sign Up</a>
+                </div>
+            </li>
+        </ul>
+        <div class="nav-actions">
+            <div class="search-box">
+                <i class="fas fa-search"></i>
+                <input type="text" placeholder="Search products...">
+            </div>
+            <a href="#" class="login-btn">Login / Sign Up</a>
+        </div>
+        <div class="hamburger" (click)="toggleMenu()">
+            <i class="fas" [class.fa-bars]="!isOpen" [class.fa-times]="isOpen"></i>
+        </div>
+    </div>
+</nav>
