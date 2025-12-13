@@ -14,7 +14,7 @@
             <li><a href="#">About</a></li>
             <li class="nav-mobile-actions">
                 <div class="mobile-buttons">
-                    <a href="#" class="login-btn-mobile">Login / Sign Up</a>
+                    <a routerLink="/login" class="login-btn">Login / Sign Up</a>
                 </div>
             </li>
         </ul>
@@ -23,7 +23,7 @@
                 <i class="fas fa-search"></i>
                 <input type="text" placeholder="Search products...">
             </div>
-            <a href="#" class="login-btn">Login / Sign Up</a>
+            <a routerLink="/login" class="login-btn">Login / Sign Up</a>
         </div>
         <div class="hamburger" (click)="toggleMenu()">
             <i class="fas" [class.fa-bars]="!isOpen" [class.fa-times]="isOpen"></i>
