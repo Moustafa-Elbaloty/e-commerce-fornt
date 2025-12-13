@@ -34,11 +34,14 @@
         <div class="input-box">
           <input type="text" placeholder="Name" required name="name" [(ngModel)]="registerData.name" />
         </div>
-
         <div class="input-box">
           <input type="email" placeholder="Email" required name="email" [(ngModel)]="registerData.email" />
         </div>
-
+        <div class="input-box">
+          <i class="fas fa-phone-alt"></i>
+          <input type="tel" placeholder="Phone Number" required name="phone" minlength="10" maxlength="15"
+            pattern="[0-9]{10,15}" [(ngModel)]="registerData.phone" #phoneInput="ngModel" />
+        </div>
         <div class="input-box">
           <input type="password" placeholder="Password" required name="password" [(ngModel)]="registerData.password" />
         </div>
@@ -51,7 +54,6 @@
           <i class='bx bxs-user-account'></i>
         </div>
         <div *ngIf="registerData.isVendor" class="vendor-box">
-
           <div class="input-box">
             <input type="text" placeholder="Store Name" name="storeName" [(ngModel)]="registerData.storeName"
               required />
@@ -70,24 +72,23 @@
           </div>
 
         </div>
-
         <button type="submit" class="btn">Sign Up</button>
-
       </form>
     </div>
 
-  <!-- TOGGLE / PANELS -->
-  <div class="toggle-box">
-    <div class="toggle-panel toggle-left">
-      <h1>Welcome Back!</h1>
-      <p>Enter your personal details to use all site features</p>
-      <button class="btn register-btn" (click)="showRegister()">Register</button>
+    <!-- TOGGLE / PANELS -->
+    <div class="toggle-box">
+      <div class="toggle-panel toggle-left">
+        <h1>Welcome Back!</h1>
+        <p>Enter your personal details to use all site features</p>
+        <button class="btn register-btn" (click)="showRegister()">Register</button>
+      </div>
+      <div class="toggle-panel toggle-right">
+        <h1>Hello, Friend!</h1>
+        <p>Register with your personal details to use all site features</p>
+        <button class="btn login-btn" (click)="showLogin()">Login</button>
+      </div>
     </div>
-    <div class="toggle-panel toggle-right">
-      <h1>Hello, Friend!</h1>
-      <p>Register with your personal details to use all site features</p>
-      <button class="btn login-btn" (click)="showLogin()">Login</button>
-    </div>
-  </div>
 
+  </div>
 </div>
