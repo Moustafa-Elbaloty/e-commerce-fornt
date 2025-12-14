@@ -84,6 +84,7 @@
 .nav-mobile-actions {
     display: none;
 }
+
 .login-btn {
     font-size: 0.95rem;
     font-weight: 600;
@@ -120,10 +121,18 @@
 @media (max-width: 1024px) {
 
     .nav-links:not(.mobile-active),
-    .search-box,
+    * .search-box,
     .login-btn,
     .btn-primary {
         display: none;
+    }
+
+    .mobile-buttons .login-btn {
+        display: block;
+    }
+
+    .mobile-buttons .login-btn:hover::after {
+        width: 0;
     }
 
     .hamburger {
@@ -189,6 +198,7 @@
         grid-template-columns: repeat(2, 1fr);
     }
 }
+
 .login-btn {
     font-size: 0.95rem;
     font-weight: 600;

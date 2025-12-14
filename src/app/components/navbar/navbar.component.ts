@@ -6,7 +6,6 @@ import { Component } from '@angular/core';
   styleUrls: ['./navbar.component.css']
 })
 export class NavbarComponent {
-  // يجب أن تتأكد من وجود هذا المتغير والدالة في الكومبوننت
 isOpen: boolean = false; 
 
 toggleMenu() {
