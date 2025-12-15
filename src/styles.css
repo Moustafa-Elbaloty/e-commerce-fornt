@@ -82,6 +82,16 @@ ul {
     color: var(--primary);
     font-weight: bold;
 }
+.logo {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: var(--primary);
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    flex-shrink: 0;
+}
+
 /* Sections General */
 .section {
     padding: 60px 0;
@@ -105,4 +115,8 @@ ul {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
     gap: 30px;
+}@media (max-width: 600px) {
+    .grid-3 {
+        grid-template-columns: 1fr;
+    }
 }

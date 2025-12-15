@@ -11,7 +11,7 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  min-height: 100vh;
+  min-height:calc(100vh - 326px);
   background: linear-gradient(-40deg,
       #e2e2e2, #c9d6ff, #d1c4ff, #e2e2e2);
   background-size: 400% 400%;
