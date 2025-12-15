@@ -1,32 +1,85 @@
 <nav class="navbar">
-    <div class="container nav-container">
-        <div class="logo">
-            <i class="fas fa-cube"></i> MarketPlace
-        </div>
-        <div class="search-box-mobile">
-            <i class="fas fa-search"></i>
-            <input type="text" placeholder="Search products...">
-        </div>
-        <ul class="nav-links" [class.mobile-active]="isOpen">
-            <li><a href="#" class="active">Home</a></li>
-            <li><a href="#">Products</a></li>
-            <li><a href="#">Categories</a></li>
-            <li><a href="#">About</a></li>
-            <li class="nav-mobile-actions">
-                <div class="mobile-buttons">
-                    <a routerLink="/login" class="login-btn">Login / Sign Up</a>
-                </div>
-            </li>
-        </ul>
-        <div class="nav-actions">
-            <div class="search-box">
-                <i class="fas fa-search"></i>
-                <input type="text" placeholder="Search products...">
-            </div>
-            <a routerLink="/login" class="login-btn">Login / Sign Up</a>
-        </div>
-        <div class="hamburger" (click)="toggleMenu()">
-            <i class="fas" [class.fa-bars]="!isOpen" [class.fa-times]="isOpen"></i>
-        </div>
+  <div class="container nav-container">
+
+    <!-- LOGO -->
+    <div class="logo">
+      <i class="fas fa-cube"></i> MarketPlace
     </div>
+
+    <!-- SEARCH (MOBILE) -->
+    <div class="search-box-mobile">
+      <i class="fas fa-search"></i>
+      <input type="text" placeholder="Search products...">
+    </div>
+
+    <!-- NAV LINKS (MOBILE MENU) -->
+    <ul class="nav-links" [class.mobile-active]="isOpen">
+      <li><a href="#" class="active">Home</a></li>
+      <li><a href="#">Products</a></li>
+      <li><a href="#">Categories</a></li>
+      <li><a href="#">About</a></li>
+
+      <!-- MOBILE: قبل الدخول -->
+      <li class="nav-mobile-actions" *ngIf="!auth.isLoggedIn()">
+        <div class="mobile-buttons">
+          <a routerLink="/login" class="login-btn">Login / Sign Up</a>
+        </div>
+      </li>
+
+      <!-- MOBILE: بعد الدخول -->
+      <li class="nav-mobile-actions" *ngIf="auth.isLoggedIn()">
+        <div class="mobile-buttons user-menu">
+<div class="user-trigger" (click)="toggleUserMenu($event)">
+            <i class="fas fa-user-circle user-icon"></i>
+            <span class="user-name">{{ auth.getUser()?.name }}</span>
+          </div>
+
+          <div class="dropdown" *ngIf="isUserMenuOpen">
+            <a>My Profile</a>
+            <a>My Orders</a>
+            <a>Wishlist</a>
+            <hr />
+            <a class="logout" (click)="logout()">Logout</a>
+          </div>
+        </div>
+      </li>
+    </ul>
+
+    <!-- DESKTOP ACTIONS -->
+    <div class="nav-actions">
+
+      <div class="search-box">
+        <i class="fas fa-search"></i>
+        <input type="text" placeholder="Search products...">
+      </div>
+
+      <!-- DESKTOP: قبل الدخول -->
+      <a *ngIf="!auth.isLoggedIn()" routerLink="/login" class="login-btn">
+        Login / Sign Up
+      </a>
+
+      <!-- DESKTOP: بعد الدخول -->
+      <div *ngIf="auth.isLoggedIn()" class="user-menu">
+<div class="user-trigger" (click)="toggleUserMenu($event)">
+          <i class="fas fa-user-circle user-icon"></i>
+          <span class="user-name">{{ auth.getUser()?.name }}</span>
+        </div>
+
+        <div class="dropdown" *ngIf="isUserMenuOpen">
+          <a>My Profile</a>
+          <a>My Orders</a>
+          <a>Wishlist</a>
+          <hr />
+          <a class="logout" (click)="logout()">Logout</a>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- HAMBURGER -->
+    <div class="hamburger" (click)="toggleMenu()">
+      <i class="fas" [class.fa-bars]="!isOpen" [class.fa-times]="isOpen"></i>
+    </div>
+
+  </div>
 </nav>

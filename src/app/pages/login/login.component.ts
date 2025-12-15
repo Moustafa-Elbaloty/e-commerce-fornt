@@ -99,23 +99,23 @@ export class LoginComponent {
   // ---------------------------------------
   // Manual Login
   // ---------------------------------------
-  login() {
-    if (!this.loginData.email || !this.loginData.password) {
-      alert('Please fill all fields');
-      return;
-    }
-
-    this.auth.login(this.loginData).subscribe({
-      next: (res: any) => {
-        localStorage.setItem('token', res.token);
-        alert('Login successful!');
-        this.router.navigate(['/']);
-      },
-      error: (err: any) => {
-        alert(err.error?.message || 'Login failed');
-      }
-    });
+ login() {
+  if (!this.loginData.email || !this.loginData.password) {
+    alert('Please fill all fields');
+    return;
   }
+
+  this.auth.login(this.loginData).subscribe({
+    next: () => {
+      alert('Login successful!');
+      this.router.navigate(['/']);
+    },
+    error: (err: any) => {
+      alert(err.error?.message || 'Login failed');
+    }
+  });
+}
+
 
   // ---------------------------------------
   // UI Switching
