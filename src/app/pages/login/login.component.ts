@@ -1,6 +1,6 @@
 import { Component, ElementRef, ViewChild } from '@angular/core';
-import { AuthService } from '../../services/auth.service';
 import { Router } from '@angular/router';
+import { AuthService } from '../../services/auth.service';
 import { auth, googleProvider, facebookProvider } from '../../firebase.config';
 import { signInWithPopup } from 'firebase/auth';
 
@@ -13,113 +13,130 @@ export class LoginComponent {
 
   @ViewChild('container') container!: ElementRef;
 
-  registerData = { 
-    name: '', 
-    email: '', 
-    password: '', 
-    isVendor: false, 
+  // -----------------------------
+  // Forms Data
+  // -----------------------------
+  registerData = {
+    name: '',
+    email: '',
+    password: '',
+    isVendor: false,
     storeName: '',
     address: '',
-    phone: '' 
-  };
-  
-  loginData = { 
-    email: '', 
-    password: '' 
+    phone: ''
   };
 
-  constructor(private auth: AuthService, private router: Router) {}
+  loginData = {
+    email: '',
+    password: ''
+  };
 
-  // ---------------------------------------
+  constructor(
+    private authService: AuthService,
+    private router: Router
+  ) {}
+
+  // ======================================================
   // Google Login
-  // ---------------------------------------
+  // ======================================================
   loginWithGoogle(event?: Event) {
-    if (event) {
-      event.preventDefault();
-    }
-    
+    event?.preventDefault();
+
     signInWithPopup(auth, googleProvider)
       .then(async (result) => {
-        const user = result.user;
-        const token = await user.getIdToken();
+        const firebaseUser = result.user;
+        const token = await firebaseUser.getIdToken();
 
-        localStorage.setItem('token', token);
-        console.log('Google login successful');
+        const userData = {
+          name: firebaseUser.displayName,
+          email: firebaseUser.email,
+          avatar: firebaseUser.photoURL,
+          phone: firebaseUser.phoneNumber,
+          address: ''
+        };
+
+        // ✅ خزن user + token في AuthService
+        this.authService.socialLogin(userData, token);
+
         this.router.navigate(['/']);
       })
       .catch((error) => {
-        console.error("Google Login Error:", error);
         alert('Google login failed: ' + error.message);
       });
   }
 
-  // ---------------------------------------
+  // ======================================================
   // Facebook Login
-  // ---------------------------------------
+  // ======================================================
   loginWithFacebook(event?: Event) {
-    if (event) {
-      event.preventDefault();
-    }
-    
+    event?.preventDefault();
+
     signInWithPopup(auth, facebookProvider)
       .then(async (result) => {
-        const user = result.user;
-        const token = await user.getIdToken();
-        
-        localStorage.setItem('token', token);
-        console.log("Facebook Login Success:", user);
+        const firebaseUser = result.user;
+        const token = await firebaseUser.getIdToken();
+
+        const userData = {
+          name: firebaseUser.displayName,
+          email: firebaseUser.email,
+          avatar: firebaseUser.photoURL,
+          phone: firebaseUser.phoneNumber,
+          address: ''
+        };
+
+        // ✅ خزن user + token
+        this.authService.socialLogin(userData, token);
+
         this.router.navigate(['/']);
       })
       .catch((error) => {
-        console.error("Facebook Login Error:", error);
         alert('Facebook login failed: ' + error.message);
       });
   }
 
-  // ---------------------------------------
+  // ======================================================
   // Manual Register
-  // ---------------------------------------
+  // ======================================================
   register() {
     if (!this.registerData.name || !this.registerData.email || !this.registerData.password) {
-      alert('Please fill all fields');
+      alert('Please fill all required fields');
       return;
     }
 
-    this.auth.register(this.registerData).subscribe({
-      next: (res: any) => {
+    this.authService.register(this.registerData).subscribe({
+      next: () => {
         alert('Registration successful!');
         this.showLogin();
       },
-      error: (err: any) => {
+      error: (err) => {
         alert(err.error?.message || 'Registration failed');
       }
     });
   }
 
-  // ---------------------------------------
+  // ======================================================
   // Manual Login
-  // ---------------------------------------
- login() {
-  if (!this.loginData.email || !this.loginData.password) {
-    alert('Please fill all fields');
-    return;
+  // ======================================================
+  login() {
+    if (!this.loginData.email || !this.loginData.password) {
+      alert('Please fill all fields');
+      return;
+    }
+
+    this.authService.login(this.loginData).subscribe({
+      next: () => {
+        alert('Login successful!');
+        this.router.navigate(['/']);
+      },
+      error: (err) => {
+        alert(err.error?.message || 'Login failed');
+      }
+    });
   }
 
-  this.auth.login(this.loginData).subscribe({
-    next: () => {
-      alert('Login successful!');
-      this.router.navigate(['/']);
-    },
-    error: (err: any) => {
-      alert(err.error?.message || 'Login failed');
-    }
-  });
-}
-
-
-  // ---------------------------------------
+  // ======================================================
   // UI Switching
-  // ---------------------------------------
+  // ======================================================
   showLogin() {
     this.container.nativeElement.classList.remove('active');
   }

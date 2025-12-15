@@ -12,9 +12,11 @@ export class AuthService {
 
   constructor(private http: HttpClient) {}
 
+
   register(data: any): Observable<any> {
     return this.http.post(`${this.baseUrl}/register`, data);
   }
+
 
   login(data: any): Observable<any> {
     return this.http.post<any>(`${this.baseUrl}/login`, data).pipe(
@@ -26,11 +28,18 @@ export class AuthService {
     );
   }
 
+
+  socialLogin(user: any, token: string) {
+    this.setSession(user, token);
+  }
+
+ 
   private setSession(user: any, token: string) {
     this.user = user;
     localStorage.setItem('token', token);
     localStorage.setItem('user', JSON.stringify(user));
   }
+
 
   getUser() {
     if (!this.user) {
@@ -42,9 +51,11 @@ export class AuthService {
     return this.user;
   }
 
+  
   isLoggedIn(): boolean {
     return !!localStorage.getItem('token');
   }
+
 
   logout() {
     this.user = null;

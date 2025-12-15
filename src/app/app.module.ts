@@ -13,6 +13,7 @@ import { CategoriesComponent } from './components/categories/categories.componen
 import { PromoComponent } from './components/promo/promo.component';
 import { FooterComponent } from './components/footer/footer.component';
 import { HomeComponent } from './pages/home/home.component';
+import { ProfileComponent } from './pages/profile/profile.component';
 
 @NgModule({
   declarations: [
@@ -24,7 +25,8 @@ import { HomeComponent } from './pages/home/home.component';
     CategoriesComponent,
     PromoComponent,
     FooterComponent,
-    HomeComponent
+    HomeComponent,
+    ProfileComponent
   ],
   imports: [
     BrowserModule,
