@@ -12,12 +12,10 @@ export class AuthService {
 
   constructor(private http: HttpClient) {}
 
-  // ===== Register =====
   register(data: any): Observable<any> {
     return this.http.post(`${this.baseUrl}/register`, data);
   }
 
-  // ===== Login =====
   login(data: any): Observable<any> {
     return this.http.post<any>(`${this.baseUrl}/login`, data).pipe(
       tap((res) => {
@@ -28,7 +26,6 @@ export class AuthService {
     );
   }
 
-  // ===== Session Handling =====
   private setSession(user: any, token: string) {
     this.user = user;
     localStorage.setItem('token', token);
