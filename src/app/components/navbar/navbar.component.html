@@ -24,7 +24,7 @@
 
       <li class="nav-mobile-actions" *ngIf="auth.isLoggedIn()">
         <div class="mobile-buttons user-menu">
-<div class="user-trigger" (click)="toggleUserMenu($event)">
+          <div class="user-trigger" (click)="toggleUserMenu($event)">
             <i class="fas fa-user-circle user-icon"></i>
             <span class="user-name">{{ auth.getUser()?.name }}</span>
           </div>
@@ -55,7 +55,7 @@
 
       <!-- DESKTOP: بعد الدخول -->
       <div *ngIf="auth.isLoggedIn()" class="user-menu">
-<div class="user-trigger" (click)="toggleUserMenu($event)">
+        <div class="user-trigger" (click)="toggleUserMenu($event)">
           <i class="fas fa-user-circle user-icon"></i>
           <span class="user-name">{{ auth.getUser()?.name }}</span>
         </div>
@@ -63,7 +63,7 @@
         <div class="dropdown" *ngIf="isUserMenuOpen">
           <a routerLink="/profile">My Profile</a>
           <a>My Orders</a>
-          <a>My Cart</a>
+          <a >My Cart</a>
           <hr />
           <a class="logout" (click)="logout()">Logout</a>
         </div>
