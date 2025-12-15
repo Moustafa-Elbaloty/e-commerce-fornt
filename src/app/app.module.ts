@@ -14,6 +14,7 @@ import { PromoComponent } from './components/promo/promo.component';
 import { FooterComponent } from './components/footer/footer.component';
 import { HomeComponent } from './pages/home/home.component';
 import { ProfileComponent } from './pages/profile/profile.component';
+import { CartComponent } from './pages/cart/cart.component';
 
 @NgModule({
   declarations: [
@@ -26,7 +27,8 @@ import { ProfileComponent } from './pages/profile/profile.component';
     PromoComponent,
     FooterComponent,
     HomeComponent,
-    ProfileComponent
+    ProfileComponent,
+    CartComponent
   ],
   imports: [
     BrowserModule,
