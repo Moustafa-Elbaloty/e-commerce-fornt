@@ -60,6 +60,12 @@ updateProfile(data: any): Observable<any> {
   );
 }
 
+changePassword(data: any): Observable<any> {
+  return this.http.put(
+    'http://localhost:5000/api/auth/change-password',
+    data
+  );
+}
 
   getUser() {
     if (!this.user) {

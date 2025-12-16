@@ -18,6 +18,7 @@ import { HomeComponent } from './pages/home/home.component';
 import { ProfileComponent } from './pages/profile/profile.component';
 import { CartComponent } from './pages/cart/cart.component';
 import { CheckoutComponent } from './pages/checkout/checkout.component';
+import { ChangePasswordComponent } from './pages/change-password/change-password.component';
 
 @NgModule({
   declarations: [
@@ -32,7 +33,8 @@ import { CheckoutComponent } from './pages/checkout/checkout.component';
     HomeComponent,
     ProfileComponent,
     CartComponent,
-    CheckoutComponent
+    CheckoutComponent,
+    ChangePasswordComponent
   ],
   imports: [
     BrowserModule,

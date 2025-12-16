@@ -7,7 +7,7 @@ import { CartComponent } from './pages/cart/cart.component';
 import { CheckoutComponent } from './pages/checkout/checkout.component';
 import { AdminPanalComponent } from './components/admin-panal/admin-panal.component';
 import { AdminGuard } from '../app/guard/admin.guard'; // استيراد الـ Guard
-
+import { ChangePasswordComponent } from './pages/change-password/change-password.component';import { AuthGuard } from './guards/auth.guard';
 
 const routes: Routes = [
   { path: '', component: HomeComponent },      // الصفحة الرئيسية
@@ -20,6 +20,12 @@ const routes: Routes = [
     component: AdminPanalComponent,
     canActivate: [AdminGuard] // إضافة الحماية
   },
+  {
+  path: 'change-password',
+  component: ChangePasswordComponent,
+  canActivate: [AuthGuard]
+}
+
 ];
 
 @NgModule({
