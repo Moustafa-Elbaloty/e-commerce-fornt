@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
 import { AuthService } from '../../services/auth.service';
 
 @Component({
@@ -9,25 +8,29 @@ import { AuthService } from '../../services/auth.service';
 })
 export class ProfileComponent implements OnInit {
 
-  user: any;
+  profile: any = null;
+  loading = false;
+  error: string | null = null;
 
-  constructor(
-    private auth: AuthService,
-    private router: Router
-  ) {}
+  constructor(private auth: AuthService) {}
 
   ngOnInit(): void {
-  
-    if (!this.auth.isLoggedIn()) {
-      this.router.navigate(['/login']);
-      return;
-    }
-
-    this.user = this.auth.getUser();
+    this.loadProfile();
   }
 
-  logout() {
-    this.auth.logout();
-    this.router.navigate(['/login']);
+  loadProfile(): void {
+    this.loading = true;
+    this.auth.getUserDashboard().subscribe({
+      next: (res) => {
+        this.profile = res.data.user;
+        this.loading = false;
+      },
+      error: (err) => {
+        this.error = 'Failed to load profile';
+        this.loading = false;
+        console.error(err);
+      }
+    });
   }
+
 }

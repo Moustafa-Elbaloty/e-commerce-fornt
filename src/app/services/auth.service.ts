@@ -39,6 +39,11 @@ export class AuthService {
     localStorage.setItem('token', token);
     localStorage.setItem('user', JSON.stringify(user));
   }
+getUserDashboard() {
+  return this.http.get<any>(
+    'http://localhost:5000/api/users/dashboard'
+  );
+}
 
 
   getUser() {
