@@ -32,7 +32,7 @@
           <div class="dropdown" *ngIf="isUserMenuOpen">
             <a routerLink="/profile">My Profile</a>
             <a>My Orders</a>
-            <a> My Cart</a>
+            <a routerLink="/cart" >My Cart</a>
             <hr />
             <a class="logout" (click)="logout()">Logout</a>
           </div>
@@ -68,10 +68,7 @@
           <a class="logout" (click)="logout()">Logout</a>
         </div>
       </div>
-
     </div>
-
-    <!-- HAMBURGER -->
     <div class="hamburger" (click)="toggleMenu()">
       <i class="fas" [class.fa-bars]="!isOpen" [class.fa-times]="isOpen"></i>
     </div>
