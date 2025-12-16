@@ -14,7 +14,7 @@ const routes: Routes = [
   { path: 'login', component: LoginComponent } ,// صفحة اللوجن
   { path: 'profile', component: ProfileComponent },
   { path: 'cart', component: CartComponent },
-  {path: 'checkout', component: CheckoutComponent}
+  {path: 'checkout', component: CheckoutComponent},
   { 
     path: 'adminPanal', 
     component: AdminPanalComponent,
