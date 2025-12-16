@@ -1,0 +1,302 @@
+    <nav class="navbar">
+        <div class="container nav-container">
+            <div class="logo">
+                <i class="fas fa-cubes"></i> Admin Panel
+            </div>
+            
+            <ul class="nav-links">
+                </ul>
+            
+            <div class="nav-actions">
+                <div class="search-box">
+                    <i class="fas fa-search"></i>
+                    <input type="text" placeholder="Search products...">
+                </div>
+                <a href="#" class="profile-icon">
+                    <i class="fas fa-user-circle fa-2x"></i>
+                </a>
+            </div>
+        </div>
+    </nav>
+    
+    <div class="admin-dashboard">
+        <div class="sidebar">
+            <div class="logo">MarketPlace</div>
+            <nav>
+                <a href="#" class="active"><i class="fas fa-tachometer-alt"></i> Dashboard</a>
+                <a href="#"><i class="fas fa-users"></i> Users</a>
+                <a href="#"><i class="fas fa-box-open"></i> Products</a>
+                <a href="#"><i class="fas fa-shopping-cart"></i> Orders</a>
+                <a href="#"><i class="fas fa-chart-line"></i> Reports</a>
+            </nav>
+        </div>
+
+        <div class="main-content">
+            
+            <div class="dashboard-grid">
+                <div class="card stat-card">
+                    <h3>Total Users</h3>
+                    <div class="value">2,450</div>
+                </div>
+                <div class="card stat-card">
+                    <h3>Total Orders</h3>
+                    <div class="value">1,230</div>
+                </div>
+                <div class="card stat-card">
+                    <h3>Total Products</h3>
+                    <div class="value">580</div>
+                </div>
+                <div class="card stat-card">
+                    <h3>Total Revenue</h3>
+                    <div class="value">$125,890</div>
+                </div>
+            </div>
+            
+            <div class="sections-grid">
+                
+                <div class="card">
+                    <div class="section-title">
+                        <h2>User Management</h2>
+                        <i class="fas fa-ellipsis-v"></i>
+                    </div>
+                    <div class="table-responsive">
+                        <table class="data-table">
+                            <thead>
+                                <tr>
+                                    <th>ID</th>
+                                    <th>Name</th>
+                                    <th>Email</th>
+                                    <th>Role</th>
+                                    <th>Status</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>U001</td>
+                                    <td>Alice Smith</td>
+                                    <td>alice@example.com</td>
+                                    <td>Customer</td>
+                                    <td><span class="status-badge status-active">Active</span></td>
+                                </tr>
+                                <tr>
+                                    <td>U002</td>
+                                    <td>Bob Johnson</td>
+                                    <td>bob@example.com</td>
+                                    <td>Seller</td>
+                                    <td><span class="status-badge status-inactive">Inactive</span></td>
+                                </tr>
+                                <tr>
+                                    <td>U003</td>
+                                    <td>Charlie Brown</td>
+                                    <td>charlie@example.co</td>
+                                    <td>Customer</td>
+                                    <td><span class="status-badge status-active">Active</span></td>
+                                </tr>
+                                <tr>
+                                    <td>U004</td>
+                                    <td>Diana Prince</td>
+                                    <td>diana@example.co</td>
+                                    <td>Seller</td>
+                                    <td><span class="status-badge status-active">Active</span></td>
+                                </tr>
+                                <tr>
+                                    <td>U005</td>
+                                    <td>Eve Adams</td>
+                                    <td>eve@example.com</td>
+                                    <td>Seller</td>
+                                    <td><span class="status-badge status-active">Active</span></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="section-title">
+                        <h2>Order Management</h2>
+                        <i class="fas fa-ellipsis-v"></i>
+                    </div>
+                    <div class="table-responsive">
+                        <table class="data-table">
+                            <thead>
+                                <tr>
+                                    <th>ID</th>
+                                    <th>Customer</th>
+                                    <th>Date</th>
+                                    <th>Total</th>
+                                    <th>Status</th>
+                                    <th>Ac</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>ORD001</td>
+                                    <td>Alice Smith</td>
+                                    <td>2023-12-01</td>
+                                    <td>$120.50</td>
+                                    <td><span class="status-badge status-delivered">Delivered</span></td>
+                                    <td><i class="fas fa-edit"></i></td>
+                                </tr>
+                                <tr>
+                                    <td>ORD002</td>
+                                    <td>Bob Johnson</td>
+                                    <td>2023-12-02</td>
+                                    <td>$250.00</td>
+                                    <td><span class="status-badge status-processing">Processing</span></td>
+                                    <td><i class="fas fa-edit"></i></td>
+                                </tr>
+                                <tr>
+                                    <td>ORD003</td>
+                                    <td>Charlie Brown</td>
+                                    <td>2023-12-03</td>
+                                    <td>$75.20</td>
+                                    <td><span class="status-badge status-shipped">Shipped</span></td>
+                                    <td><i class="fas fa-edit"></i></td>
+                                </tr>
+                                <tr>
+                                    <td>ORD004</td>
+                                    <td>Diana Prince</td>
+                                    <td>2023-12-03</td>
+                                    <td>$300.00</td>
+                                    <td><span class="status-badge status-pending">Pending</span></td>
+                                    <td><i class="fas fa-edit"></i></td>
+                                </tr>
+                                <tr>
+                                    <td>ORD005</td>
+                                    <td>Eve Adams</td>
+                                    <td>2023-12-02</td>
+                                    <td>$99.99</td>
+                                    <td><span class="status-badge status-delivered">Delivered</span></td>
+                                    <td><i class="fas fa-edit"></i></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card product-management">
+                <div class="section-title">
+                    <h2>Product Management</h2>
+                    <i class="fas fa-ellipsis-v"></i>
+                </div>
+                <div class="table-responsive">
+                    <table class="data-table">
+                        <thead>
+                            <tr>
+                                <th>Product ID</th>
+                                <th>Name</th>
+                                <th>Category</th>
+                                <th>Stock</th>
+                                <th>Price</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>PROD001</td>
+                                <td>Gaming Laptop</td>
+                                <td>Electronics</td>
+                                <td><span class="text-success">15</span></td>
+                                <td>$1,200.00</td>
+                                <td class="actions">
+                                    <i class="fas fa-edit"></i>
+                                    <i class="fas fa-trash-alt"></i>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>PROD002</td>
+                                <td>Wireless Headset</td>
+                                <td>Accessories</td>
+                                <td><span class="text-success">50</span></td>
+                                <td>$75.00</td>
+                                <td class="actions">
+                                    <i class="fas fa-edit"></i>
+                                    <i class="fas fa-trash-alt"></i>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>PROD003</td>
+                                <td>Smart Watch</td>
+                                <td>Wearables</td>
+                                <td><span class="text-success">30</span></td>
+                                <td>$199.99</td>
+                                <td class="actions">
+                                    <i class="fas fa-edit"></i>
+                                    <i class="fas fa-trash-alt"></i>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>PROD004</td>
+                                <td>Ergonomic Mouse</td>
+                                <td>Peripherals</td>
+                                <td><span class="text-success">100</span></td>
+                                <td>$35.00</td>
+                                <td class="actions">
+                                    <i class="fas fa-edit"></i>
+                                    <i class="fas fa-trash-alt"></i>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>PROD005</td>
+                                <td>Mechanical Keyboard</td>
+                                <td>Peripherals</td>
+                                <td><span class="text-success">20</span></td>
+                                <td>$120.00</td>
+                                <td class="actions">
+                                    <i class="fas fa-edit"></i>
+                                    <i class="fas fa-trash-alt"></i>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-logo-section">
+                    <div class="footer-logo"><i class="fas fa-store"></i> MarketPlace</div>
+                    <p>Your ultimate destination for modern shopping.</p>
+                    <div class="social-links">
+                        <a href="#"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#"><i class="fab fa-twitter"></i></a>
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                    </div>
+                </div>
+
+                <div>
+                    <h4>Company</h4>
+                    <ul>
+                        <li><a href="#">About Us</a></li>
+                        <li><a href="#">Careers</a></li>
+                        <li><a href="#">Blog</a></li>
+                    </ul>
+                </div>
+
+                <div>
+                    <h4>Support</h4>
+                    <ul>
+                        <li><a href="#">Contact Us</a></li>
+                        <li><a href="#">FAQs</a></li>
+                        <li><a href="#">Shipping</a></li>
+                    </ul>
+                </div>
+
+                <div>
+                    <h4>Legal</h4>
+                    <ul>
+                        <li><a href="#">Privacy Policy</a></li>
+                        <li><a href="#">Terms of Service</a></li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="copyright">
+                &copy; 2025 MarketPlace. All rights reserved.
+            </div>
+        </div>
+    </footer>
