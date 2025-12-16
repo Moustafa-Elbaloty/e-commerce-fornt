@@ -29,7 +29,7 @@ export class NavbarComponent {
 
   logout() {
     this.auth.logout();
-  this.isUserMenuOpen = false; 
+  window.location.href = '/';
   }
 
   @HostListener('document:click', ['$event'])
