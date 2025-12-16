@@ -1,6 +1,7 @@
-import { Component, ElementRef, HostListener } from '@angular/core';
+import { Component, ElementRef, HostListener, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { AuthService } from '../../services/auth.service';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-navbar',
@@ -11,12 +12,17 @@ export class NavbarComponent {
 
   isOpen = false;
   isUserMenuOpen = false;
+  isAdmin$!: Observable<boolean>; // إضافة observable للـ admin
 
   constructor(
     public auth: AuthService,
     private router: Router,
     private elementRef: ElementRef   
   ) {}
+
+  ngOnInit(): void {
+    this.isAdmin$ = this.auth.isAdmin$; // الاشتراك في admin status
+  }
 
   toggleMenu() {
     this.isOpen = !this.isOpen;
