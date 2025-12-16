@@ -32,5 +32,35 @@ export class ProfileComponent implements OnInit {
       }
     });
   }
+saveChanges() {
+  const payload = {
+    name: this.profile.name,
+    phone: this.profile.phone,
+    addresses: this.profile.address
+      ? [
+          {
+            street: this.profile.address,
+            isDefault: true
+          }
+        ]
+      : []
+  };
+
+  this.auth.updateProfile(payload).subscribe({
+    next: (res) => {
+      // تحديث البيانات المعروضة
+      this.profile = res.user;
+
+      // تحديث localStorage
+      localStorage.setItem('user', JSON.stringify(res.user));
+
+      alert('Profile updated successfully');
+    },
+    error: (err) => {
+      console.error(err);
+      alert('Failed to update profile');
+    }
+  });
+}
 
 }

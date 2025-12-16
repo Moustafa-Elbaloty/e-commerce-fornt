@@ -53,6 +53,12 @@ getUserDashboard() {
     'http://localhost:5000/api/users/dashboard'
   );
 }
+updateProfile(data: any): Observable<any> {
+  return this.http.put(
+    'http://localhost:5000/api/users/update',
+    data
+  );
+}
 
 
   getUser() {
