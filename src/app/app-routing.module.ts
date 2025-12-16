@@ -4,12 +4,14 @@ import { HomeComponent } from './pages/home/home.component';
 import { LoginComponent } from './pages/login/login.component';
 import { ProfileComponent } from './pages/profile/profile.component';
 import { CartComponent } from './pages/cart/cart.component';
+import { CheckoutComponent } from './pages/checkout/checkout.component';
 
 const routes: Routes = [
   { path: '', component: HomeComponent },      // الصفحة الرئيسية
   { path: 'login', component: LoginComponent } ,// صفحة اللوجن
- { path: 'profile', component: ProfileComponent },
- { path: 'cart', component: CartComponent }
+  { path: 'profile', component: ProfileComponent },
+  { path: 'cart', component: CartComponent },
+  {path: 'checkout', component: CheckoutComponent}
 ];
 
 @NgModule({

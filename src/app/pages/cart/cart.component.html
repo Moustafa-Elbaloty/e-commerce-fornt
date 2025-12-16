@@ -1,68 +1,70 @@
-
 <main class="shopping-cart-page">
-  <div class="container">
-    <h1 class="page-title">Shopping Cart</h1>
+    <div class="container">
+        <h1 class="page-title">Shopping Cart</h1>
 
-    <div class="cart-content-grid">
+        <div class="cart-content-grid">
 
-      <!-- CART ITEMS -->
-      <div class="cart-details">
-        <div class="cart-header">
-          <h2>Your Cart</h2>
-          <p>You have {{ cartItems.length }} items in your cart.</p>
-        </div>
+            <!-- CART ITEMS -->
+            <div class="cart-details">
+                <div class="cart-header">
+                    <h2>Your Cart</h2>
+                    <p>You have {{ cartItems.length }} items in your cart.</p>
+                </div>
 
-        <div class="cart-item" *ngFor="let item of cartItems">
-          <div class="item-info">
-            <div class="item-image">
-              <img [src]="item.image" [alt]="item.name">
+                <div class="cart-item" *ngFor="let item of cartItems">
+                    <div class="item-info">
+                        <div class="item-image">
+                            <img [src]="item.image" [alt]="item.name">
+                        </div>
+                        <div class="item-details">
+                            <h4>{{ item.name }}</h4>
+                            <p>${{ item.price }}</p>
+                        </div>
+                    </div>
+
+                    <div class="item-actions">
+                        <div class="cart-qty-selector">
+                            <button class="cart-qty-btn" (click)="decrease(item)">-</button>
+                            <input class="cart-qty-input" [value]="item.qty" readonly>
+                            <button class="cart-qty-btn" (click)="increase(item)">+</button>
+                        </div>
+
+                        <span class="item-price-total">
+                            ${{ item.price * item.qty | number:'1.2-2' }}
+                        </span>
+
+                        <i class="fas fa-times remove-btn" (click)="removeItem(item.id)"></i>
+                    </div>
+                </div>
             </div>
-            <div class="item-details">
-              <h4>{{ item.name }}</h4>
-              <p>${{ item.price }}</p>
+
+            <!-- SUMMARY -->
+            <div class="order-summary">
+                <h2>Order Summary</h2>
+
+                <div class="summary-row">
+                    <span>Subtotal</span>
+                    <span>${{ subtotal | number:'1.2-2' }}</span>
+                </div>
+
+                <div class="summary-row">
+                    <span>Shipping</span>
+                    <span>${{ shipping }}</span>
+                </div>
+
+                <div class="summary-row total">
+                    <span>Order Total</span>
+                    <span>${{ total | number:'1.2-2' }}</span>
+                </div>
+
+                <div class="checkout-btn-container">
+                    <a class="btn-checkout" routerLink="/checkout">
+                        Proceed to Checkout
+                    </a>
+
+                </div>
             </div>
-          </div>
 
-          <div class="item-actions">
-            <div class="cart-qty-selector">
-              <button class="cart-qty-btn" (click)="decrease(item)">-</button>
-              <input class="cart-qty-input" [value]="item.qty" readonly>
-              <button class="cart-qty-btn" (click)="increase(item)">+</button>
-            </div>
-
-            <span class="item-price-total">
-              ${{ item.price * item.qty | number:'1.2-2' }}
-            </span>
-
-            <i class="fas fa-times remove-btn" (click)="removeItem(item.id)"></i>
-          </div>
         </div>
-      </div>
-
-      <!-- SUMMARY -->
-      <div class="order-summary">
-        <h2>Order Summary</h2>
-
-        <div class="summary-row">
-          <span>Subtotal</span>
-          <span>${{ subtotal | number:'1.2-2' }}</span>
-        </div>
-
-        <div class="summary-row">
-          <span>Shipping</span>
-          <span>${{ shipping }}</span>
-        </div>
-
-        <div class="summary-row total">
-          <span>Order Total</span>
-          <span>${{ total | number:'1.2-2' }}</span>
-        </div>
-
-        <div class="checkout-btn-container">
-          <a class="btn-checkout">Proceed to Checkout</a>
-        </div>
-      </div>
-
     </div>
-  </div>
 </main>

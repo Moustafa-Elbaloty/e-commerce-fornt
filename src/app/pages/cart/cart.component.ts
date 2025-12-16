@@ -15,13 +15,13 @@ export class CartComponent implements OnInit {
   }
 
   /* =======================
-     Init Cart with Demo Data
+     Init Cart
      ======================= */
   initCart() {
-    const cart = localStorage.getItem('cart');
+    const cart = localStorage.getItem('cartItems');
 
     if (!cart) {
-      // عناصر تجريبية
+      // Demo Data (أول مرة فقط)
       this.cartItems = [
         {
           id: 1,
@@ -63,7 +63,7 @@ export class CartComponent implements OnInit {
      LocalStorage
      ======================= */
   saveCart() {
-    localStorage.setItem('cart', JSON.stringify(this.cartItems));
+    localStorage.setItem('cartItems', JSON.stringify(this.cartItems));
   }
 
   /* =======================

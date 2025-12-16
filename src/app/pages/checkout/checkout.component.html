@@ -1,0 +1,202 @@
+<div class="container">
+
+  <h1>Checkout</h1>
+  <div class="subtitle">
+    Finalize your purchase by providing shipping and payment details.
+  </div>
+
+  <div class="checkout-grid">
+
+    <!-- ================= Shipping Information ================= -->
+    <div class="card">
+      <h2>Shipping Information</h2>
+      <p>Please provide your delivery details.</p>
+
+      <div class="form-row">
+        <div class="form-group">
+          <label>First Name</label>
+          <input
+            type="text"
+            [(ngModel)]="shipping.firstName"
+            (keypress)="allowOnlyLetters($event)"
+            (input)="saveCustomerInfo()"
+            required
+          >
+        </div>
+
+        <div class="form-group">
+          <label>Last Name</label>
+          <input
+            type="text"
+            [(ngModel)]="shipping.lastName"
+            (keypress)="allowOnlyLetters($event)"
+            (input)="saveCustomerInfo()"
+            required
+          >
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label>Address Line 1</label>
+        <input
+          type="text"
+          [(ngModel)]="shipping.address1"
+          (input)="saveCustomerInfo()"
+          required
+        >
+      </div>
+
+      <div class="form-group">
+        <label>Address Line 2</label>
+        <input
+          type="text"
+          [(ngModel)]="shipping.address2"
+          (input)="saveCustomerInfo()"
+          required
+        >
+      </div>
+
+      <div class="form-group">
+        <label>Governorate</label>
+        <select
+          [(ngModel)]="shipping.governorate"
+          (change)="saveCustomerInfo()"
+          required
+        >
+          <option value="">Select Governorate</option>
+          <option *ngFor="let g of egyptGovernorates" [value]="g">
+            {{ g }}
+          </option>
+        </select>
+      </div>
+
+      <div class="form-group">
+        <label>City / Area</label>
+        <input
+          type="text"
+          [(ngModel)]="shipping.city"
+          (input)="saveCustomerInfo()"
+          required
+        >
+      </div>
+
+      <div class="form-group">
+        <label>Phone Number</label>
+        <input
+          type="text"
+          [(ngModel)]="shipping.phone"
+          (keypress)="allowOnlyNumbers($event)"
+          (input)="formatPhone()"
+          maxlength="11"
+          required
+          placeholder="01XXXXXXXXX"
+        >
+      </div>
+    </div>
+
+    <!-- ================= Order Summary ================= -->
+    <div class="card order-summary">
+      <h2>Order Summary</h2>
+      <p>Review your items before placing the order.</p>
+
+      <div class="order-item" *ngFor="let item of cartItems">
+        <div class="product-image">
+          <img [src]="item.image" [alt]="item.name">
+        </div>
+
+        <div class="product-details">
+          <div class="product-name">{{ item.name }}</div>
+          <div class="product-qty">Qty: {{ item.qty }}</div>
+        </div>
+
+        <div class="product-price">
+          ${{ item.price * item.qty | number:'1.2-2' }}
+        </div>
+      </div>
+
+      <div class="summary-line">
+        <span>Subtotal</span>
+        <span>${{ subtotal | number:'1.2-2' }}</span>
+      </div>
+
+      <div class="summary-line">
+        <span>Shipping</span>
+        <span>${{ shippingCost }}</span>
+      </div>
+
+      <div class="summary-line total">
+        <span>Total</span>
+        <span>${{ total | number:'1.2-2' }}</span>
+      </div>
+
+      <div class="checkout-btn-container">
+        <button
+          class="btn"
+          (click)="placeOrder()"
+          [disabled]="!isFormValid()"
+        >
+          Place Order
+        </button>
+      </div>
+    </div>
+
+    <!-- ================= Payment Method ================= -->
+    <div class="card">
+      <h2>Payment Method</h2>
+      <p>Choose how you'd like to pay.</p>
+
+      <div class="payment-options">
+        <label>
+          <input type="radio" value="credit" [(ngModel)]="paymentType">
+          Credit Card
+        </label>
+
+        <label>
+          <input type="radio" value="cash" [(ngModel)]="paymentType">
+          Cash on Delivery
+        </label>
+      </div>
+
+      <div *ngIf="paymentType === 'credit'">
+        <div class="form-group">
+          <label>Card Number</label>
+          <input
+            type="text"
+            [(ngModel)]="card.number"
+            (keypress)="allowOnlyNumbers($event)"
+            (input)="formatCardNumber()"
+            maxlength="19"
+            required
+          >
+        </div>
+
+        <div class="form-row">
+          <div class="form-group">
+            <label>Expiry Date</label>
+            <input
+              type="text"
+              [(ngModel)]="card.expiry"
+              (keypress)="allowOnlyNumbers($event)"
+              (input)="formatExpiry()"
+              maxlength="5"
+              required
+            >
+          </div>
+
+          <div class="form-group">
+            <label>CVV</label>
+            <input
+              type="text"
+              [(ngModel)]="card.cvv"
+              (keypress)="allowOnlyNumbers($event)"
+              (input)="formatCVV()"
+              maxlength="3"
+              required
+            >
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
