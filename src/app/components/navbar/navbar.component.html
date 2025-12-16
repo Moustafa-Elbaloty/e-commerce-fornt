@@ -15,6 +15,10 @@
       <li><a href="#">Products</a></li>
       <li><a href="#">Categories</a></li>
       <li><a href="#">About</a></li>
+      <!-- رابط الأدمن - يظهر فقط للأدمن -->
+      <li *ngIf="isAdmin$ | async">
+        <a routerLink="adminPanal">admin</a>
+      </li>
 
       <li class="nav-mobile-actions" *ngIf="!auth.isLoggedIn()">
         <div class="mobile-buttons">
@@ -33,6 +37,8 @@
             <a routerLink="/profile">My Profile</a>
             <a>My Orders</a>
             <a routerLink="/cart" >My Cart</a>
+            <!-- رابط الأدمن في الـ dropdown أيضاً (اختياري) -->
+            <a *ngIf="isAdmin$ | async" routerLink="adminPanal">Admin Panel</a>
             <hr />
             <a class="logout" (click)="logout()">Logout</a>
           </div>
@@ -64,6 +70,8 @@
           <a routerLink="/profile">My Profile</a>
           <a>My Orders</a>
           <a routerLink="/cart" >My Cart</a>
+           <!-- رابط الأدمن في الـ dropdown (Desktop) -->
+          <a *ngIf="isAdmin$ | async" routerLink="adminPanal">Admin Panel</a>
           <hr />
           <a class="logout" (click)="logout()">Logout</a>
         </div>
