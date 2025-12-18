@@ -1,0 +1,83 @@
+<div class="orders-page">
+  <div class="container">
+
+    <!-- Header -->
+    <div class="page-header">
+      <div>
+        <h1>My Orders</h1>
+        <p>Premium overview of your purchases</p>
+      </div>
+    </div>
+
+    <!-- Empty State -->
+    <div *ngIf="orders.length === 0" class="empty-state">
+      <i class="fas fa-box-open"></i>
+      <h3>No orders yet</h3>
+      <p>Your orders will appear here once you make a purchase.</p>
+    </div>
+
+    <!-- Orders -->
+    <div
+      class="order-card"
+      *ngFor="let order of orders"
+      [ngClass]="order.status"
+    >
+
+      <!-- Top -->
+      <div class="order-top">
+        <div>
+          <div class="order-id">Order #{{ order.id }}</div>
+          <div class="order-date">{{ formatDate(order.date) }}</div>
+        </div>
+
+        <span class="status" [ngClass]="order.status">
+          {{ order.status }}
+        </span>
+      </div>
+
+      <!-- Products -->
+      <div class="products">
+        <div class="product" *ngFor="let item of order.items">
+
+          <div class="product-image">
+            <img
+              [src]="item.image"
+              [alt]="item.name"
+              loading="lazy"
+            >
+          </div>
+
+          <div class="product-info">
+            <h4>{{ item.name }}</h4>
+            <p>x{{ item.qty }}</p>
+          </div>
+
+          <div class="product-price">
+            ${{ item.price * item.qty | number:'1.1-1' }}
+          </div>
+
+        </div>
+      </div>
+
+      <!-- Summary -->
+      <div class="order-summary">
+        <div>
+          <span>Items</span>
+          <strong>{{ totalItems(order.items) }}</strong>
+        </div>
+
+        <div>
+          <span>Subtotal</span>
+          <strong>${{ order.subtotal | number:'1.1-1' }}</strong>
+        </div>
+
+        <div>
+          <span>Total</span>
+          <strong>${{ order.total | number:'1.1-1' }}</strong>
+        </div>
+      </div>
+
+    </div>
+
+  </div>
+</div>

@@ -19,8 +19,6 @@ import { ProfileComponent } from './pages/profile/profile.component';
 import { CartComponent } from './pages/cart/cart.component';
 import { CheckoutComponent } from './pages/checkout/checkout.component';
 import { ChangePasswordComponent } from './pages/change-password/change-password.component';
-import { ProductsPageComponent } from './pages/products-page/products-page.component';
-import { ProductDetailsComponent } from './pages/product-details/product-details.component';
 
 @NgModule({
   declarations: [
@@ -36,9 +34,7 @@ import { ProductDetailsComponent } from './pages/product-details/product-details
     ProfileComponent,
     CartComponent,
     CheckoutComponent,
-    ChangePasswordComponent,
-    ProductsPageComponent,
-    ProductDetailsComponent,
+    ChangePasswordComponent
   ],
   imports: [BrowserModule, AppRoutingModule, HttpClientModule, FormsModule],
   providers: [

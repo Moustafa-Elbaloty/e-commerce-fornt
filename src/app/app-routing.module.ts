@@ -6,6 +6,7 @@ import { ProfileComponent } from './pages/profile/profile.component';
 import { CartComponent } from './pages/cart/cart.component';
 import { CheckoutComponent } from './pages/checkout/checkout.component';
 import { AdminPanalComponent } from './components/admin-panal/admin-panal.component';
+import { MyordersComponent } from './pages/myorders/myorders.component';
 import { AdminGuard } from '../app/guard/admin.guard'; // استيراد الـ Guard
 import { ChangePasswordComponent } from './pages/change-password/change-password.component';
 import { AuthGuard } from './guards/auth.guard';
@@ -17,9 +18,9 @@ const routes: Routes = [
   { path: 'login', component: LoginComponent }, // صفحة اللوجن
   { path: 'profile', component: ProfileComponent },
   { path: 'cart', component: CartComponent },
-  { path: 'checkout', component: CheckoutComponent },
-  {
-    path: 'adminPanal',
+  {path: 'checkout', component: CheckoutComponent},
+  { 
+    path: 'adminPanal', 
     component: AdminPanalComponent,
     canActivate: [AdminGuard], // إضافة الحماية
   },
