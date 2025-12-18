@@ -19,6 +19,7 @@ import { ProfileComponent } from './pages/profile/profile.component';
 import { CartComponent } from './pages/cart/cart.component';
 import { CheckoutComponent } from './pages/checkout/checkout.component';
 import { ChangePasswordComponent } from './pages/change-password/change-password.component';
+import { MyordersComponent } from './pages/myorders/myorders.component';
 
 @NgModule({
   declarations: [
@@ -34,7 +35,8 @@ import { ChangePasswordComponent } from './pages/change-password/change-password
     ProfileComponent,
     CartComponent,
     CheckoutComponent,
-    ChangePasswordComponent
+    ChangePasswordComponent,
+    MyordersComponent
   ],
   imports: [
     BrowserModule,

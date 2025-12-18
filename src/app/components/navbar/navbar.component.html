@@ -35,7 +35,7 @@
 
           <div class="dropdown" *ngIf="isUserMenuOpen">
             <a routerLink="/profile">My Profile</a>
-            <a>My Orders</a>
+            <a routerLink="/myorders">My Orders</a>
             <a routerLink="/cart" >My Cart</a>
             <!-- رابط الأدمن في الـ dropdown أيضاً (اختياري) -->
             <a *ngIf="isAdmin$ | async" routerLink="adminPanal">Admin Panel</a>
@@ -68,7 +68,7 @@
 
         <div class="dropdown" *ngIf="isUserMenuOpen">
           <a routerLink="/profile">My Profile</a>
-          <a>My Orders</a>
+          <a routerLink="/myorders">My Orders</a>
           <a routerLink="/cart" >My Cart</a>
            <!-- رابط الأدمن في الـ dropdown (Desktop) -->
           <a *ngIf="isAdmin$ | async" routerLink="adminPanal">Admin Panel</a>

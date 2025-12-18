@@ -7,62 +7,45 @@
 
   <div class="checkout-grid">
 
-    <!-- ================= Shipping Information ================= -->
+    <!-- ================= Shipping ================= -->
     <div class="card">
       <h2>Shipping Information</h2>
-      <p>Please provide your delivery details.</p>
 
       <div class="form-row">
         <div class="form-group">
           <label>First Name</label>
-          <input
-            type="text"
+          <input type="text" name="firstName"
             [(ngModel)]="shipping.firstName"
-            (keypress)="allowOnlyLetters($event)"
-            (input)="saveCustomerInfo()"
-            required
-          >
+            [class.error]="submitted && isEmpty(shipping.firstName)">
         </div>
 
         <div class="form-group">
           <label>Last Name</label>
-          <input
-            type="text"
+          <input type="text" name="lastName"
             [(ngModel)]="shipping.lastName"
-            (keypress)="allowOnlyLetters($event)"
-            (input)="saveCustomerInfo()"
-            required
-          >
+            [class.error]="submitted && isEmpty(shipping.lastName)">
         </div>
       </div>
 
       <div class="form-group">
         <label>Address Line 1</label>
-        <input
-          type="text"
+        <input type="text" name="address1"
           [(ngModel)]="shipping.address1"
-          (input)="saveCustomerInfo()"
-          required
-        >
+          [class.error]="submitted && isEmpty(shipping.address1)">
       </div>
 
       <div class="form-group">
         <label>Address Line 2</label>
-        <input
-          type="text"
+        <input type="text" name="address2"
           [(ngModel)]="shipping.address2"
-          (input)="saveCustomerInfo()"
-          required
-        >
+          [class.error]="submitted && isEmpty(shipping.address2)">
       </div>
 
       <div class="form-group">
         <label>Governorate</label>
-        <select
+        <select name="governorate"
           [(ngModel)]="shipping.governorate"
-          (change)="saveCustomerInfo()"
-          required
-        >
+          [class.error]="submitted && isEmpty(shipping.governorate)">
           <option value="">Select Governorate</option>
           <option *ngFor="let g of egyptGovernorates" [value]="g">
             {{ g }}
@@ -71,130 +54,74 @@
       </div>
 
       <div class="form-group">
-        <label>City / Area</label>
-        <input
-          type="text"
+        <label>City</label>
+        <input type="text" name="city"
           [(ngModel)]="shipping.city"
-          (input)="saveCustomerInfo()"
-          required
-        >
+          [class.error]="submitted && isEmpty(shipping.city)">
       </div>
 
       <div class="form-group">
-        <label>Phone Number</label>
-        <input
-          type="text"
+        <label>Phone</label>
+        <input type="text" name="phone"
           [(ngModel)]="shipping.phone"
-          (keypress)="allowOnlyNumbers($event)"
           (input)="formatPhone()"
-          maxlength="11"
-          required
-          placeholder="01XXXXXXXXX"
-        >
+          [class.error]="submitted && invalidPhone()">
       </div>
     </div>
 
     <!-- ================= Order Summary ================= -->
     <div class="card order-summary">
       <h2>Order Summary</h2>
-      <p>Review your items before placing the order.</p>
 
       <div class="order-item" *ngFor="let item of cartItems">
-        <div class="product-image">
-          <img [src]="item.image" [alt]="item.name">
-        </div>
-
-        <div class="product-details">
-          <div class="product-name">{{ item.name }}</div>
-          <div class="product-qty">Qty: {{ item.qty }}</div>
-        </div>
-
-        <div class="product-price">
-          ${{ item.price * item.qty | number:'1.2-2' }}
-        </div>
+        <img [src]="item.image">
+        <div>{{ item.name }} (x{{ item.qty }})</div>
+        <div>${{ item.price * item.qty }}</div>
       </div>
 
-      <div class="summary-line">
-        <span>Subtotal</span>
-        <span>${{ subtotal | number:'1.2-2' }}</span>
-      </div>
+      <button class="btn" (click)="placeOrder()">Place Order</button>
 
-      <div class="summary-line">
-        <span>Shipping</span>
-        <span>${{ shippingCost }}</span>
-      </div>
-
-      <div class="summary-line total">
-        <span>Total</span>
-        <span>${{ total | number:'1.2-2' }}</span>
-      </div>
-
-      <div class="checkout-btn-container">
-        <button
-          class="btn"
-          (click)="placeOrder()"
-          [disabled]="!isFormValid()"
-        >
-          Place Order
-        </button>
-      </div>
+      <p class="error-msg" *ngIf="formError">
+        ⚠️ {{ formError }}
+      </p>
     </div>
 
-    <!-- ================= Payment Method ================= -->
+    <!-- ================= Payment ================= -->
     <div class="card">
       <h2>Payment Method</h2>
-      <p>Choose how you'd like to pay.</p>
 
       <div class="payment-options">
         <label>
-          <input type="radio" value="credit" [(ngModel)]="paymentType">
+          <input type="radio" name="paymentType" value="credit"
+            [(ngModel)]="paymentType">
           Credit Card
         </label>
 
         <label>
-          <input type="radio" value="cash" [(ngModel)]="paymentType">
+          <input type="radio" name="paymentType" value="cash"
+            [(ngModel)]="paymentType">
           Cash on Delivery
         </label>
       </div>
 
       <div *ngIf="paymentType === 'credit'">
-        <div class="form-group">
-          <label>Card Number</label>
-          <input
-            type="text"
-            [(ngModel)]="card.number"
-            (keypress)="allowOnlyNumbers($event)"
-            (input)="formatCardNumber()"
-            maxlength="19"
-            required
-          >
-        </div>
+        <input type="text" name="cardNumber"
+          placeholder="Card Number"
+          [(ngModel)]="card.number"
+          (input)="formatCardNumber()"
+          [class.error]="submitted && invalidCardNumber()">
 
-        <div class="form-row">
-          <div class="form-group">
-            <label>Expiry Date</label>
-            <input
-              type="text"
-              [(ngModel)]="card.expiry"
-              (keypress)="allowOnlyNumbers($event)"
-              (input)="formatExpiry()"
-              maxlength="5"
-              required
-            >
-          </div>
+        <input type="text" name="expiry"
+          placeholder="MM/YY"
+          [(ngModel)]="card.expiry"
+          (input)="formatExpiry()"
+          [class.error]="submitted && invalidExpiry()">
 
-          <div class="form-group">
-            <label>CVV</label>
-            <input
-              type="text"
-              [(ngModel)]="card.cvv"
-              (keypress)="allowOnlyNumbers($event)"
-              (input)="formatCVV()"
-              maxlength="3"
-              required
-            >
-          </div>
-        </div>
+        <input type="text" name="cvv"
+          placeholder="CVV"
+          [(ngModel)]="card.cvv"
+          (input)="formatCVV()"
+          [class.error]="submitted && invalidCVV()">
       </div>
     </div>
 
