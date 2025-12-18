@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { CartService } from '../../services/cart.service';
+import { CheckoutService } from '../../services/checkout.service';
 
 @Component({
   selector: 'app-checkout',
@@ -8,12 +10,12 @@ import { Router } from '@angular/router';
 })
 export class CheckoutComponent implements OnInit {
 
-  constructor(private router: Router) {}
-
   submitted = false;
   formError = '';
+  loading = false;
 
-  paymentType: 'credit' | 'cash' = 'credit';
+  // UI value
+  paymentType: 'stripe' | 'cash' = 'cash';
 
   card = {
     number: '',
@@ -32,7 +34,9 @@ export class CheckoutComponent implements OnInit {
   };
 
   cartItems: any[] = [];
+  subtotal = 0;
   shippingCost = 15;
+  total = 0;
 
   egyptGovernorates: string[] = [
     'Cairo','Giza','Alexandria','Qalyubia','Sharqia','Dakahlia','Beheira',
@@ -41,16 +45,65 @@ export class CheckoutComponent implements OnInit {
     'Aswan','Luxor','Red Sea','Matrouh','North Sinai','South Sinai','New Valley'
   ];
 
+  constructor(
+    private cartService: CartService,
+    private checkoutService: CheckoutService,
+    private router: Router
+  ) {}
+
   ngOnInit(): void {
-    const cart = localStorage.getItem('cartItems');
-    if (!cart) {
-      this.router.navigate(['/cart']);
-      return;
-    }
-    this.cartItems = JSON.parse(cart);
+    this.loadCart();
   }
 
-  /* ================= Helpers ================= */
+  loadCart() {
+    this.loading = true;
+
+    this.cartService.getCart().subscribe({
+      next: (res: any) => {
+        this.cartItems = res.items || [];
+        this.subtotal = Number(res.totalPrice) || 0;
+        this.total = this.subtotal + this.shippingCost;
+        this.loading = false;
+
+        if (this.cartItems.length === 0) {
+          this.router.navigate(['/cart']);
+        }
+      },
+      error: () => {
+        this.loading = false;
+        this.router.navigate(['/cart']);
+      }
+    });
+  }
+
+  /* ================= Guards ================= */
+
+  allowOnlyLetters(event: KeyboardEvent) {
+    const charCode = event.which || event.keyCode;
+    if (
+      !(charCode >= 65 && charCode <= 90) &&
+      !(charCode >= 97 && charCode <= 122) &&
+      !(charCode >= 1536 && charCode <= 1791) &&
+      charCode !== 32
+    ) {
+      event.preventDefault();
+    }
+  }
+
+  allowOnlyNumbers(event: KeyboardEvent) {
+    const charCode = event.which || event.keyCode;
+    if (charCode < 48 || charCode > 57) {
+      event.preventDefault();
+    }
+  }
+
+  cleanName(field: 'firstName' | 'lastName' | 'city') {
+    this.shipping[field] =
+      this.shipping[field].replace(/[^A-Za-zء-ي\s]/g, '');
+  }
+
+  /* ================= Validators ================= */
+
   isEmpty(v: string): boolean {
     return !v || v.trim() === '';
   }
@@ -72,8 +125,10 @@ export class CheckoutComponent implements OnInit {
   }
 
   /* ================= Formatters ================= */
+
   formatPhone() {
-    this.shipping.phone = this.shipping.phone.replace(/\D/g, '').slice(0, 11);
+    this.shipping.phone =
+      this.shipping.phone.replace(/\D/g, '').slice(0, 11);
   }
 
   formatCardNumber() {
@@ -91,27 +146,16 @@ export class CheckoutComponent implements OnInit {
   }
 
   formatCVV() {
-    this.card.cvv = this.card.cvv.replace(/\D/g, '').slice(0, 3);
-  }
-
-  /* ================= Totals ================= */
-  get subtotal(): number {
-    return this.cartItems.reduce(
-      (sum, item) => sum + item.price * item.qty,
-      0
-    );
-  }
-
-  get total(): number {
-    return this.subtotal + this.shippingCost;
+    this.card.cvv =
+      this.card.cvv.replace(/\D/g, '').slice(0, 3);
   }
 
   /* ================= Submit ================= */
+
   placeOrder() {
     this.submitted = true;
     this.formError = '';
 
-    // Validation
     if (
       this.isEmpty(this.shipping.firstName) ||
       this.isEmpty(this.shipping.lastName) ||
@@ -125,42 +169,41 @@ export class CheckoutComponent implements OnInit {
       return;
     }
 
-    if (this.paymentType === 'credit') {
-      if (
-        this.invalidCardNumber() ||
-        this.invalidExpiry() ||
-        this.invalidCVV()
-      ) {
-        this.formError = 'Please enter valid card details';
-        return;
-      }
+    if (
+      this.paymentType === 'stripe' &&
+      (this.invalidCardNumber() || this.invalidExpiry() || this.invalidCVV())
+    ) {
+      this.formError = 'Please enter valid card details';
+      return;
     }
 
-    /* ================= SAVE ORDER ================= */
-
-    const newOrder = {
-      id: Date.now(),                 // Order ID
-      date: new Date().toISOString(), // Order Date
-      status: 'pending',              // pending | delivered | canceled
-      customer: this.shipping,
-      paymentType: this.paymentType,
-      items: this.cartItems,
+    // ✅ FIX HERE
+    const payload = {
+      items: this.cartItems.map(item => ({
+        product: item.product?._id || item.product,
+        quantity: item.quantity,
+        price: item.price
+      })),
+      shipping: this.shipping,
+      paymentMethod: this.paymentType, // 👈 الحل النهائي
       subtotal: this.subtotal,
       shippingCost: this.shippingCost,
-      total: this.total
+      totalPrice: this.total
     };
 
-    const storedOrders = localStorage.getItem('orders');
-    const orders = storedOrders ? JSON.parse(storedOrders) : [];
+    this.checkoutService.createOrder(payload).subscribe({
+      next: () => {
+        alert('Order placed successfully ✅');
+        this.router.navigate(['/orders']);
+      },
+      error: (err: any) => {
+        console.error(err);
+        this.formError = err?.error?.message || 'Something went wrong';
+      }
+    });
+  }
 
-    orders.push(newOrder);
-
-    localStorage.setItem('orders', JSON.stringify(orders));
-
-    /* ================= CLEAN UP ================= */
-    localStorage.removeItem('cartItems');
-
-    alert('Order placed successfully ✅');
-    this.router.navigate(['/orders']); // صفحة My Orders
+  getImage(image?: string): string {
+    return image ? 'http://localhost:5000/' + image : 'assets/no-image.png';
   }
 }

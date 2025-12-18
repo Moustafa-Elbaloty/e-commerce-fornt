@@ -1,5 +1,4 @@
 <div class="container">
-
   <h1>Checkout</h1>
   <div class="subtitle">
     Finalize your purchase by providing shipping and payment details.
@@ -7,66 +6,103 @@
 
   <div class="checkout-grid">
 
-    <!-- ================= Shipping ================= -->
+    <!-- ================= Shipping Information ================= -->
     <div class="card">
       <h2>Shipping Information</h2>
 
-      <div class="form-row">
-        <div class="form-group">
-          <label>First Name</label>
-          <input type="text" name="firstName"
-            [(ngModel)]="shipping.firstName"
-            [class.error]="submitted && isEmpty(shipping.firstName)">
+      <form name="shippingForm">
+        <div class="form-row">
+          <div class="form-group">
+            <label>First Name</label>
+            <input
+              type="text"
+              name="firstName"
+              [(ngModel)]="shipping.firstName"
+              (keypress)="allowOnlyLetters($event)"
+              (input)="cleanName('firstName')"
+              autocomplete="given-name"
+              [class.error]="submitted && isEmpty(shipping.firstName)"
+            >
+          </div>
+
+          <div class="form-group">
+            <label>Last Name</label>
+            <input
+              type="text"
+              name="lastName"
+              [(ngModel)]="shipping.lastName"
+              (keypress)="allowOnlyLetters($event)"
+              (input)="cleanName('lastName')"
+              autocomplete="family-name"
+              [class.error]="submitted && isEmpty(shipping.lastName)"
+            >
+          </div>
         </div>
 
         <div class="form-group">
-          <label>Last Name</label>
-          <input type="text" name="lastName"
-            [(ngModel)]="shipping.lastName"
-            [class.error]="submitted && isEmpty(shipping.lastName)">
+          <label>Address Line 1</label>
+          <input
+            type="text"
+            name="address1"
+            [(ngModel)]="shipping.address1"
+            autocomplete="address-line1"
+            [class.error]="submitted && isEmpty(shipping.address1)"
+          >
         </div>
-      </div>
 
-      <div class="form-group">
-        <label>Address Line 1</label>
-        <input type="text" name="address1"
-          [(ngModel)]="shipping.address1"
-          [class.error]="submitted && isEmpty(shipping.address1)">
-      </div>
+        <div class="form-group">
+          <label>Address Line 2</label>
+          <input
+            type="text"
+            name="address2"
+            [(ngModel)]="shipping.address2"
+            autocomplete="address-line2"
+            [class.error]="submitted && isEmpty(shipping.address2)"
+          >
+        </div>
 
-      <div class="form-group">
-        <label>Address Line 2</label>
-        <input type="text" name="address2"
-          [(ngModel)]="shipping.address2"
-          [class.error]="submitted && isEmpty(shipping.address2)">
-      </div>
+        <div class="form-group">
+          <label>Governorate</label>
+          <select
+            name="governorate"
+            [(ngModel)]="shipping.governorate"
+            [class.error]="submitted && isEmpty(shipping.governorate)"
+          >
+            <option value="">Select Governorate</option>
+            <option *ngFor="let g of egyptGovernorates" [value]="g">
+              {{ g }}
+            </option>
+          </select>
+        </div>
 
-      <div class="form-group">
-        <label>Governorate</label>
-        <select name="governorate"
-          [(ngModel)]="shipping.governorate"
-          [class.error]="submitted && isEmpty(shipping.governorate)">
-          <option value="">Select Governorate</option>
-          <option *ngFor="let g of egyptGovernorates" [value]="g">
-            {{ g }}
-          </option>
-        </select>
-      </div>
+        <div class="form-group">
+          <label>City</label>
+          <input
+            type="text"
+            name="city"
+            [(ngModel)]="shipping.city"
+            (keypress)="allowOnlyLetters($event)"
+            (input)="cleanName('city')"
+            autocomplete="address-level2"
+            [class.error]="submitted && isEmpty(shipping.city)"
+          >
+        </div>
 
-      <div class="form-group">
-        <label>City</label>
-        <input type="text" name="city"
-          [(ngModel)]="shipping.city"
-          [class.error]="submitted && isEmpty(shipping.city)">
-      </div>
-
-      <div class="form-group">
-        <label>Phone</label>
-        <input type="text" name="phone"
-          [(ngModel)]="shipping.phone"
-          (input)="formatPhone()"
-          [class.error]="submitted && invalidPhone()">
-      </div>
+        <div class="form-group">
+          <label>Phone</label>
+          <input
+            type="tel"
+            name="phone"
+            [(ngModel)]="shipping.phone"
+            (keypress)="allowOnlyNumbers($event)"
+            (input)="formatPhone()"
+            maxlength="11"
+            placeholder="01XXXXXXXXX"
+            autocomplete="tel"
+            [class.error]="submitted && invalidPhone()"
+          >
+        </div>
+      </form>
     </div>
 
     <!-- ================= Order Summary ================= -->
@@ -74,54 +110,102 @@
       <h2>Order Summary</h2>
 
       <div class="order-item" *ngFor="let item of cartItems">
-        <img [src]="item.image">
-        <div>{{ item.name }} (x{{ item.qty }})</div>
-        <div>${{ item.price * item.qty }}</div>
+        <img
+          [src]="item.product.image"
+          [alt]="item.product.name"
+        >
+
+        <div>
+          {{ item.product.name }} (x{{ item.quantity }})
+        </div>
+
+        <div>
+          ${{ item.product.price * item.quantity }}
+        </div>
       </div>
 
-      <button class="btn" (click)="placeOrder()">Place Order</button>
+      <div class="summary-line">
+        <span>Subtotal</span>
+        <span>${{ subtotal }}</span>
+      </div>
+
+      <div class="summary-line">
+        <span>Shipping</span>
+        <span>${{ shippingCost }}</span>
+      </div>
+
+      <div class="summary-line total">
+        <span>Total</span>
+        <span>${{ total }}</span>
+      </div>
+
+      <button class="btn" (click)="placeOrder()">
+        Place Order
+      </button>
 
       <p class="error-msg" *ngIf="formError">
         ⚠️ {{ formError }}
       </p>
     </div>
 
-    <!-- ================= Payment ================= -->
+    <!-- ================= Payment Method ================= -->
     <div class="card">
       <h2>Payment Method</h2>
 
       <div class="payment-options">
         <label>
-          <input type="radio" name="paymentType" value="credit"
-            [(ngModel)]="paymentType">
+          <input
+            type="radio"
+            value="stripe"
+            [(ngModel)]="paymentType"
+          >
           Credit Card
         </label>
 
         <label>
-          <input type="radio" name="paymentType" value="cash"
-            [(ngModel)]="paymentType">
+          <input
+            type="radio"
+            value="cash"
+            [(ngModel)]="paymentType"
+          >
           Cash on Delivery
         </label>
       </div>
 
-      <div *ngIf="paymentType === 'credit'">
-        <input type="text" name="cardNumber"
+      <!-- Credit Card Form -->
+      <div *ngIf="paymentType === 'stripe'">
+        <input
+          type="text"
           placeholder="Card Number"
           [(ngModel)]="card.number"
+          (keypress)="allowOnlyNumbers($event)"
           (input)="formatCardNumber()"
-          [class.error]="submitted && invalidCardNumber()">
+          maxlength="19"
+          autocomplete="cc-number"
+          [class.error]="submitted && invalidCardNumber()"
+        >
 
-        <input type="text" name="expiry"
+        <input
+          type="text"
           placeholder="MM/YY"
           [(ngModel)]="card.expiry"
+          (keypress)="allowOnlyNumbers($event)"
           (input)="formatExpiry()"
-          [class.error]="submitted && invalidExpiry()">
+          maxlength="5"
+          autocomplete="cc-exp"
+          [class.error]="submitted && invalidExpiry()"
+        >
 
-        <input type="text" name="cvv"
+        <input
+          type="text"
           placeholder="CVV"
           [(ngModel)]="card.cvv"
+          (keypress)="allowOnlyNumbers($event)"
           (input)="formatCVV()"
-          [class.error]="submitted && invalidCVV()">
+          maxlength="3"
+          autocomplete="cc-csc"
+          [class.error]="submitted && invalidCVV()"
+        >
       </div>
     </div>
 
