@@ -19,6 +19,8 @@ import { ProfileComponent } from './pages/profile/profile.component';
 import { CartComponent } from './pages/cart/cart.component';
 import { CheckoutComponent } from './pages/checkout/checkout.component';
 import { ChangePasswordComponent } from './pages/change-password/change-password.component';
+import { ProductsPageComponent } from './pages/products-page/products-page.component';
+import { ProductDetailsComponent } from './pages/product-details/product-details.component';
 
 @NgModule({
   declarations: [
@@ -34,17 +36,18 @@ import { ChangePasswordComponent } from './pages/change-password/change-password
     ProfileComponent,
     CartComponent,
     CheckoutComponent,
-    ChangePasswordComponent
+    ChangePasswordComponent,
+    ProductsPageComponent,
+    ProductDetailsComponent,
   ],
-  imports: [
-    BrowserModule,
-    AppRoutingModule,HttpClientModule  ,FormsModule       
+  imports: [BrowserModule, AppRoutingModule, HttpClientModule, FormsModule],
+  providers: [
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: AuthInterceptor,
+      multi: true,
+    },
   ],
-  providers: [  {
-    provide: HTTP_INTERCEPTORS,
-    useClass: AuthInterceptor,
-    multi: true
-  }],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
 })
-export class AppModule { }
+export class AppModule {}

@@ -1,0 +1,152 @@
+<div class="container">
+
+  <!-- Mobile Filter Button -->
+  <button class="mobile-filter-btn" (click)="toggleSidebar()">
+    <i class="fas fa-filter"></i> Show Filters
+  </button>
+
+  <div class="product-page-layout">
+
+    <!-- ================= Sidebar ================= -->
+    <aside class="sidebar" [class.active]="isSidebarActive">
+
+      <!-- Categories -->
+      <div class="filter-section">
+        <h3 class="filter-title">Categories</h3>
+
+        <label *ngFor="let cat of ['Electronics','Home & Kitchen','smart phones','Books & Media']">
+          <input
+            type="radio"
+            name="category"
+            [checked]="selectedCategory === cat"
+            (change)="applyCategory(cat)"
+          />
+          {{ cat }}
+        </label>
+
+        <span class="clear-filter" (click)="clearCategory()">Clear</span>
+      </div>
+
+      <!-- Price -->
+      <div class="filter-section">
+        <h3 class="filter-title">Price Range</h3>
+        <div class="price-inputs">
+          <input type="number" placeholder="Min" [(ngModel)]="minPrice" (change)="applyFilters()" />
+          <input type="number" placeholder="Max" [(ngModel)]="maxPrice" (change)="applyFilters()" />
+        </div>
+      </div>
+
+      <!-- Rating -->
+      <div class="filter-section">
+        <h3 class="filter-title">Customer Rating</h3>
+
+        <label>
+          <input type="radio" name="rating" (change)="applyRating(5)" [checked]="rating === 5" />
+          ★★★★★ & Up
+        </label>
+
+        <label>
+          <input type="radio" name="rating" (change)="applyRating(4)" [checked]="rating === 4" />
+          ★★★★☆ & Up
+        </label>
+
+        <label>
+          <input type="radio" name="rating" (change)="applyRating(3)" [checked]="rating === 3" />
+          ★★★☆☆ & Up
+        </label>
+
+        <span class="clear-filter" (click)="clearRating()">Clear</span>
+      </div>
+
+      <!-- Brand Search -->
+      <div class="filter-search">
+        <i class="fas fa-search"></i>
+        <input type="text" placeholder="Search brand..." [(ngModel)]="brandSearch" />
+      </div>
+
+      <!-- Brands -->
+      <div class="checkbox-group brands-list">
+        <label *ngFor="let brand of filteredBrands">
+          <input
+            type="checkbox"
+            [checked]="selectedBrands.includes(brand)"
+            (change)="toggleBrand(brand)"
+          />
+          {{ brand }}
+        </label>
+      </div>
+
+      <span class="clear-filter" *ngIf="selectedBrands.length" (click)="clearBrands()">
+        Clear
+      </span>
+
+    </aside>
+
+    <!-- ================= Products ================= -->
+    <main>
+
+      <!-- Loading -->
+      <div *ngIf="loading" class="loading">Loading...</div>
+
+      <!-- Products Grid -->
+      <div class="products-grid" *ngIf="!loading">
+
+        <div
+          class="product-card-new"
+          *ngFor="let product of products"
+          [routerLink]="['/products', product._id]"
+          tabindex="0"
+          role="button"
+          style="cursor: pointer;"
+        >
+
+          <div class="product-img">
+            <img [src]="product.image" [alt]="product.name" />
+          </div>
+
+          <div class="product-info">
+            <h3>{{ product.name }}</h3>
+
+            <div class="product-rating">
+              <span class="stars">{{ product.stars }}</span>
+              ({{ product.reviews }})
+            </div>
+
+            <div class="product-price">
+              ${{ product.price }}
+            </div>
+          </div>
+
+          <!-- Add To Cart -->
+          <button
+            class="btn btn-primary add-btn-new"
+            (click)="addToCart(product); $event.stopPropagation()"
+          >
+            <i class="fas fa-cart-plus"></i> Add to Cart
+          </button>
+
+        </div>
+
+      </div>
+
+      <!-- ================= Pagination ================= -->
+      <div class="pagination" *ngIf="totalPages > 1">
+
+        <button (click)="prevPage()" [disabled]="currentPage === 1">‹</button>
+
+        <button
+          *ngFor="let p of pages"
+          (click)="goToPage(p)"
+          [class.active]="p === currentPage"
+        >
+          {{ p }}
+        </button>
+
+        <button (click)="nextPage()" [disabled]="currentPage === totalPages">›</button>
+
+      </div>
+
+    </main>
+
+  </div>
+</div>
