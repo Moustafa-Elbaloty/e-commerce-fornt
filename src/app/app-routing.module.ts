@@ -12,8 +12,9 @@ import { ChangePasswordComponent } from './pages/change-password/change-password
 import { AuthGuard } from './guards/auth.guard';
 import { ProductsPageComponent } from './pages/products-page/products-page.component';
 import { ProductDetailsComponent } from './pages/product-details/product-details.component';
-
-const routes: Routes = [
+  import { ForgotPasswordComponent } from './pages/forgot-password/forgot-password.component';
+import { ResetPasswordComponent } from './pages/reset-password/reset-password.component';
+  const routes: Routes = [
   { path: '', component: HomeComponent }, // الصفحة الرئيسية
   { path: 'login', component: LoginComponent }, // صفحة اللوجن
   { path: 'profile', component: ProfileComponent },
@@ -24,7 +25,11 @@ const routes: Routes = [
     path: 'adminPanal',
     component: AdminPanalComponent,
     canActivate: [AdminGuard], // إضافة الحماية
-  },
+  },{
+  path: 'forgot-password',
+  component: ForgotPasswordComponent
+}
+,
   {
     path: 'change-password',
     component: ChangePasswordComponent,

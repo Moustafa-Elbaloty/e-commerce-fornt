@@ -405,4 +405,72 @@ form {
     bottom: 0;
   }
 
+}/* ===============================
+   Fine Tuning – Colors Only
+=============================== */
+
+/* vendor container */
+.vendor-box {
+  margin-top: 6px;
+}
+
+/* input wrapper */
+.input-box {
+  margin: 6px 0;
+}
+
+/* normal inputs */
+.input-box input {
+  padding: 8px 12px;
+  font-size: 12.5px;
+  background-color: #eee;
+  color: #333;
+}
+
+/* file inputs container */
+.input-box.file-box {
+  padding: 6px 8px;
+  margin-top: 6px;
+  background-color: #f3f4ff; /* بنفسجي فاتح جدًا */
+  border: 1px dashed #d6d8ff;
+}
+
+/* file label */
+.file-label {
+  font-size: 10.5px;
+  margin-bottom: 3px;
+  gap: 5px;
+  color: #4b4b7a; /* رمادي بنفسجي هادي */
+}
+
+.file-label i {
+  color: #512da8; /* لون البراند */
+}
+
+/* file input itself */
+.input-box.file-box input[type="file"] {
+  padding: 5px 6px;
+  font-size: 10.5px;
+  background-color: #eef2ff;
+  color: #333;
+}
+
+/* upload button inside file input */
+.input-box.file-box input[type="file"]::file-selector-button {
+  padding: 4px 8px;
+  font-size: 10.5px;
+  margin-right: 6px;
+  background-color: #512da8;
+  color: #fff;
+  border: none;
+  border-radius: 6px;
+}
+
+/* hover states – subtle */
+.input-box.file-box input[type="file"]::file-selector-button:hover {
+  background-color: #3e1f8f;
+}
+
+.input-box.file-box input[type="file"]:hover {
+  outline: 2px solid rgba(81, 45, 168, 0.35);
 }
