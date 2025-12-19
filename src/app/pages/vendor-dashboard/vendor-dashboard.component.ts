@@ -10,7 +10,7 @@ export class VendorDashboardComponent {
   product: any = {
     name: '',
     price: 0,
-    stock: 0, // ✅ stock
+    stock: 0, 
     category: '',
     brand: '',
     description: '',
@@ -29,8 +29,7 @@ export class VendorDashboardComponent {
 
     formData.append('name', this.product.name);
     formData.append('price', this.product.price);
-    formData.append('show', this.product.stock); // ❌ غلط (مثال)
-    formData.append('stock', this.product.stock); // ✅ صح
+    formData.append('stock', this.product.stock);
     formData.append('category', this.product.category);
     formData.append('brand', this.product.brand);
     formData.append('description', this.product.description);

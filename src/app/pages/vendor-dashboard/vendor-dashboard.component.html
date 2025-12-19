@@ -7,36 +7,19 @@
     <!-- Product Name -->
     <label>
       Product Name
-      <input
-        type="text"
-        name="name"
-        [(ngModel)]="product.name"
-        required
-      />
+      <input type="text" name="name" [(ngModel)]="product.name" required />
     </label>
 
     <!-- Price -->
     <label>
       Price ($)
-      <input
-        type="number"
-        name="price"
-        [(ngModel)]="product.price"
-        required
-        min="0"
-      />
+      <input type="number" name="price" [(ngModel)]="product.price" required min="0" />
     </label>
 
     <!-- ✅ Stock -->
     <label>
       Stock Quantity
-      <input
-        type="number"
-        name="stock"
-        [(ngModel)]="product.stock"
-        required
-        min="0"
-      />
+      <input type="number" name="stock" [(ngModel)]="product.stock" required min="0" />
     </label>
 
     <!-- Category -->
@@ -52,20 +35,13 @@
     <!-- Brand -->
     <label>
       Brand
-      <input
-        type="text"
-        name="brand"
-        [(ngModel)]="product.brand"
-      />
+      <input type="text" name="brand" [(ngModel)]="product.brand" />
     </label>
 
     <!-- Description -->
     <label>
       Description
-      <textarea
-        name="description"
-        [(ngModel)]="product.description"
-      ></textarea>
+      <textarea name="description" [(ngModel)]="product.description"></textarea>
     </label>
 
     <!-- Image -->
