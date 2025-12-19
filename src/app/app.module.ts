@@ -2,7 +2,7 @@ import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { HttpClientModule } from '@angular/common/http';
 import { FormsModule } from '@angular/forms';
-import { CommonModule } from '@angular/common'; 
+import { CommonModule } from '@angular/common';
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
 
 import { AuthInterceptor } from './interceptors/auth.interceptor';
@@ -24,7 +24,6 @@ import { ChangePasswordComponent } from './pages/change-password/change-password
 import { ProductsPageComponent } from './pages/products-page/products-page.component';
 import { MyordersComponent } from './pages/myorders/myorders.component';
 import { ProductDetailsComponent } from './pages/product-details/product-details.component';
-import { VendorDashboardComponent } from './pages/vendor-dashboard/vendor-dashboard.component';
 
 @NgModule({
   declarations: [
@@ -44,7 +43,6 @@ import { VendorDashboardComponent } from './pages/vendor-dashboard/vendor-dashbo
     ProductsPageComponent,
     MyordersComponent,
     ProductDetailsComponent,
-    VendorDashboardComponent,
   ],
   imports: [
     BrowserModule,

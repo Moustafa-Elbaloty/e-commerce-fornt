@@ -33,10 +33,7 @@ export class ProductService {
     return this.http.get<any>(`${this.API_URL}/${id}`);
   }
 
-  // ===============================
-  // CREATE PRODUCT (Vendor)
-  // ===============================
-  createProduct(formData: FormData) {
-    return this.http.post<any>(`${this.API_URL}`, formData);
-  }
+    createProduct(formData: FormData) {
+  return this.http.post('http://localhost:5000/api/products', formData);
+}
 }

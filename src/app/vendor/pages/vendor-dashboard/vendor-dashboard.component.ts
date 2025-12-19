@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
-import { ProductService } from '../../services/products.service';
+import { ProductService } from '../../../services/products.service';
+import { VendorService } from '../../services/vendor.service';
 
 @Component({
   selector: 'app-upload-product',
@@ -10,7 +11,7 @@ export class VendorDashboardComponent {
   product: any = {
     name: '',
     price: 0,
-    stock: 0, 
+    stock: 0,
     category: '',
     brand: '',
     description: '',
@@ -18,7 +19,7 @@ export class VendorDashboardComponent {
 
   imageFile!: File;
 
-  constructor(private productService: ProductService) {}
+  constructor(private productService: ProductService, vendorService:VendorService) {}
 
   onImageSelect(event: any): void {
     this.imageFile = event.target.files[0];
@@ -28,8 +29,8 @@ export class VendorDashboardComponent {
     const formData = new FormData();
 
     formData.append('name', this.product.name);
-    formData.append('price', this.product.price);
-    formData.append('stock', this.product.stock);
+    formData.append('price', String(this.product.price));
+    formData.append('stock', String(this.product.stock));
     formData.append('category', this.product.category);
     formData.append('brand', this.product.brand);
     formData.append('description', this.product.description);
@@ -39,11 +40,12 @@ export class VendorDashboardComponent {
     }
 
     this.productService.createProduct(formData).subscribe({
-      next: () => {
-        alert('Product created successfully');
+      next: (res) => {
+        alert('✅ Product created successfully');
+        console.log(res);
       },
       error: (err) => {
-        console.error(err);
+        console.error('❌ Error creating product', err);
       },
     });
   }

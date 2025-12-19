@@ -12,17 +12,16 @@ import { ChangePasswordComponent } from './pages/change-password/change-password
 import { AuthGuard } from './guards/auth.guard';
 import { ProductsPageComponent } from './pages/products-page/products-page.component';
 import { ProductDetailsComponent } from './pages/product-details/product-details.component';
-import { VendorDashboardComponent } from './pages/vendor-dashboard/vendor-dashboard.component';
 
 const routes: Routes = [
   { path: '', component: HomeComponent }, // الصفحة الرئيسية
   { path: 'login', component: LoginComponent }, // صفحة اللوجن
   { path: 'profile', component: ProfileComponent },
   { path: 'cart', component: CartComponent },
-  {path: 'checkout', component: CheckoutComponent},
+  { path: 'checkout', component: CheckoutComponent },
   { path: 'myorders', component: MyordersComponent },
-  { 
-    path: 'adminPanal', 
+  {
+    path: 'adminPanal',
     component: AdminPanalComponent,
     canActivate: [AdminGuard], // إضافة الحماية
   },
@@ -33,6 +32,15 @@ const routes: Routes = [
   },
   { path: 'products', component: ProductsPageComponent },
 
+  { path: 'products/:id', component: ProductDetailsComponent },
+
+  {
+    path: 'vendor',
+    loadChildren: () =>
+      import('./vendor/vendor.module').then((m) => m.VendorModule),
+  },
+
+  { path: 'products', component: ProductsPageComponent },
   { path: 'products/:id', component: ProductDetailsComponent },
 ];
 
