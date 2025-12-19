@@ -1,9 +1,11 @@
 <div class="page">
   <div class="container" id="container" #container>
-    <!-- LOGIN  -->
+
+    <!-- LOGIN -->
     <div class="form-box login">
       <form (ngSubmit)="login()" #loginForm="ngForm">
         <h1>Sign In</h1>
+
         <div class="social-icons">
           <a class="icon google" (click)="loginWithGoogle($event)">
             <i class="fa-brands fa-google-plus-g"></i>
@@ -12,24 +14,32 @@
             <i class="fa-brands fa-facebook-f"></i>
           </a>
         </div>
+
         <span>or use your email and password</span>
+
         <div class="input-box">
-          <input type="email" placeholder="Email" required name="email" [(ngModel)]="loginData.email" />
+          <input type="email" placeholder="Email" required name="email"
+            [(ngModel)]="loginData.email" />
         </div>
+
         <div class="input-box">
-          <input type="password" placeholder="Password" required name="password" [(ngModel)]="loginData.password" />
+          <input type="password" placeholder="Password" required name="password"
+            [(ngModel)]="loginData.password" />
         </div>
+
         <div class="forgot-link">
           <a href="#">Forgot password?</a>
         </div>
+
         <button type="submit" class="btn">Sign In</button>
       </form>
     </div>
 
-    <!-- REGISTER  -->
+    <!-- REGISTER -->
     <div class="form-box register">
       <form (ngSubmit)="register()" #registerForm="ngForm">
         <h1>Create Account</h1>
+
         <div class="social-icons">
           <a class="icon google" (click)="loginWithGoogle($event)">
             <i class="fa-brands fa-google-plus-g"></i>
@@ -38,59 +48,82 @@
             <i class="fa-brands fa-facebook-f"></i>
           </a>
         </div>
+
         <p>or use your email for registration</p>
+
         <div class="input-box">
-          <input type="text" placeholder="Name" required name="name" [(ngModel)]="registerData.name" />
+          <input type="text" placeholder="Name" required name="name"
+            [(ngModel)]="registerData.name" />
         </div>
+
         <div class="input-box">
-          <input type="email" placeholder="Email" required name="email" [(ngModel)]="registerData.email" />
+          <input type="email" placeholder="Email" required name="email"
+            [(ngModel)]="registerData.email" />
         </div>
+
         <div class="input-box">
-          <i class="fas fa-phone-alt"></i>
-          <input type="tel" placeholder="Phone Number" required name="phone" minlength="10" maxlength="15"
-            pattern="[0-9]{10,15}" [(ngModel)]="registerData.phone" #phoneInput="ngModel" />
+          <input type="tel" placeholder="Phone Number" required name="phone"
+            [(ngModel)]="registerData.phone" />
         </div>
+
         <div class="input-box">
-          <input type="password" placeholder="Password" required name="password" [(ngModel)]="registerData.password" />
+          <input type="password" placeholder="Password" required name="password"
+            [(ngModel)]="registerData.password" />
         </div>
+
+        <!-- Vendor Checkbox -->
         <div class="input-box role-checkbox">
           <label class="checkbox-container">
-            <input type="checkbox" [(ngModel)]="registerData.isVendor" name="isVendor" />
+            <input type="checkbox" name="isVendor"
+              [(ngModel)]="registerData.isVendor" />
             <span class="checkmark"></span>
             Register as Vendor
           </label>
-          <i class='bx bxs-user-account'></i>
         </div>
+
+        <!-- Vendor Extra Fields -->
         <div *ngIf="registerData.isVendor" class="vendor-box">
+
           <div class="input-box">
-            <input type="text" placeholder="Store Name" name="storeName" [(ngModel)]="registerData.storeName"
-              required />
+            <input type="text" placeholder="Store Name" required
+              [(ngModel)]="registerData.storeName" name="storeName" />
             <i class='bx bxs-store'></i>
           </div>
 
-          <div class="input-box">
-            <input type="text" placeholder="Business Address" name="address" [(ngModel)]="registerData.address"
-              required />
-            <i class='bx bxs-map'></i>
+          <!-- ID Card -->
+          <div class="input-box file-box">
+            <label class="file-label">
+              <i class="fas fa-id-card"></i>
+              Upload ID Card
+            </label>
+            <input type="file" accept="image/*"
+              (change)="onFileChange($event,'idCard')" required />
           </div>
 
-          <div class="input-box">
-            <input type="text" placeholder="Business Phone Number" name="phone" [(ngModel)]="registerData.phone" required />
-            <i class='bx bxs-phone'></i>
+          <!-- Commercial Register -->
+          <div class="input-box file-box">
+            <label class="file-label">
+              <i class="fas fa-file-alt"></i>
+              Upload Commercial Register
+            </label>
+            <input type="file" accept="image/*,.pdf"
+              (change)="onFileChange($event,'commercialRegister')" required />
           </div>
 
         </div>
+
         <button type="submit" class="btn">Sign Up</button>
       </form>
     </div>
 
-    <!-- TOGGLE / PANELS -->
+    <!-- TOGGLE -->
     <div class="toggle-box">
       <div class="toggle-panel toggle-left">
         <h1>Welcome Back!</h1>
         <p>Enter your personal details to use all site features</p>
         <button class="btn register-btn" (click)="showRegister()">Register</button>
       </div>
+
       <div class="toggle-panel toggle-right">
         <h1>Hello, Friend!</h1>
         <p>Register with your personal details to use all site features</p>
