@@ -18,17 +18,15 @@
         <span>or use your email and password</span>
 
         <div class="input-box">
-          <input type="email" placeholder="Email" required name="email"
-            [(ngModel)]="loginData.email" />
+          <input type="email" placeholder="Email" required name="email" [(ngModel)]="loginData.email" />
         </div>
 
         <div class="input-box">
-          <input type="password" placeholder="Password" required name="password"
-            [(ngModel)]="loginData.password" />
+          <input type="password" placeholder="Password" required name="password" [(ngModel)]="loginData.password" />
         </div>
 
         <div class="forgot-link">
-          <a href="#">Forgot password?</a>
+          <a routerLink="/forgot-password">Forgot password?</a>
         </div>
 
         <button type="submit" class="btn">Sign In</button>
@@ -52,30 +50,25 @@
         <p>or use your email for registration</p>
 
         <div class="input-box">
-          <input type="text" placeholder="Name" required name="name"
-            [(ngModel)]="registerData.name" />
+          <input type="text" placeholder="Name" required name="name" [(ngModel)]="registerData.name" />
         </div>
 
         <div class="input-box">
-          <input type="email" placeholder="Email" required name="email"
-            [(ngModel)]="registerData.email" />
+          <input type="email" placeholder="Email" required name="email" [(ngModel)]="registerData.email" />
         </div>
 
         <div class="input-box">
-          <input type="tel" placeholder="Phone Number" required name="phone"
-            [(ngModel)]="registerData.phone" />
+          <input type="tel" placeholder="Phone Number" required name="phone" [(ngModel)]="registerData.phone" />
         </div>
 
         <div class="input-box">
-          <input type="password" placeholder="Password" required name="password"
-            [(ngModel)]="registerData.password" />
+          <input type="password" placeholder="Password" required name="password" [(ngModel)]="registerData.password" />
         </div>
 
         <!-- Vendor Checkbox -->
         <div class="input-box role-checkbox">
           <label class="checkbox-container">
-            <input type="checkbox" name="isVendor"
-              [(ngModel)]="registerData.isVendor" />
+            <input type="checkbox" name="isVendor" [(ngModel)]="registerData.isVendor" />
             <span class="checkmark"></span>
             Register as Vendor
           </label>
@@ -85,8 +78,8 @@
         <div *ngIf="registerData.isVendor" class="vendor-box">
 
           <div class="input-box">
-            <input type="text" placeholder="Store Name" required
-              [(ngModel)]="registerData.storeName" name="storeName" />
+            <input type="text" placeholder="Store Name" required [(ngModel)]="registerData.storeName"
+              name="storeName" />
             <i class='bx bxs-store'></i>
           </div>
 
@@ -96,8 +89,7 @@
               <i class="fas fa-id-card"></i>
               Upload ID Card
             </label>
-            <input type="file" accept="image/*"
-              (change)="onFileChange($event,'idCard')" required />
+            <input type="file" accept="image/*" (change)="onFileChange($event,'idCard')" required />
           </div>
 
           <!-- Commercial Register -->
@@ -106,8 +98,7 @@
               <i class="fas fa-file-alt"></i>
               Upload Commercial Register
             </label>
-            <input type="file" accept="image/*,.pdf"
-              (change)="onFileChange($event,'commercialRegister')" required />
+            <input type="file" accept="image/*,.pdf" (change)="onFileChange($event,'commercialRegister')" required />
           </div>
 
         </div>

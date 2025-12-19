@@ -12,14 +12,19 @@ import { ChangePasswordComponent } from './pages/change-password/change-password
 import { AuthGuard } from './guards/auth.guard';
 import { ProductsPageComponent } from './pages/products-page/products-page.component';
 import { ProductDetailsComponent } from './pages/product-details/product-details.component';
-
+import { ForgotPasswordComponent } from './pages/forgot-password/forgot-password.component';
+import { ResetPasswordComponent } from './pages/reset-password/reset-password.component';
 const routes: Routes = [
   { path: '', component: HomeComponent }, // الصفحة الرئيسية
   { path: 'login', component: LoginComponent }, // صفحة اللوجن
   { path: 'profile', component: ProfileComponent },
   { path: 'cart', component: CartComponent },
   {path: 'checkout', component: CheckoutComponent},
-  { path: 'myorders', component: MyordersComponent },
+  { path: 'myorders', component: MyordersComponent },{
+  path: 'reset-password/:token',
+  component: ResetPasswordComponent
+}
+,
   { 
     path: 'adminPanal', 
     component: AdminPanalComponent,
@@ -29,7 +34,11 @@ const routes: Routes = [
     path: 'change-password',
     component: ChangePasswordComponent,
     canActivate: [AuthGuard],
-  },
+  },{
+  path: 'forgot-password',
+  component: ForgotPasswordComponent
+},
+
   { path: 'products', component: ProductsPageComponent },
 
   { path: 'products/:id', component: ProductDetailsComponent },

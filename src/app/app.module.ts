@@ -23,6 +23,8 @@ import { CheckoutComponent } from './pages/checkout/checkout.component';
 import { ChangePasswordComponent } from './pages/change-password/change-password.component';
 import { ProductsPageComponent } from './pages/products-page/products-page.component';
 import { MyordersComponent } from './pages/myorders/myorders.component';
+import { ForgotPasswordComponent } from './pages/forgot-password/forgot-password.component';
+import { ResetPasswordComponent } from './pages/reset-password/reset-password.component';
 
 @NgModule({
   declarations: [
@@ -40,7 +42,7 @@ import { MyordersComponent } from './pages/myorders/myorders.component';
     CheckoutComponent,
     ChangePasswordComponent,
     ProductsPageComponent, // ✅
-    MyordersComponent      // ✅
+    MyordersComponent, ForgotPasswordComponent, ResetPasswordComponent    
   ],
   imports: [
     BrowserModule,
