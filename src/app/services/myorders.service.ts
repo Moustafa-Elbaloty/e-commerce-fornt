@@ -11,13 +11,29 @@ export class MyordersService {
 
   constructor(private http: HttpClient) {}
 
-  getMyOrders(): Observable<any> {
+  private getAuthHeaders() {
     const token = localStorage.getItem('token');
+    return {
+      headers: new HttpHeaders({
+        Authorization: `Bearer ${token}`
+      })
+    };
+  }
 
-    const headers = new HttpHeaders({
-      Authorization: `Bearer ${token}`
-    });
+  // 🟢 Get my orders
+  getMyOrders(): Observable<any> {
+    return this.http.get(
+      `${this.baseUrl}/myorders`,
+      this.getAuthHeaders()
+    );
+  }
 
-    return this.http.get(`${this.baseUrl}/myorders`, { headers });
+  // 🟢 Retry payment (Paymob)
+  retryPayment(orderId: string): Observable<any> {
+    return this.http.post(
+      `${this.baseUrl}/${orderId}/retry-payment`,
+      {},
+      this.getAuthHeaders()
+    );
   }
 }

@@ -1,0 +1,43 @@
+.payment-result {
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: #f4f3ff;
+}
+
+.result {
+  background: #fff;
+  padding: 40px;
+  border-radius: 16px;
+  text-align: center;
+  box-shadow: 0 12px 30px rgba(0,0,0,.1);
+}
+
+.result.success h1 {
+  color: #22c55e;
+}
+
+.result.failed h1 {
+  color: #ef4444;
+}
+
+.icon {
+  font-size: 60px;
+  margin-bottom: 15px;
+}
+
+button {
+  margin-top: 20px;
+  padding: 10px 24px;
+  border-radius: 12px;
+  border: none;
+  background: #8b5cf6;
+  color: #fff;
+  font-size: 16px;
+  cursor: pointer;
+}
+
+button:hover {
+  opacity: .9;
+}

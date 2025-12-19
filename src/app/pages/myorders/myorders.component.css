@@ -178,3 +178,57 @@
     text-align: right;
   }
 }
+.badges {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+}
+
+/* Payment Badge */
+.payment-badge {
+  font-size: 0.7rem;
+  font-weight: 700;
+  padding: 6px 14px;
+  border-radius: 20px;
+  text-transform: uppercase;
+}
+
+.payment-badge.paid {
+  background: #dcfce7;
+  color: #166534;
+}
+
+.payment-badge.pending {
+  background: #fef3c7;
+  color: #92400e;
+}
+
+.payment-badge.failed {
+  background: #fee2e2;
+  color: #991b1b;
+}
+
+.badge-group {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.badge-label {
+  font-size: 0.7rem;
+  color: var(--muted);
+  font-weight: 600;
+}
+.payment-badge.cash {
+  background: #e0f2fe;
+  color: #0369a1;
+}
+.payment-badge.clickable {
+  cursor: pointer;
+  border: none;
+}
+
+.payment-badge.clickable:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
