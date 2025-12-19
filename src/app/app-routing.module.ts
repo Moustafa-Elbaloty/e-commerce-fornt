@@ -12,6 +12,7 @@ import { ChangePasswordComponent } from './pages/change-password/change-password
 import { AuthGuard } from './guards/auth.guard';
 import { ProductsPageComponent } from './pages/products-page/products-page.component';
 import { ProductDetailsComponent } from './pages/product-details/product-details.component';
+import { PaymentResultComponent } from './pages/payment-result/payment-result.component';
 
 const routes: Routes = [
   { path: '', component: HomeComponent }, // الصفحة الرئيسية
