@@ -26,11 +26,7 @@ const routes: Routes = [
     path: 'adminPanal',
     component: AdminPanalComponent,
     canActivate: [AdminGuard], // إضافة الحماية
-  },{
-  path: 'forgot-password',
-  component: ForgotPasswordComponent
-}
-,
+  },
   {
     path: 'change-password',
     component: ChangePasswordComponent,
