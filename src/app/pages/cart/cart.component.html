@@ -17,16 +17,10 @@
         </div>
 
         <!-- Cart Items -->
-        <div
-          class="cart-item"
-          *ngFor="let item of cartItems"
-        >
+        <div class="cart-item" *ngFor="let item of cartItems">
           <div class="item-info">
             <div class="item-image">
-              <img
-                [src]="item.product.image"
-                [alt]="item.product.name"
-              />
+              <img [src]="item.product.image" [alt]="item.product.name" />
             </div>
 
             <div class="item-details">
@@ -37,25 +31,13 @@
 
           <div class="item-actions">
             <div class="cart-qty-selector">
-              <button
-                class="cart-qty-btn"
-                (click)="decrease(item)"
-                [disabled]="item.quantity === 1"
-              >
+              <button class="cart-qty-btn" (click)="decrease(item)" [disabled]="item.quantity === 1">
                 -
               </button>
 
-              <input
-                class="cart-qty-input"
-                [value]="item.quantity"
-                readonly
-              />
+              <input class="cart-qty-input" [value]="item.quantity" readonly />
 
-              <button
-                class="cart-qty-btn"
-                (click)="increase(item)"
-                [disabled]="item.outOfStock"
-              >
+              <button class="cart-qty-btn" (click)="increase(item)" [disabled]="item.outOfStock">
                 +
               </button>
             </div>
@@ -64,10 +46,7 @@
               ${{ item.product.price * item.quantity | number:'1.2-2' }}
             </span>
 
-            <i
-              class="fas fa-times remove-btn"
-              (click)="removeItem(item.product._id)"
-            ></i>
+            <i class="fas fa-times remove-btn" (click)="removeItem(item.product._id)"></i>
           </div>
         </div>
       </div>
@@ -92,11 +71,7 @@
         </div>
 
         <div class="checkout-btn-container">
-          <a
-            class="btn-checkout"
-            routerLink="/checkout"
-            *ngIf="cartItems.length > 0"
-          >
+          <a class="btn-checkout" routerLink="/checkout" *ngIf="cartItems.length > 0">
             Proceed to Checkout
           </a>
         </div>

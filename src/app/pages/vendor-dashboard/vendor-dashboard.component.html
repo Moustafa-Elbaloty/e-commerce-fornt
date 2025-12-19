@@ -1,0 +1,82 @@
+<section class="vendor-section">
+  <h2>Upload New Product</h2>
+  <p class="subtitle">Add a new product to your store</p>
+
+  <form (ngSubmit)="createProduct()" #productForm="ngForm" class="product-form">
+
+    <!-- Product Name -->
+    <label>
+      Product Name
+      <input
+        type="text"
+        name="name"
+        [(ngModel)]="product.name"
+        required
+      />
+    </label>
+
+    <!-- Price -->
+    <label>
+      Price ($)
+      <input
+        type="number"
+        name="price"
+        [(ngModel)]="product.price"
+        required
+        min="0"
+      />
+    </label>
+
+    <!-- ✅ Stock -->
+    <label>
+      Stock Quantity
+      <input
+        type="number"
+        name="stock"
+        [(ngModel)]="product.stock"
+        required
+        min="0"
+      />
+    </label>
+
+    <!-- Category -->
+    <label>
+      Category
+      <select name="category" [(ngModel)]="product.category" required>
+        <option value="electronics">Electronics</option>
+        <option value="smart phones">Smart Phones</option>
+        <option value="home">Home</option>
+      </select>
+    </label>
+
+    <!-- Brand -->
+    <label>
+      Brand
+      <input
+        type="text"
+        name="brand"
+        [(ngModel)]="product.brand"
+      />
+    </label>
+
+    <!-- Description -->
+    <label>
+      Description
+      <textarea
+        name="description"
+        [(ngModel)]="product.description"
+      ></textarea>
+    </label>
+
+    <!-- Image -->
+    <label>
+      Product Image
+      <input type="file" (change)="onImageSelect($event)" />
+    </label>
+
+    <button type="submit" class="btn-primary" [disabled]="productForm.invalid">
+      Create Product
+    </button>
+
+  </form>
+</section>

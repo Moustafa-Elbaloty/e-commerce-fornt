@@ -2,7 +2,7 @@ import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { HttpClientModule } from '@angular/common/http';
 import { FormsModule } from '@angular/forms';
-import { CommonModule } from '@angular/common'; // ✅ مهم جدًا
+import { CommonModule } from '@angular/common'; 
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
 
 import { AuthInterceptor } from './interceptors/auth.interceptor';
@@ -23,6 +23,8 @@ import { CheckoutComponent } from './pages/checkout/checkout.component';
 import { ChangePasswordComponent } from './pages/change-password/change-password.component';
 import { ProductsPageComponent } from './pages/products-page/products-page.component';
 import { MyordersComponent } from './pages/myorders/myorders.component';
+import { ProductDetailsComponent } from './pages/product-details/product-details.component';
+import { VendorDashboardComponent } from './pages/vendor-dashboard/vendor-dashboard.component';
 
 @NgModule({
   declarations: [
@@ -39,15 +41,17 @@ import { MyordersComponent } from './pages/myorders/myorders.component';
     CartComponent,
     CheckoutComponent,
     ChangePasswordComponent,
-    ProductsPageComponent, // ✅
-    MyordersComponent      // ✅
+    ProductsPageComponent,
+    MyordersComponent,
+    ProductDetailsComponent,
+    VendorDashboardComponent,
   ],
   imports: [
     BrowserModule,
-    CommonModule,   // ✅ يحل ngClass و number pipe
+    CommonModule, // ✅ يحل ngClass و number pipe
     AppRoutingModule,
     HttpClientModule,
-    FormsModule     // ✅ يحل ngModel
+    FormsModule, // ✅ يحل ngModel
   ],
   providers: [
     {

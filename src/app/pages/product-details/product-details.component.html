@@ -1,216 +1,161 @@
+<!-- ==============================================
+     Main wrapper
+============================================== -->
+<main class="product-page-root" *ngIf="!loading && product; else loadingTpl">
 
+    <!-- ==============================================
+       Product main section
+  ============================================== -->
+    <section class="product-main-section">
+        <div class="product-grid">
 
-    <main>
-        <section class="product-main-section">
-            <div class="product-grid">
+            <!-- ========== Gallery ========== -->
+            <div class="gallery">
 
-                <div class="gallery">
-                    <div class="main-image-holder">
-                        <img id="main-product-img" src="https://i.imgur.com/uS5U0n9.png"
-                            alt="AuraGlow Wireless Headphones">
-                    </div>
-                    <div class="thumbnails">
-                        <div class="thumb active" data-img-src="https://i.imgur.com/uS5U0n9.png"
-                            onclick="changeProductImage(this)">
-                            <img src="https://i.imgur.com/uS5U0n9.png" alt="Thumb 1">
-                        </div>
-                        <div class="thumb" data-img-src="https://i.imgur.com/wP0c5k4.png"
-                            onclick="changeProductImage(this)">
-                            <img src="https://i.imgur.com/wP0c5k4.png" alt="Thumb 2">
-                        </div>
-                        <div class="thumb" data-img-src="https://i.imgur.com/x2g8R6s.png"
-                            onclick="changeProductImage(this)">
-                            <img src="https://i.imgur.com/x2g8R6s.png" alt="Thumb 3">
-                        </div>
-                        <div class="thumb" data-img-src="https://i.imgur.com/o4GzH9K.png"
-                            onclick="changeProductImage(this)">
-                            <img src="https://i.imgur.com/o4GzH9K.png" alt="Thumb 4">
-                        </div>
-                    </div>
+                <!-- main large image -->
+                <div class="main-image-holder">
+                    <img [src]="mainImage" [alt]="product.name" />
                 </div>
 
-                <div class="product-info">
-                    <h1>AuraGlow Wireless Headphones</h1>
-
-                    <div class="rating-wrapper">
-                        <div class="stars">
-                            <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i
-                                class="fas fa-star"></i><i class="fas fa-star-half-alt"></i>
-                        </div>
-                        <span class="review-count">(152 reviews)</span>
+                <!-- thumbnails -->
+                <div class="thumbnails">
+                    <div class="thumb" *ngFor="let img of thumbnails; let i = index" [class.active]="img === mainImage"
+                        (click)="changeProductImage(img)">
+                        <img [src]="img" [alt]="product.name + ' thumbnail ' + i" />
                     </div>
+                </div>
+            </div>
 
-                    <div class="product-price">$199.99</div>
+            <!-- ========== Product info ========== -->
+            <div class="product-info">
 
-                    <p class="description">
-                        Experience unparalleled audio clarity with AuraGlow Wireless Headphones. Engineered for comfort
-                        and immersive sound, these headphones feature advanced noise-cancellation technology, ensuring
-                        your music and calls are crystal clear. Designed especially for long wear, while dynamic drivers
-                        deliver rich bass and crisp highs.
-                        <br><br>
-                        Key Features: Active Noise Cancellation - Bluetooth 5.2 Connectivity - Ergonomic Over-Ear Design
-                        - High-Fidelity Audio Drivers.
+                <!-- Product title -->
+                <h1>{{ product.name }}</h1>
+
+                <!-- Rating / reviews -->
+                <div class="rating-wrapper">
+                    <div class="stars">
+                        <!-- ممكن تستبدل بـ دالة أو Pipe ترسم النجوم حسب rating -->
+                        ★★★★☆
+                    </div>
+                    <span class="review-count">
+                        <!-- ( {{ product.reviews || 0 }} reviews ) -->
+                    </span>
+                </div>
+
+                <!-- Price -->
+                <div class="product-price">
+                    ${{ product.price }}
+                </div>
+
+                <!-- Description -->
+                <p class="description">
+                    {{ product.description }}
+                </p>
+
+                <!-- Meta data: availability, brand, category -->
+                <div class="meta-data">
+                    <p>
+                        <strong>Availability:</strong>
+                        <span>
+                            {{ product.stock && product.stock > 0 ? 'In Stock' : 'Out of Stock' }}
+                        </span>
                     </p>
-
-                    <div class="meta-data">
-                        <p><strong>Availability:</strong> <span>In Stock</span></p>
-                        <p><strong>Brand:</strong> <span>SonicWave</span></p>
-                        <p><strong>SKU:</strong> <span>SW-AG-001</span></p>
-                    </div>
-
-                    <div class="actions-group">
-                        <div class="quantity-selector">
-                            <button class="qty-btn" onclick="updateQuantity(-1)">-</button>
-                            <input type="text" id="qty-input" class="qty-input" value="1" readonly>
-                            <button class="qty-btn" onclick="updateQuantity(1)">+</button>
-                        </div>
-                        <a href="#" class="add-to-cart-btn">Add to Cart</a>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <section class="related-products-section">
-            <h2 class="section-title-custom">Related Products</h2>
-            <div class="related-products-grid">
-
-                <div class="related-product-card">
-                    <div class="related-card-image">
-                        <img src="https://i.imgur.com/0i9gT6B.png" alt="Smart Speaker">
-                    </div>
-                    <div class="related-card-content">
-                        <h3>SonicFlow Smart Speaker</h3>
-                        <p class="related-card-price">$79.99</p>
-                        <a href="#" class="btn-primary" style="display: block;">View Details</a>
-                    </div>
-                </div>
-                <div class="related-product-card">
-                    <div class="related-card-image">
-                        <img src="https://i.imgur.com/G5qWwN5.png" alt="Earbuds">
-                    </div>
-                    <div class="related-card-content">
-                        <h3>EchoBuds Pro Earbuds</h3>
-                        <p class="related-card-price">$129.99</p>
-                        <a href="#" class="btn-primary" style="display: block;">View Details</a>
-                    </div>
-                </div>
-                <div class="related-product-card">
-                    <div class="related-card-image">
-                        <img src="https://i.imgur.com/Z4w0M2P.png" alt="Portable Speaker">
-                    </div>
-                    <div class="related-card-content">
-                        <h3>SoundBeam Portable</h3>
-                        <p class="related-card-price">$49.99</p>
-                        <a href="#" class="btn-primary" style="display: block;">View Details</a>
-                    </div>
-                </div>
-                <div class="related-product-card">
-                    <div class="related-card-image">
-                        <img src="https://i.imgur.com/3q12SjZ.png" alt="Gaming Headset">
-                    </div>
-                    <div class="related-card-content">
-                        <h3>VortexSound Gaming</h3>
-                        <p class="related-card-price">$249.99</p>
-                        <a href="#" class="btn-primary" style="display: block;">View Details</a>
-                    </div>
+                    <p>
+                        <strong>Brand:</strong>
+                        <span>{{ product.brand || '-' }}</span>
+                    </p>
+                    <p>
+                        <strong>Category:</strong>
+                        <span>{{ product.category || '-' }}</span>
+                    </p>
                 </div>
 
-            </div>
-        </section>
+                <!-- Actions: quantity + add to cart -->
+                <div class="actions-group">
 
-        <section class="reviews-section-content">
-            <h2 class="section-title-custom">Customer Reviews</h2>
-
-            <div class="review-item expanded" onclick="toggleReview(this)">
-                <div class="review-header">
-                    <div class="review-user-info">
-                        Alex R.
-                        <div class="review-stars-small">
-                            <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i
-                                class="fas fa-star"></i><i class="fas fa-star"></i>
-                        </div>
+                    <!-- quantity -->
+                    <div class="quantity-selector">
+                        <button class="qty-btn" (click)="updateQuantity(-1)">-</button>
+                        <input class="qty-input" type="text" [value]="quantity" readonly />
+                        <button class="qty-btn" (click)="updateQuantity(1)">+</button>
                     </div>
-                    <i class="fas fa-chevron-down" style="transition: transform 0.3s;"></i>
-                </div>
-                <div class="review-content">
-                    Absolutely blown away by the sound quality and comfort! The noise cancellation is top-notch, perfect
-                    for my daily commute and focused work sessions. Battery life is impressive too.
-                </div>
-            </div>
 
-            <div class="review-item" onclick="toggleReview(this)">
-                <div class="review-header">
-                    <div class="review-user-info">
-                        Maya S.
-                        <div class="review-stars-small">
-                            <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i
-                                class="fas fa-star"></i><i class="far fa-star"></i>
-                        </div>
-                    </div>
-                    <i class="fas fa-chevron-down" style="transition: transform 0.3s;"></i>
-                </div>
-                <div class="review-content">
-                    The headphones are great value for money. The purple color is exactly as advertised, and the
-                    controls are easy to use. Highly recommended!
-                </div>
-            </div>
 
-            <div class="review-item" onclick="toggleReview(this)">
-                <div class="review-header">
-                    <div class="review-user-info">
-                        John D.
-                        <div class="review-stars-small">
-                            <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i
-                                class="fas fa-star"></i><i class="fas fa-star"></i>
-                        </div>
-                    </div>
-                    <i class="fas fa-chevron-down" style="transition: transform 0.3s;"></i>
-                </div>
-                <div class="review-content">
-                    Received the product quickly and in perfect condition. The sound profile is balanced. A fantastic
-                    purchase overall.
-                </div>
-            </div>
-        </section>
+                    <!-- Add to cart -->
+                    <button class="add-to-cart-btn" (click)="addToCart()" [disabled]="product.stock === 0">
+                        {{ product.stock === 0 ? 'Out of Stock' : 'Add to Cart' }}
+                    </button>
 
-    </main>
-
-    <footer class="footer">
-        <div class="container footer-grid">
-            <div class="footer-col">
-                <div class="logo"><i class="fas fa-cube"></i> name</div>
-                <p>Your ultimate destination for modern shopping.</p>
-                <div class="socials">
-                    <a href="#"><i class="fab fa-facebook-f"></i></a>
-                    <a href="#"><i class="fab fa-twitter"></i></a>
-                    <a href="#"><i class="fab fa-instagram"></i></a>
                 </div>
-            </div>
-            <div class="footer-col">
-                <h4>Company</h4>
-                <ul>
-                    <li><a href="#">About Us</a></li>
-                    <li><a href="#">Careers</a></li>
-                    <li><a href="#">Blog</a></li>
-                </ul>
-            </div>
-            <div class="footer-col">
-                <h4>Support</h4>
-                <ul>
-                    <li><a href="#">Contact Us</a></li>
-                    <li><a href="#">FAQs</a></li>
-                    <li><a href="#">Shipping</a></li>
-                </ul>
-            </div>
-            <div class="footer-col">
-                <h4>Legal</h4>
-                <ul>
-                    <li><a href="#">Privacy Policy</a></li>
-                    <li><a href="#">Terms of Service</a></li>
-                </ul>
             </div>
         </div>
-        <div class="footer-bottom">
-            <p>&copy; 2025 name. All rights reserved.</p>
+    </section>
+
+    <!-- ==============================================
+       Related products (static example; لاحقًا ممكن ديناميكية)
+  ============================================== -->
+    <section class="related-products-section">
+        <h2 class="section-title-custom">Related Products</h2>
+        <div class="related-products-grid">
+
+            <!-- <div class="related-product-card" *ngFor="let r of relatedExample">
+                <div class="related-card-image">
+                    <img [src]="r.image" [alt]="r.name" />
+                </div>
+                <div class="related-card-content">
+                    <h3>{{ r.name }}</h3>
+                    <p class="related-card-price">${{ r.price }}</p>
+                    <a class="btn-primary" routerLink="['/products', r._id]"
+                        style="display: block; text-align: center;">
+                        View Details
+                    </a>
+                </div>
+            </div> -->
+
         </div>
-    </footer>
+    </section>
+
+    <!-- ==============================================
+       Reviews section (static sample; يمكن تعديلها)
+  ============================================== -->
+    <section class="reviews-section-content">
+        <h2 class="section-title-custom">Customer Reviews</h2>
+
+        <!-- <div class="review-item" *ngFor="let review of dummyReviews; let i = index"
+            [class.expanded]="expandedReviewIndex === i" (click)="toggleReview(i)">
+            <div class="review-header">
+                <div class="review-user-info">
+                    {{ review.user }}
+                    <div class="review-stars-small">
+                        {{ review.stars }}
+                    </div>
+                </div>
+                <i class="fas fa-chevron-down"></i>
+            </div>
+
+            <div class="review-content">
+                {{ review.text }}
+            </div>
+        </div> -->
+    </section>
+
+
+
+</main>
+
+<!-- ==============================================
+     Loading template
+============================================== -->
+<ng-template #loadingTpl>
+    <div class="loading">
+        Loading product...
+    </div>
+</ng-template>
+
+<!-- ==============================================
+     Error template
+============================================== -->
+<div *ngIf="error" class="error">
+    Product not found or an error occurred.
+</div>

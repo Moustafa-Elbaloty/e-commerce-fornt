@@ -1,6 +1,6 @@
 <div class="container">
 
-  <!-- Mobile Filter Button -->
+  <!-- ================= Mobile Filter Button ================= -->
   <button class="mobile-filter-btn" (click)="toggleSidebar()">
     <i class="fas fa-filter"></i> Show Filters
   </button>
@@ -10,7 +10,7 @@
     <!-- ================= Sidebar ================= -->
     <aside class="sidebar" [class.active]="isSidebarActive">
 
-      <!-- Categories -->
+      <!-- ===== Categories ===== -->
       <div class="filter-section">
         <h3 class="filter-title">Categories</h3>
 
@@ -27,16 +27,26 @@
         <span class="clear-filter" (click)="clearCategory()">Clear</span>
       </div>
 
-      <!-- Price -->
+      <!-- ===== Price ===== -->
       <div class="filter-section">
         <h3 class="filter-title">Price Range</h3>
         <div class="price-inputs">
-          <input type="number" placeholder="Min" [(ngModel)]="minPrice" (change)="applyFilters()" />
-          <input type="number" placeholder="Max" [(ngModel)]="maxPrice" (change)="applyFilters()" />
+          <input
+            type="number"
+            placeholder="Min"
+            [(ngModel)]="minPrice"
+            (change)="applyFilters()"
+          />
+          <input
+            type="number"
+            placeholder="Max"
+            [(ngModel)]="maxPrice"
+            (change)="applyFilters()"
+          />
         </div>
       </div>
 
-      <!-- Rating -->
+      <!-- ===== Rating ===== -->
       <div class="filter-section">
         <h3 class="filter-title">Customer Rating</h3>
 
@@ -58,13 +68,17 @@
         <span class="clear-filter" (click)="clearRating()">Clear</span>
       </div>
 
-      <!-- Brand Search -->
+      <!-- ===== Brand Search ===== -->
       <div class="filter-search">
         <i class="fas fa-search"></i>
-        <input type="text" placeholder="Search brand..." [(ngModel)]="brandSearch" />
+        <input
+          type="text"
+          placeholder="Search brand..."
+          [(ngModel)]="brandSearch"
+        />
       </div>
 
-      <!-- Brands -->
+      <!-- ===== Brands ===== -->
       <div class="checkbox-group brands-list">
         <label *ngFor="let brand of filteredBrands">
           <input
@@ -76,7 +90,11 @@
         </label>
       </div>
 
-      <span class="clear-filter" *ngIf="selectedBrands.length" (click)="clearBrands()">
+      <span
+        class="clear-filter"
+        *ngIf="selectedBrands.length"
+        (click)="clearBrands()"
+      >
         Clear
       </span>
 
@@ -85,11 +103,13 @@
     <!-- ================= Products ================= -->
     <main>
 
-      <!-- Loading -->
-      <div *ngIf="loading" class="loading">Loading...</div>
+      <!-- ===== Loading ===== -->
+      <div *ngIf="loading" class="loading">
+        Loading products...
+      </div>
 
-      <!-- Products Grid -->
-      <div class="products-grid" *ngIf="!loading">
+      <!-- ===== Products Grid ===== -->
+      <div class="products-grid" *ngIf="!loading && products.length">
 
         <div
           class="product-card-new"
@@ -97,19 +117,24 @@
           [routerLink]="['/products', product._id]"
           tabindex="0"
           role="button"
-          style="cursor: pointer;"
         >
 
+          <!-- Image -->
           <div class="product-img">
-            <img [src]="product.image" [alt]="product.name" />
+            <img
+              [src]="product.image"
+              [alt]="product.name"
+              loading="lazy"
+            />
           </div>
 
+          <!-- Info -->
           <div class="product-info">
             <h3>{{ product.name }}</h3>
 
             <div class="product-rating">
               <span class="stars">{{ product.stars }}</span>
-              ({{ product.reviews }})
+              <span class="reviews">({{ product.reviews }})</span>
             </div>
 
             <div class="product-price">
@@ -117,22 +142,33 @@
             </div>
           </div>
 
-          <!-- Add To Cart -->
+          <!-- Add To Cart (stop navigation) -->
           <button
             class="btn btn-primary add-btn-new"
             (click)="addToCart(product); $event.stopPropagation()"
           >
-            <i class="fas fa-cart-plus"></i> Add to Cart
+            <i class="fas fa-cart-plus"></i>
+            Add to Cart
           </button>
 
         </div>
 
       </div>
 
+      <!-- ===== Empty State ===== -->
+      <div *ngIf="!loading && !products.length" class="empty-state">
+        No products found.
+      </div>
+
       <!-- ================= Pagination ================= -->
       <div class="pagination" *ngIf="totalPages > 1">
 
-        <button (click)="prevPage()" [disabled]="currentPage === 1">‹</button>
+        <button
+          (click)="prevPage()"
+          [disabled]="currentPage === 1"
+        >
+          ‹
+        </button>
 
         <button
           *ngFor="let p of pages"
@@ -142,7 +178,12 @@
           {{ p }}
         </button>
 
-        <button (click)="nextPage()" [disabled]="currentPage === totalPages">›</button>
+        <button
+          (click)="nextPage()"
+          [disabled]="currentPage === totalPages"
+        >
+          ›
+        </button>
 
       </div>
 

@@ -2,7 +2,7 @@ import { Component, OnInit, OnDestroy } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { ProductService } from '../../services/products.service';
-
+import { CartService } from '../../services/cart.service';
 
 export interface Product {
   _id?: string;
@@ -16,16 +16,13 @@ export interface Product {
   stock?: number;
 }
 
-
-
 @Component({
   selector: 'app-product-details',
   templateUrl: './product-details.component.html',
   styleUrls: ['./product-details.component.css'],
 })
 export class ProductDetailsComponent implements OnInit, OnDestroy {
-
-  product!: Product;
+  product: Product | null = null;
   loading = true;
   error = false;
 
@@ -36,23 +33,28 @@ export class ProductDetailsComponent implements OnInit, OnDestroy {
   // Quantity
   quantity = 1;
 
-  // Reviews
-  expandedReviewIndex: number | null = 0;
-
   private routeSub!: Subscription;
 
   constructor(
     private route: ActivatedRoute,
-    private productService: ProductService
+    private productService: ProductService,
+    private cartService: CartService
   ) {}
 
+  // ===============================
+  // Lifecycle
+  // ===============================
   ngOnInit(): void {
-    // ✅ react to route param changes
-    this.routeSub = this.route.paramMap.subscribe(params => {
+    this.routeSub = this.route.paramMap.subscribe((params) => {
       const productId = params.get('id');
-      if (productId) {
-        this.fetchProduct(productId);
+
+      if (!productId) {
+        this.error = true;
+        this.loading = false;
+        return;
       }
+
+      this.fetchProduct(productId);
     });
   }
 
@@ -60,30 +62,31 @@ export class ProductDetailsComponent implements OnInit, OnDestroy {
     this.routeSub?.unsubscribe();
   }
 
-  /* ===============================
-     Fetch product
-  ================================ */
+  // ===============================
+  // Fetch product
+  // ===============================
   fetchProduct(productId: string): void {
     this.loading = true;
     this.error = false;
 
     this.productService.getProductById(productId).subscribe({
-      next: (res) => {
-        if (!res?.product) {
+      next: (res: any) => {
+        // ✅ backend بيرجع المنتج داخل data
+        const product = res?.data;
+
+        if (!product) {
           this.error = true;
           this.loading = false;
           return;
         }
 
-        this.product = res.product;
+        this.product = product;
 
-        // Gallery safety
-        this.mainImage = this.product.image || '';
-        this.thumbnails = this.product.images?.length
-          ? this.product.images
-          : this.product.image
-          ? [this.product.image]
-          : [];
+        // 🖼 Gallery
+        this.mainImage = product.image;
+        this.thumbnails = product.images?.length
+          ? product.images
+          : [product.image];
 
         this.quantity = 1;
         this.loading = false;
@@ -95,40 +98,33 @@ export class ProductDetailsComponent implements OnInit, OnDestroy {
     });
   }
 
-  /* ===============================
-     Gallery
-  ================================ */
+  // ===============================
+  // Gallery
+  // ===============================
   changeProductImage(img: string): void {
     this.mainImage = img;
   }
 
-  /* ===============================
-     Quantity
-  ================================ */
+  // ===============================
+  // Quantity
+  // ===============================
   updateQuantity(change: number): void {
     this.quantity = Math.max(1, this.quantity + change);
   }
 
-  /* ===============================
-     Cart
-  ================================ */
+  // ===============================
+  // Cart
+  // ===============================
   addToCart(): void {
-    if (!this.product) return;
+    if (!this.product?._id) return;
 
-    console.log('Added to cart:', {
-      product: this.product,
-      quantity: this.quantity,
+    this.cartService.addToCart(this.product._id, this.quantity).subscribe({
+      next: () => {
+        console.log('Product added to cart');
+      },
+      error: (err) => {
+        console.error('Failed to add to cart', err);
+      },
     });
-
-    // لاحقًا:
-    // this.cartService.add(this.product, this.quantity);
-  }
-
-  /* ===============================
-     Reviews
-  ================================ */
-  toggleReview(index: number): void {
-    this.expandedReviewIndex =
-      this.expandedReviewIndex === index ? null : index;
   }
 }
