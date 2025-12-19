@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { MyordersService } from '../../services/myorders.service';
 
 @Component({
   selector: 'app-myorders',
@@ -8,6 +9,10 @@ import { Component, OnInit } from '@angular/core';
 export class MyordersComponent implements OnInit {
 
   orders: Order[] = [];
+  loading = false;
+  error = '';
+
+  constructor(private myordersService: MyordersService) {}
 
   ngOnInit(): void {
     this.loadOrders();
@@ -15,27 +20,36 @@ export class MyordersComponent implements OnInit {
 
   /* ================= Load Orders ================= */
   loadOrders(): void {
-    const storedOrders = localStorage.getItem('orders');
+    this.loading = true;
+    this.error = '';
 
-    if (!storedOrders) {
-      this.orders = [];
-      return;
-    }
+    this.myordersService.getMyOrders().subscribe({
+      next: (res: any[]) => {
+        this.orders = res.map(order => ({
+          id: order._id,
+          date: order.createdAt,
+          status: order.orderStatus,
+          items: order.items.map((item: any) => ({
+            name: item.product?.name,
+            price: item.price,
+            qty: item.quantity,
+            image: item.product?.image
+          })),
+          subtotal: order.totalPrice,
+          total: order.totalPrice
+        })).reverse();
 
-    const parsed = JSON.parse(storedOrders);
-
-    this.orders = parsed.map((order: any) => ({
-      id: order.id,
-      date: order.date,
-      status: order.status || 'pending',
-      items: order.items || [],
-      subtotal: Number(order.subtotal) || 0,
-      total: Number(order.total) || 0
-    })).reverse();
+        this.loading = false;
+      },
+      error: (err) => {
+        console.error(err);
+        this.error = 'Failed to load orders';
+        this.loading = false;
+      }
+    });
   }
 
   /* ================= Helpers ================= */
-
   formatDate(date: string): string {
     return new Date(date).toDateString();
   }
@@ -43,18 +57,14 @@ export class MyordersComponent implements OnInit {
   totalItems(items: OrderItem[]): number {
     return items.reduce((sum, item) => sum + item.qty, 0);
   }
-
-  itemTotal(item: OrderItem): number {
-    return item.price * item.qty;
-  }
 }
 
 /* ================= Interfaces ================= */
 
 interface Order {
-  id: number;
+  id: string;
   date: string;
-  status: 'pending' | 'delivered' | 'canceled';
+  status: 'pending' | 'processing' | 'shipped' | 'delivered' | 'cancelled';
   items: OrderItem[];
   subtotal: number;
   total: number;

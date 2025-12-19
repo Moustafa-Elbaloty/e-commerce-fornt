@@ -19,6 +19,7 @@ const routes: Routes = [
   { path: 'profile', component: ProfileComponent },
   { path: 'cart', component: CartComponent },
   {path: 'checkout', component: CheckoutComponent},
+  { path: 'myorders', component: MyordersComponent },
   { 
     path: 'adminPanal', 
     component: AdminPanalComponent,
