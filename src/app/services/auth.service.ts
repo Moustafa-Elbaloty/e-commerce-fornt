@@ -107,4 +107,10 @@ changePassword(data: any): Observable<any> {
     { email }
   );
 }
+resetPassword(token: string, password: string) {
+  return this.http.put(
+    `http://localhost:5000/api/auth/reset-password/${token}`,
+    { password }
+  );
+}
 }

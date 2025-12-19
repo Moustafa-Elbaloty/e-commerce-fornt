@@ -14,6 +14,7 @@ import { ProductsPageComponent } from './pages/products-page/products-page.compo
 import { ProductDetailsComponent } from './pages/product-details/product-details.component';
 import { PaymentResultComponent } from './pages/payment-result/payment-result.component';
 import { ForgotPasswordComponent } from './pages/forgot-password/forgot-password.component';
+import { ResetPasswordComponent } from './pages/reset-password/reset-password.component';
 const routes: Routes = [
   { path: '', component: HomeComponent }, // الصفحة الرئيسية
   { path: 'login', component: LoginComponent }, // صفحة اللوجن
@@ -26,6 +27,11 @@ const routes: Routes = [
   path: 'forgot-password',
   component: ForgotPasswordComponent
 },
+{
+  path: 'reset-password/:token',
+  component: ResetPasswordComponent
+}
+,
   {
     path: 'adminPanal',
     component: AdminPanalComponent,
