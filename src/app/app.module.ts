@@ -2,11 +2,13 @@ import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { HttpClientModule } from '@angular/common/http';
 import { FormsModule } from '@angular/forms';
+import { CommonModule } from '@angular/common'; // ✅ مهم جدًا
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
-import { AuthInterceptor } from './interceptors/auth.interceptor';
 
+import { AuthInterceptor } from './interceptors/auth.interceptor';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
+
 import { LoginComponent } from './pages/login/login.component';
 import { NavbarComponent } from './components/navbar/navbar.component';
 import { HeroComponent } from './components/hero/hero.component';
@@ -19,6 +21,8 @@ import { ProfileComponent } from './pages/profile/profile.component';
 import { CartComponent } from './pages/cart/cart.component';
 import { CheckoutComponent } from './pages/checkout/checkout.component';
 import { ChangePasswordComponent } from './pages/change-password/change-password.component';
+import { ProductsPageComponent } from './pages/products-page/products-page.component';
+import { MyordersComponent } from './pages/myorders/myorders.component';
 
 @NgModule({
   declarations: [
@@ -34,9 +38,17 @@ import { ChangePasswordComponent } from './pages/change-password/change-password
     ProfileComponent,
     CartComponent,
     CheckoutComponent,
-    ChangePasswordComponent
+    ChangePasswordComponent,
+    ProductsPageComponent, // ✅
+    MyordersComponent      // ✅
   ],
-  imports: [BrowserModule, AppRoutingModule, HttpClientModule, FormsModule],
+  imports: [
+    BrowserModule,
+    CommonModule,   // ✅ يحل ngClass و number pipe
+    AppRoutingModule,
+    HttpClientModule,
+    FormsModule     // ✅ يحل ngModel
+  ],
   providers: [
     {
       provide: HTTP_INTERCEPTORS,
