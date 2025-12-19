@@ -13,7 +13,7 @@ import { AuthGuard } from './guards/auth.guard';
 import { ProductsPageComponent } from './pages/products-page/products-page.component';
 import { ProductDetailsComponent } from './pages/product-details/product-details.component';
 import { PaymentResultComponent } from './pages/payment-result/payment-result.component';
-
+import { ForgotPasswordComponent } from './pages/forgot-password/forgot-password.component';
 const routes: Routes = [
   { path: '', component: HomeComponent }, // الصفحة الرئيسية
   { path: 'login', component: LoginComponent }, // صفحة اللوجن
@@ -21,8 +21,11 @@ const routes: Routes = [
   { path: 'cart', component: CartComponent },
   { path: 'checkout', component: CheckoutComponent },
   { path: 'myorders', component: MyordersComponent },
-  { path: 'payment-result', component: PaymentResultComponent },
-
+  { path: 'payment-result', component: PaymentResultComponent }
+,{
+  path: 'forgot-password',
+  component: ForgotPasswordComponent
+},
   {
     path: 'adminPanal',
     component: AdminPanalComponent,

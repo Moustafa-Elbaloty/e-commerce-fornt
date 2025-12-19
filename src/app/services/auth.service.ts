@@ -101,4 +101,10 @@ changePassword(data: any): Observable<any> {
     localStorage.removeItem('user');
     this.isAdminSubject.next(false); // reset admin status
   }
+   forgotPassword(email: string) {
+  return this.http.post(
+    'http://localhost:5000/api/auth/forgot-password',
+    { email }
+  );
+}
 }
