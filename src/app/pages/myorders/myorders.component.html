@@ -1,7 +1,7 @@
 <div class="orders-page">
   <div class="container">
 
-    <!-- Header -->
+    <!-- ================= Header ================= -->
     <div class="page-header">
       <div>
         <h1>My Orders</h1>
@@ -9,49 +9,51 @@
       </div>
     </div>
 
-    <!-- Loading -->
+    <!-- ================= Loading ================= -->
     <div *ngIf="loading" class="loading">
       Loading your orders...
     </div>
 
-    <!-- Error -->
+    <!-- ================= Error ================= -->
     <div *ngIf="error" class="error">
       {{ error }}
     </div>
 
-    <!-- Empty State -->
+    <!-- ================= Empty State ================= -->
     <div *ngIf="!loading && orders.length === 0" class="empty-state">
       <i class="fas fa-box-open"></i>
       <h3>No orders yet</h3>
       <p>Your orders will appear here once you make a purchase.</p>
     </div>
 
-    <!-- Orders -->
+    <!-- ================= Orders ================= -->
     <div
       class="order-card"
       *ngFor="let order of orders"
       [ngClass]="order.status"
     >
 
-      <!-- Top -->
+      <!-- ===== Top ===== -->
       <div class="order-top">
         <div>
           <div class="order-id">Order #{{ order.id }}</div>
-          <div class="order-date">{{ formatDate(order.date) }}</div>
+          <div class="order-date">
+            {{ formatDate(order.date) }}
+          </div>
         </div>
 
         <span class="status" [ngClass]="order.status">
-          {{ order.status }}
+          {{ order.status | titlecase }}
         </span>
       </div>
 
-      <!-- Products -->
+      <!-- ===== Products ===== -->
       <div class="products">
         <div class="product" *ngFor="let item of order.items">
 
           <div class="product-image">
             <img
-              [src]="item.image"
+              [src]="getImage(item.image)"
               [alt]="item.name"
               loading="lazy"
             >
@@ -59,17 +61,17 @@
 
           <div class="product-info">
             <h4>{{ item.name }}</h4>
-            <p>x{{ item.qty }}</p>
+            <p>Quantity: x{{ item.qty }}</p>
           </div>
 
           <div class="product-price">
-            ${{ item.price * item.qty | number:'1.1-1' }}
+            ${{ item.price * item.qty | number:'1.2-2' }}
           </div>
 
         </div>
       </div>
 
-      <!-- Summary -->
+      <!-- ===== Summary ===== -->
       <div class="order-summary">
         <div>
           <span>Items</span>
@@ -78,12 +80,16 @@
 
         <div>
           <span>Subtotal</span>
-          <strong>${{ order.subtotal | number:'1.1-1' }}</strong>
+          <strong>
+            ${{ order.subtotal | number:'1.2-2' }}
+          </strong>
         </div>
 
-        <div>
+        <div class="total">
           <span>Total</span>
-          <strong>${{ order.total | number:'1.1-1' }}</strong>
+          <strong>
+            ${{ order.total | number:'1.2-2' }}
+          </strong>
         </div>
       </div>
 

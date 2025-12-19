@@ -14,8 +14,8 @@ export class CheckoutComponent implements OnInit {
   formError = '';
   loading = false;
 
-  // UI value
-  paymentType: 'stripe' | 'cash' = 'cash';
+  // 🔴 تعديل بسيط: stripe → paymob
+  paymentType: 'paymob' | 'cash' = 'cash';
 
   card = {
     number: '',
@@ -156,6 +156,7 @@ export class CheckoutComponent implements OnInit {
     this.submitted = true;
     this.formError = '';
 
+    // ✅ نفس فالديشن الشيبنج (مفيش تغيير)
     if (
       this.isEmpty(this.shipping.firstName) ||
       this.isEmpty(this.shipping.lastName) ||
@@ -169,15 +170,20 @@ export class CheckoutComponent implements OnInit {
       return;
     }
 
+    // ❌ نلغيه فقط لو Paymob
     if (
-      this.paymentType === 'stripe' &&
-      (this.invalidCardNumber() || this.invalidExpiry() || this.invalidCVV())
+      this.paymentType === 'paymob'
+    ) {
+      // Paymob بيتكفل ببيانات الكارت
+    } else if (
+      this.invalidCardNumber() ||
+      this.invalidExpiry() ||
+      this.invalidCVV()
     ) {
       this.formError = 'Please enter valid card details';
       return;
     }
 
-    // ✅ FIX HERE
     const payload = {
       items: this.cartItems.map(item => ({
         product: item.product?._id || item.product,
@@ -185,14 +191,22 @@ export class CheckoutComponent implements OnInit {
         price: item.price
       })),
       shipping: this.shipping,
-      paymentMethod: this.paymentType, // 👈 الحل النهائي
+      paymentMethod: this.paymentType, // 👈 paymob أو cash
       subtotal: this.subtotal,
       shippingCost: this.shippingCost,
       totalPrice: this.total
     };
 
     this.checkoutService.createOrder(payload).subscribe({
-      next: () => {
+      next: (res: any) => {
+
+        // 🟢 Paymob → redirect
+        if (this.paymentType === 'paymob' && res?.iframeUrl) {
+          window.location.href = res.iframeUrl;
+          return;
+        }
+
+        // 🟢 Cash
         alert('Order placed successfully ✅');
         this.router.navigate(['/orders']);
       },

@@ -24,16 +24,19 @@ export class MyordersComponent implements OnInit {
     this.error = '';
 
     this.myordersService.getMyOrders().subscribe({
-      next: (res: any[]) => {
-        this.orders = res.map(order => ({
+      next: (res: any) => {
+
+        const ordersData = res.data || [];
+
+        this.orders = ordersData.map((order: any) => ({
           id: order._id,
           date: order.createdAt,
           status: order.orderStatus,
           items: order.items.map((item: any) => ({
-            name: item.product?.name,
+            name: item.product?.name || 'Product',
             price: item.price,
             qty: item.quantity,
-            image: item.product?.image
+            image: item.product?.image || ''
           })),
           subtotal: order.totalPrice,
           total: order.totalPrice
@@ -56,6 +59,19 @@ export class MyordersComponent implements OnInit {
 
   totalItems(items: OrderItem[]): number {
     return items.reduce((sum, item) => sum + item.qty, 0);
+  }
+
+  // ✅ الحل النهائي للصورة
+  getImage(image?: string): string {
+    if (!image) {
+      return 'assets/no-image.png';
+    }
+
+    if (image.startsWith('http')) {
+      return image;
+    }
+
+    return `http://localhost:5000/${image}`;
   }
 }
 

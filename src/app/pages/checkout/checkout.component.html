@@ -20,7 +20,6 @@
               [(ngModel)]="shipping.firstName"
               (keypress)="allowOnlyLetters($event)"
               (input)="cleanName('firstName')"
-              autocomplete="given-name"
               [class.error]="submitted && isEmpty(shipping.firstName)"
             >
           </div>
@@ -33,7 +32,6 @@
               [(ngModel)]="shipping.lastName"
               (keypress)="allowOnlyLetters($event)"
               (input)="cleanName('lastName')"
-              autocomplete="family-name"
               [class.error]="submitted && isEmpty(shipping.lastName)"
             >
           </div>
@@ -45,7 +43,6 @@
             type="text"
             name="address1"
             [(ngModel)]="shipping.address1"
-            autocomplete="address-line1"
             [class.error]="submitted && isEmpty(shipping.address1)"
           >
         </div>
@@ -56,7 +53,6 @@
             type="text"
             name="address2"
             [(ngModel)]="shipping.address2"
-            autocomplete="address-line2"
             [class.error]="submitted && isEmpty(shipping.address2)"
           >
         </div>
@@ -83,7 +79,6 @@
             [(ngModel)]="shipping.city"
             (keypress)="allowOnlyLetters($event)"
             (input)="cleanName('city')"
-            autocomplete="address-level2"
             [class.error]="submitted && isEmpty(shipping.city)"
           >
         </div>
@@ -98,7 +93,6 @@
             (input)="formatPhone()"
             maxlength="11"
             placeholder="01XXXXXXXXX"
-            autocomplete="tel"
             [class.error]="submitted && invalidPhone()"
           >
         </div>
@@ -114,11 +108,9 @@
           [src]="item.product.image"
           [alt]="item.product.name"
         >
-
         <div>
           {{ item.product.name }} (x{{ item.quantity }})
         </div>
-
         <div>
           ${{ item.product.price * item.quantity }}
         </div>
@@ -156,56 +148,22 @@
         <label>
           <input
             type="radio"
-            value="stripe"
+            name="paymentType"
+            value="paymob"
             [(ngModel)]="paymentType"
           >
-          Credit Card
+          Credit Card (Paymob)
         </label>
 
         <label>
           <input
             type="radio"
+            name="paymentType"
             value="cash"
             [(ngModel)]="paymentType"
           >
           Cash on Delivery
         </label>
-      </div>
-
-      <!-- Credit Card Form -->
-      <div *ngIf="paymentType === 'stripe'">
-        <input
-          type="text"
-          placeholder="Card Number"
-          [(ngModel)]="card.number"
-          (keypress)="allowOnlyNumbers($event)"
-          (input)="formatCardNumber()"
-          maxlength="19"
-          autocomplete="cc-number"
-          [class.error]="submitted && invalidCardNumber()"
-        >
-
-        <input
-          type="text"
-          placeholder="MM/YY"
-          [(ngModel)]="card.expiry"
-          (keypress)="allowOnlyNumbers($event)"
-          (input)="formatExpiry()"
-          maxlength="5"
-          autocomplete="cc-exp"
-          [class.error]="submitted && invalidExpiry()"
-        >
-
-        <input
-          type="text"
-          placeholder="CVV"
-          [(ngModel)]="card.cvv"
-          (keypress)="allowOnlyNumbers($event)"
-          (input)="formatCVV()"
-          maxlength="3"
-          autocomplete="cc-csc"
-          [class.error]="submitted && invalidCVV()"
-        >
       </div>
     </div>
 
