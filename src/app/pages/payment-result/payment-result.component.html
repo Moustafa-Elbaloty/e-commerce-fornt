@@ -1,0 +1,19 @@
+<div class="payment-result">
+
+  <!-- SUCCESS -->
+  <div *ngIf="status === 'success'" class="result success">
+    <div class="icon">✅</div>
+    <h1>Payment Successful</h1>
+    <p>Your payment has been completed successfully.</p>
+    <button (click)="goToOrders()">Go to My Orders</button>
+  </div>
+
+  <!-- FAILED -->
+  <div *ngIf="status === 'failed'" class="result failed">
+    <div class="icon">❌</div>
+    <h1>Payment Failed</h1>
+    <p>Something went wrong while processing your payment.</p>
+    <button (click)="goToOrders()">Try Again</button>
+  </div>
+
+</div>

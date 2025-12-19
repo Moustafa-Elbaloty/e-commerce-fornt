@@ -42,9 +42,62 @@
           </div>
         </div>
 
-        <span class="status" [ngClass]="order.status">
-          {{ order.status | titlecase }}
-        </span>
+        <!-- ===== Status Badges ===== -->
+        <div class="badges">
+
+          <!-- ===== Payment Status ===== -->
+          <div class="badge-group">
+            <span class="badge-label">Payment</span>
+
+            <!-- 💵 CASH -->
+            <span
+              *ngIf="order.paymentMethod === 'cash'"
+              class="payment-badge cash"
+            >
+              CASH ON DELIVERY
+            </span>
+
+            <!-- 💳 PAYMOB - PENDING -->
+            <button
+              *ngIf="order.paymentMethod === 'paymob' && order.paymentStatus === 'pending'"
+              class="payment-badge pending clickable"
+              (click)="retryPayment(order.id)"
+              [disabled]="retryLoadingId === order.id"
+            >
+              {{ retryLoadingId === order.id ? 'PROCESSING...' : 'PAY NOW' }}
+            </button>
+
+            <!-- 💳 PAYMOB - PAID -->
+            <span
+              *ngIf="order.paymentMethod === 'paymob' && order.paymentStatus === 'paid'"
+              class="payment-badge paid"
+            >
+              PAID
+            </span>
+
+            <!-- ❌ PAYMOB - FAILED -->
+            <button
+              *ngIf="order.paymentMethod === 'paymob' && order.paymentStatus === 'failed'"
+              class="payment-badge failed clickable"
+              (click)="retryPayment(order.id)"
+              [disabled]="retryLoadingId === order.id"
+            >
+              {{ retryLoadingId === order.id ? 'PROCESSING...' : 'RETRY PAYMENT' }}
+            </button>
+          </div>
+
+          <!-- ===== Order Status ===== -->
+          <div class="badge-group">
+            <span class="badge-label">Order</span>
+            <span
+              class="status"
+              [ngClass]="order.status"
+            >
+              {{ order.status | titlecase }}
+            </span>
+          </div>
+
+        </div>
       </div>
 
       <!-- ===== Products ===== -->

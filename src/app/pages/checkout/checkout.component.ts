@@ -14,7 +14,7 @@ export class CheckoutComponent implements OnInit {
   formError = '';
   loading = false;
 
-  // 🔴 تعديل بسيط: stripe → paymob
+  // 🔵 paymob أو cash
   paymentType: 'paymob' | 'cash' = 'cash';
 
   card = {
@@ -54,6 +54,8 @@ export class CheckoutComponent implements OnInit {
   ngOnInit(): void {
     this.loadCart();
   }
+
+  /* ================= Load Cart ================= */
 
   loadCart() {
     this.loading = true;
@@ -112,42 +114,11 @@ export class CheckoutComponent implements OnInit {
     return !/^(010|011|012|015)\d{8}$/.test(this.shipping.phone);
   }
 
-  invalidCardNumber(): boolean {
-    return this.card.number.replace(/\s/g, '').length !== 16;
-  }
-
-  invalidExpiry(): boolean {
-    return this.card.expiry.length !== 5;
-  }
-
-  invalidCVV(): boolean {
-    return this.card.cvv.length !== 3;
-  }
-
   /* ================= Formatters ================= */
 
   formatPhone() {
     this.shipping.phone =
       this.shipping.phone.replace(/\D/g, '').slice(0, 11);
-  }
-
-  formatCardNumber() {
-    this.card.number = this.card.number
-      .replace(/\D/g, '')
-      .slice(0, 16)
-      .replace(/(.{4})/g, '$1 ')
-      .trim();
-  }
-
-  formatExpiry() {
-    let v = this.card.expiry.replace(/\D/g, '').slice(0, 4);
-    if (v.length > 2) v = v.slice(0, 2) + '/' + v.slice(2);
-    this.card.expiry = v;
-  }
-
-  formatCVV() {
-    this.card.cvv =
-      this.card.cvv.replace(/\D/g, '').slice(0, 3);
   }
 
   /* ================= Submit ================= */
@@ -156,7 +127,7 @@ export class CheckoutComponent implements OnInit {
     this.submitted = true;
     this.formError = '';
 
-    // ✅ نفس فالديشن الشيبنج (مفيش تغيير)
+    // 🔴 Shipping Validation
     if (
       this.isEmpty(this.shipping.firstName) ||
       this.isEmpty(this.shipping.lastName) ||
@@ -170,19 +141,9 @@ export class CheckoutComponent implements OnInit {
       return;
     }
 
-    // ❌ نلغيه فقط لو Paymob
-    if (
-      this.paymentType === 'paymob'
-    ) {
-      // Paymob بيتكفل ببيانات الكارت
-    } else if (
-      this.invalidCardNumber() ||
-      this.invalidExpiry() ||
-      this.invalidCVV()
-    ) {
-      this.formError = 'Please enter valid card details';
-      return;
-    }
+    // ✅ مفيش أي Card Validation
+    // - Paymob: iframe
+    // - Cash: no card at all
 
     const payload = {
       items: this.cartItems.map(item => ({
@@ -191,7 +152,7 @@ export class CheckoutComponent implements OnInit {
         price: item.price
       })),
       shipping: this.shipping,
-      paymentMethod: this.paymentType, // 👈 paymob أو cash
+      paymentMethod: this.paymentType, // paymob | cash
       subtotal: this.subtotal,
       shippingCost: this.shippingCost,
       totalPrice: this.total
@@ -200,7 +161,7 @@ export class CheckoutComponent implements OnInit {
     this.checkoutService.createOrder(payload).subscribe({
       next: (res: any) => {
 
-        // 🟢 Paymob → redirect
+        // 🟢 Paymob → Redirect
         if (this.paymentType === 'paymob' && res?.iframeUrl) {
           window.location.href = res.iframeUrl;
           return;
