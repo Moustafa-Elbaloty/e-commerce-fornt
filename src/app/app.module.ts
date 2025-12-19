@@ -23,7 +23,6 @@ import { CheckoutComponent } from './pages/checkout/checkout.component';
 import { ChangePasswordComponent } from './pages/change-password/change-password.component';
 import { ProductsPageComponent } from './pages/products-page/products-page.component';
 import { MyordersComponent } from './pages/myorders/myorders.component';
-import { ProductDetailsComponent } from './pages/product-details/product-details.component';
 
 @NgModule({
   declarations: [
@@ -40,9 +39,8 @@ import { ProductDetailsComponent } from './pages/product-details/product-details
     CartComponent,
     CheckoutComponent,
     ChangePasswordComponent,
-    ProductsPageComponent,
-    MyordersComponent,
-    ProductDetailsComponent,
+    ProductsPageComponent, // ✅
+    MyordersComponent      // ✅
   ],
   imports: [
     BrowserModule,

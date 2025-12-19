@@ -13,22 +13,31 @@ export class LoginComponent {
 
   @ViewChild('container') container!: ElementRef;
 
-  // -----------------------------
-  // Forms Data
-  // -----------------------------
-  registerData = {
+  // =====================================
+  // Register & Login Data
+  // =====================================
+  registerData: any = {
     name: '',
     email: '',
     password: '',
     isVendor: false,
-    storeName: '',
-    address: '',
-    phone: ''
+    storeName: ''
   };
 
   loginData = {
     email: '',
     password: ''
+  };
+
+  // =====================================
+  // Vendor Files
+  // =====================================
+  vendorFiles: {
+    idCard: File | null;
+    commercialRegister: File | null;
+  } = {
+    idCard: null,
+    commercialRegister: null
   };
 
   constructor(
@@ -50,14 +59,10 @@ export class LoginComponent {
         const userData = {
           name: firebaseUser.displayName,
           email: firebaseUser.email,
-          avatar: firebaseUser.photoURL,
-          phone: firebaseUser.phoneNumber,
-          address: ''
+          avatar: firebaseUser.photoURL
         };
 
-        // ✅ خزن user + token في AuthService
         this.authService.socialLogin(userData, token);
-
         this.router.navigate(['/']);
       })
       .catch((error) => {
@@ -79,14 +84,10 @@ export class LoginComponent {
         const userData = {
           name: firebaseUser.displayName,
           email: firebaseUser.email,
-          avatar: firebaseUser.photoURL,
-          phone: firebaseUser.phoneNumber,
-          address: ''
+          avatar: firebaseUser.photoURL
         };
 
-        // ✅ خزن user + token
         this.authService.socialLogin(userData, token);
-
         this.router.navigate(['/']);
       })
       .catch((error) => {
@@ -94,18 +95,34 @@ export class LoginComponent {
       });
   }
 
-  // ======================================================
-  // Manual Register
-  // ======================================================
+ 
   register() {
     if (!this.registerData.name || !this.registerData.email || !this.registerData.password) {
       alert('Please fill all required fields');
       return;
     }
 
-    this.authService.register(this.registerData).subscribe({
+    if (this.registerData.isVendor) {
+      if (!this.registerData.storeName || !this.vendorFiles.idCard || !this.vendorFiles.commercialRegister) {
+        alert('Vendor must upload required documents');
+        return;
+      }
+    }
+
+    const formData = new FormData();
+
+    Object.keys(this.registerData).forEach(key => {
+      formData.append(key, this.registerData[key]);
+    });
+
+    if (this.registerData.isVendor) {
+      formData.append('idCard', this.vendorFiles.idCard as File);
+      formData.append('commercialRegister', this.vendorFiles.commercialRegister as File);
+    }
+
+    this.authService.register(formData).subscribe({
       next: () => {
-        alert('Registration successful!');
+        alert('Registration successful, waiting for review');
         this.showLogin();
       },
       error: (err) => {
@@ -114,9 +131,7 @@ export class LoginComponent {
     });
   }
 
-  // ======================================================
-  // Manual Login
-  // ======================================================
+
   login() {
     if (!this.loginData.email || !this.loginData.password) {
       alert('Please fill all fields');
@@ -125,7 +140,6 @@ export class LoginComponent {
 
     this.authService.login(this.loginData).subscribe({
       next: () => {
-        alert('Login successful!');
         this.router.navigate(['/']);
       },
       error: (err) => {
@@ -134,9 +148,14 @@ export class LoginComponent {
     });
   }
 
-  // ======================================================
-  // UI Switching
-  // ======================================================
+  onFileChange(event: Event, type: 'idCard' | 'commercialRegister') {
+    const input = event.target as HTMLInputElement;
+    if (input.files && input.files.length > 0) {
+      this.vendorFiles[type] = input.files[0];
+    }
+  }
+
+
   showLogin() {
     this.container.nativeElement.classList.remove('active');
   }
