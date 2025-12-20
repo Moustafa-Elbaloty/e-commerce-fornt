@@ -33,4 +33,34 @@ export class UsersComponent implements OnInit {
       }
     });
   }
+
+  blockUser(user: any): void {
+    if (user.role === 'admin') return;
+
+    const confirmBlock = confirm(`Are you sure you want to block ${user.name}?`);
+    if (!confirmBlock) return;
+
+    this.adminService.blockUser(user._id).subscribe({
+      next: () => {
+        user.isBlocked = true;
+      },
+      error: () => {
+        alert('Failed to block user');
+      }
+    });
+  }
+
+  unblockUser(user: any): void {
+    const confirmUnblock = confirm(`Unblock ${user.name}?`);
+    if (!confirmUnblock) return;
+
+    this.adminService.unblockUser(user._id).subscribe({
+      next: () => {
+        user.isBlocked = false;
+      },
+      error: () => {
+        alert('Failed to unblock user');
+      }
+    });
+  }
 }

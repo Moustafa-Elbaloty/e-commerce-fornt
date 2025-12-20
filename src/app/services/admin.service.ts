@@ -42,6 +42,24 @@ export class AdminService {
     });
   }
 
+  // PUT /api/admin/updateUser/:id
+  blockUser(userId: string): Observable<any> {
+    return this.http.put(
+      `${this.apiUrl}/updateUser/${userId}`,
+      { isBlocked: true },
+      { headers: this.getHeaders() }
+    );
+  }
+
+  // PUT /api/admin/updateUser/:id
+  unblockUser(userId: string): Observable<any> {
+    return this.http.put(
+      `${this.apiUrl}/updateUser/${userId}`,
+      { isBlocked: false },
+      { headers: this.getHeaders() }
+    );
+  }
+
   // ===============================
   // Orders
   // GET /api/admin/orders
@@ -52,10 +70,7 @@ export class AdminService {
     });
   }
 
-  // ===============================
-  // Update Order Status
   // PUT /api/admin/orders/:id
-  // ===============================
   updateOrderStatus(orderId: string, status: string): Observable<any> {
     return this.http.put(
       `${this.apiUrl}/orders/${orderId}`,
@@ -74,10 +89,7 @@ export class AdminService {
     });
   }
 
-  // ===============================
-  // Delete Product
   // DELETE /api/admin/products/:id
-  // ===============================
   deleteProduct(productId: string): Observable<any> {
     return this.http.delete(
       `${this.apiUrl}/products/${productId}`,

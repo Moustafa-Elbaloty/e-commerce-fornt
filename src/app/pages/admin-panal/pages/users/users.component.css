@@ -4,27 +4,19 @@
 
 h1 {
   margin-bottom: 20px;
-  font-size: 26px;
 }
 
 .loading {
-  padding: 15px;
-  background: #f1f1f1;
-  border-radius: 8px;
+  color: #555;
 }
 
 .error {
-  padding: 15px;
-  background: #ffe5e5;
-  color: #c0392b;
-  border-radius: 8px;
+  color: #ef4444;
+  font-weight: bold;
 }
 
 .table-wrapper {
-  background: #ffffff;
-  border-radius: 12px;
-  overflow: hidden;
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+  overflow-x: auto;
 }
 
 table {
@@ -33,39 +25,54 @@ table {
 }
 
 th, td {
-  padding: 14px 16px;
+  padding: 12px;
+  border-bottom: 1px solid #e5e7eb;
   text-align: left;
-  border-bottom: 1px solid #eee;
-}
-
-th {
-  background: #fafafa;
-  font-size: 14px;
-  text-transform: uppercase;
-  color: #777;
 }
 
 .role {
-  background: #ece9ff;
-  color: #5a4fcf;
   padding: 4px 10px;
-  border-radius: 20px;
-  font-size: 13px;
+  border-radius: 6px;
+  background: #e0e7ff;
+  color: #3730a3;
+  font-weight: 600;
 }
 
 .status {
-  padding: 4px 12px;
-  border-radius: 20px;
-  font-size: 13px;
-  font-weight: 500;
+  padding: 4px 10px;
+  border-radius: 6px;
+  font-weight: 600;
 }
 
 .status.active {
-  background: #e6ffed;
-  color: #2e7d32;
+  background: #dcfce7;
+  color: #166534;
 }
 
 .status.blocked {
-  background: #ffe5e5;
-  color: #c0392b;
+  background: #fee2e2;
+  color: #991b1b;
+}
+
+.btn {
+  padding: 6px 12px;
+  border-radius: 6px;
+  border: none;
+  cursor: pointer;
+  font-weight: 600;
+}
+
+.btn.block {
+  background: #ef4444;
+  color: white;
+}
+
+.btn.unblock {
+  background: #22c55e;
+  color: white;
+}
+
+.btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
 }

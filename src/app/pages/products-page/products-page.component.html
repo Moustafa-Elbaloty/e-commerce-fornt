@@ -15,12 +15,7 @@
         <h3 class="filter-title">Categories</h3>
 
         <label *ngFor="let cat of ['Electronics','Home & Kitchen','smart phones','Books & Media']">
-          <input
-            type="radio"
-            name="category"
-            [checked]="selectedCategory === cat"
-            (change)="applyCategory(cat)"
-          />
+          <input type="radio" name="category" [checked]="selectedCategory === cat" (change)="applyCategory(cat)" />
           {{ cat }}
         </label>
 
@@ -31,18 +26,8 @@
       <div class="filter-section">
         <h3 class="filter-title">Price Range</h3>
         <div class="price-inputs">
-          <input
-            type="number"
-            placeholder="Min"
-            [(ngModel)]="minPrice"
-            (change)="applyFilters()"
-          />
-          <input
-            type="number"
-            placeholder="Max"
-            [(ngModel)]="maxPrice"
-            (change)="applyFilters()"
-          />
+          <input type="number" placeholder="Min" [(ngModel)]="minPrice" (change)="applyFilters()" />
+          <input type="number" placeholder="Max" [(ngModel)]="maxPrice" (change)="applyFilters()" />
         </div>
       </div>
 
@@ -71,30 +56,18 @@
       <!-- ===== Brand Search ===== -->
       <div class="filter-search">
         <i class="fas fa-search"></i>
-        <input
-          type="text"
-          placeholder="Search brand..."
-          [(ngModel)]="brandSearch"
-        />
+        <input type="text" placeholder="Search brand..." [(ngModel)]="brandSearch" />
       </div>
 
       <!-- ===== Brands ===== -->
       <div class="checkbox-group brands-list">
         <label *ngFor="let brand of filteredBrands">
-          <input
-            type="checkbox"
-            [checked]="selectedBrands.includes(brand)"
-            (change)="toggleBrand(brand)"
-          />
+          <input type="checkbox" [checked]="selectedBrands.includes(brand)" (change)="toggleBrand(brand)" />
           {{ brand }}
         </label>
       </div>
 
-      <span
-        class="clear-filter"
-        *ngIf="selectedBrands.length"
-        (click)="clearBrands()"
-      >
+      <span class="clear-filter" *ngIf="selectedBrands.length" (click)="clearBrands()">
         Clear
       </span>
 
@@ -111,21 +84,12 @@
       <!-- ===== Products Grid ===== -->
       <div class="products-grid" *ngIf="!loading && products.length">
 
-        <div
-          class="product-card-new"
-          *ngFor="let product of products"
-          [routerLink]="['/products', product._id]"
-          tabindex="0"
-          role="button"
-        >
+        <div class="product-card-new" *ngFor="let product of products" [routerLink]="['/products', product._id]"
+          tabindex="0" role="button">
 
           <!-- Image -->
           <div class="product-img">
-            <img
-              [src]="product.image"
-              [alt]="product.name"
-              loading="lazy"
-            />
+            <img [src]="product.image" [alt]="product.name" loading="lazy" />
           </div>
 
           <!-- Info -->
@@ -141,18 +105,12 @@
               ${{ product.price }}
             </div>
           </div>
-
           <!-- Add To Cart (stop navigation) -->
-          <button
-            class="btn btn-primary add-btn-new"
-            (click)="addToCart(product); $event.stopPropagation()"
-          >
-            <i class="fas fa-cart-plus"></i>
-            Add to Cart
+          <button class="btn btn-primary add-btn-new" (click)="addToCart(product, $event)"
+            [disabled]="product.stock === 0">
+            {{ product.stock === 0 ? 'Out of Stock' : 'Add to Cart' }}
           </button>
-
         </div>
-
       </div>
 
       <!-- ===== Empty State ===== -->
@@ -163,25 +121,15 @@
       <!-- ================= Pagination ================= -->
       <div class="pagination" *ngIf="totalPages > 1">
 
-        <button
-          (click)="prevPage()"
-          [disabled]="currentPage === 1"
-        >
+        <button (click)="prevPage()" [disabled]="currentPage === 1">
           ‹
         </button>
 
-        <button
-          *ngFor="let p of pages"
-          (click)="goToPage(p)"
-          [class.active]="p === currentPage"
-        >
+        <button *ngFor="let p of pages" (click)="goToPage(p)" [class.active]="p === currentPage">
           {{ p }}
         </button>
 
-        <button
-          (click)="nextPage()"
-          [disabled]="currentPage === totalPages"
-        >
+        <button (click)="nextPage()" [disabled]="currentPage === totalPages">
           ›
         </button>
 
