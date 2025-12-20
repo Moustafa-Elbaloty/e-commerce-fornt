@@ -6,8 +6,7 @@
     </div>
 
     <div class="search-box-mobile">
-      <i class="fas fa-search"></i>
-      <input type="text" placeholder="Search products...">
+      <input type="text" placeholder="Search products..." [(ngModel)]="searchTerm" (input)="onSearch()" />
     </div>
 
     <ul class="nav-links" [class.mobile-active]="isOpen">
@@ -55,7 +54,7 @@
 
       <div class="search-box">
         <i class="fas fa-search"></i>
-        <input type="text" placeholder="Search products...">
+        <input type="text" placeholder="Search products..." [(ngModel)]="searchTerm" (input)="onSearch()" />
       </div>
 
       <!-- DESKTOP: قبل الدخول -->

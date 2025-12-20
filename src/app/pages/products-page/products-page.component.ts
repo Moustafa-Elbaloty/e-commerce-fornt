@@ -59,6 +59,11 @@ export class ProductsPageComponent implements OnInit {
       this.rating = params['rating'] ? Number(params['rating']) : undefined;
 
       this.getProducts();
+
+      // 👂 اسمع أي تغيير في المنتجات (search / load)
+      this.productService.products$.subscribe((data) => {
+        this.products = data;
+      });
     });
   }
 
@@ -69,14 +74,13 @@ export class ProductsPageComponent implements OnInit {
     this.loading = true;
 
     this.productService
-      .getProducts(
-        this.currentPage,
-        this.limit,
-        this.selectedCategory,
-        this.minPrice,
-        this.maxPrice,
-        this.rating
-      )
+      .getProducts({
+        page: this.currentPage,
+        limit: this.limit,
+        category: this.selectedCategory,
+        minPrice: this.minPrice,
+        maxPrice: this.maxPrice,
+      })
       .subscribe({
         next: (res: any) => {
           this.products = res.products.map((p: any) => ({
