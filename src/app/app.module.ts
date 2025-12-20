@@ -8,17 +8,17 @@ import { RouterModule } from '@angular/router';
 import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
 
-// Interceptor
+// interceptor
 import { AuthInterceptor } from './interceptors/auth.interceptor';
 
-// Components (Layout)
+// layout
 import { NavbarComponent } from './components/navbar/navbar.component';
 import { FooterComponent } from './components/footer/footer.component';
 import { HeroComponent } from './components/hero/hero.component';
 import { CategoriesComponent } from './components/categories/categories.component';
 import { PromoComponent } from './components/promo/promo.component';
 
-// Pages
+// pages
 import { HomeComponent } from './pages/home/home.component';
 import { LoginComponent } from './pages/login/login.component';
 import { ProfileComponent } from './pages/profile/profile.component';
@@ -30,8 +30,12 @@ import { MyordersComponent } from './pages/myorders/myorders.component';
 import { ProductDetailsComponent } from './pages/product-details/product-details.component';
 import { PaymentResultComponent } from './pages/payment-result/payment-result.component';
 
-// Admin
-import { AdminPanalComponent } from './components/admin-panal/admin-panal.component';
+// admin
+import { AdminPanalComponent } from './pages/admin-panal/admin-panal.component';
+import { DashboardComponent } from './pages/admin-panal/pages/dashboard/dashboard.component';
+import { UsersComponent } from './pages/admin-panal/pages/users/users.component';
+import { ProductsComponent } from './pages/admin-panal/pages/products/products.component';
+import { OrdersComponent } from './pages/admin-panal/pages/orders/orders.component';
 
 @NgModule({
   declarations: [
@@ -57,14 +61,18 @@ import { AdminPanalComponent } from './components/admin-panal/admin-panal.compon
     PaymentResultComponent,
 
     // admin
-    AdminPanalComponent
+    AdminPanalComponent,
+    DashboardComponent,
+    UsersComponent,
+    ProductsComponent,
+    OrdersComponent
   ],
   imports: [
     BrowserModule,
-    CommonModule,      // ngIf, ngFor, pipes
-    FormsModule,       // ngModel
+    CommonModule,   // ⭐ يحل date / ngIf / ngFor
+    FormsModule,
     HttpClientModule,
-    RouterModule,
+    RouterModule,   // ⭐ يحل routerLink / router-outlet
     AppRoutingModule
   ],
   providers: [

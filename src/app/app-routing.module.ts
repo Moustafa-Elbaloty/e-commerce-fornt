@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 
-// ===== Pages =====
+// Pages
 import { HomeComponent } from './pages/home/home.component';
 import { LoginComponent } from './pages/login/login.component';
 import { ProfileComponent } from './pages/profile/profile.component';
@@ -13,33 +13,73 @@ import { ProductsPageComponent } from './pages/products-page/products-page.compo
 import { ProductDetailsComponent } from './pages/product-details/product-details.component';
 import { PaymentResultComponent } from './pages/payment-result/payment-result.component';
 
+// Admin
+import { AdminPanalComponent } from './pages/admin-panal/admin-panal.component';
+import { DashboardComponent } from './pages/admin-panal/pages/dashboard/dashboard.component';
+import { UsersComponent } from './pages/admin-panal/pages/users/users.component';
+import { ProductsComponent } from './pages/admin-panal/pages/products/products.component';
+import { OrdersComponent } from './pages/admin-panal/pages/orders/orders.component';
+
+// Guards
+import { AuthGuard } from './guards/auth.guard';
+import { AdminGuard } from './guard/admin.guard';
+
 const routes: Routes = [
-  // ===== Public =====
+  // ================= PUBLIC =================
   { path: '', component: HomeComponent },
   { path: 'login', component: LoginComponent },
-
-  // ===== Products =====
   { path: 'products', component: ProductsPageComponent },
   { path: 'products/:id', component: ProductDetailsComponent },
 
-  // ===== User =====
-  { path: 'profile', component: ProfileComponent },
-  { path: 'cart', component: CartComponent },
-  { path: 'checkout', component: CheckoutComponent },
-  { path: 'myorders', component: MyordersComponent },
-  { path: 'change-password', component: ChangePasswordComponent },
-
-  // ===== Payment =====
-  { path: 'payment-result', component: PaymentResultComponent },
-
-  // ===== Vendor (Lazy Loading) =====
+  // ================= AUTH =================
   {
-    path: 'vendor',
-    loadChildren: () =>
-      import('./vendor/vendor.module').then((m) => m.VendorModule),
+    path: 'profile',
+    component: ProfileComponent,
+    canActivate: [AuthGuard],
+  },
+  {
+    path: 'cart',
+    component: CartComponent,
+    canActivate: [AuthGuard],
+  },
+  {
+    path: 'checkout',
+    component: CheckoutComponent,
+    canActivate: [AuthGuard],
+  },
+  {
+    path: 'myorders',
+    component: MyordersComponent,
+    canActivate: [AuthGuard],
+  },
+  {
+    path: 'change-password',
+    component: ChangePasswordComponent,
+    canActivate: [AuthGuard],
   },
 
-  // ===== Fallback =====
+  // ================= PAYMENT =================
+  {
+    path: 'payment-result',
+    component: PaymentResultComponent,
+    canActivate: [AuthGuard],
+  },
+
+  // ================= ADMIN =================
+  {
+    path: 'adminPanal',
+    component: AdminPanalComponent,
+    canActivate: [AdminGuard],
+    children: [
+      { path: '', redirectTo: 'dashboard', pathMatch: 'full' },
+      { path: 'dashboard', component: DashboardComponent },
+      { path: 'users', component: UsersComponent },
+      { path: 'products', component: ProductsComponent },
+      { path: 'orders', component: OrdersComponent },
+    ],
+  },
+
+  // ================= FALLBACK =================
   { path: '**', redirectTo: '' },
 ];
 
