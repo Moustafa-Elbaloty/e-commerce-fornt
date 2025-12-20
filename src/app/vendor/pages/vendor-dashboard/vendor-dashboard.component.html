@@ -1,58 +1,167 @@
-<section class="vendor-section">
-  <h2>Upload New Product</h2>
-  <p class="subtitle">Add a new product to your store</p>
+<!-- ===============================
+     Vendor Dashboard
+================================ -->
 
-  <form (ngSubmit)="createProduct()" #productForm="ngForm" class="product-form">
+<div class="dashboard-container">
 
-    <!-- Product Name -->
-    <label>
-      Product Name
-      <input type="text" name="name" [(ngModel)]="product.name" required />
-    </label>
+  <!-- ===============================
+       Stats Cards
+  ================================ -->
+  <div class="stats-grid" *ngIf="!loadingDashboard">
 
-    <!-- Price -->
-    <label>
-      Price ($)
-      <input type="number" name="price" [(ngModel)]="product.price" required min="0" />
-    </label>
+    <div class="stat-card">
+      <p>Total Products</p>
+      <h2>{{ stats.totalProducts }}</h2>
+      <span class="success">+12% last month</span>
+    </div>
 
-    <!-- ✅ Stock -->
-    <label>
-      Stock Quantity
-      <input type="number" name="stock" [(ngModel)]="product.stock" required min="0" />
-    </label>
+    <div class="stat-card">
+      <p>Total Stock</p>
+      <h2>{{ stats.totalStock }}</h2>
+      <span class="success">+5% this week</span>
+    </div>
 
-    <!-- Category -->
-    <label>
-      Category
-      <select name="category" [(ngModel)]="product.category" required>
-        <option value="electronics">Electronics</option>
-        <option value="smart phones">Smart Phones</option>
-        <option value="home">Home</option>
-      </select>
-    </label>
+    <div class="stat-card">
+      <p>Total Value</p>
+      <h2>${{ stats.totalValue }}</h2>
+      <span class="success">+20% YTD</span>
+    </div>
 
-    <!-- Brand -->
-    <label>
-      Brand
-      <input type="text" name="brand" [(ngModel)]="product.brand" />
-    </label>
+    <div class="stat-card warning">
+      <p>Pending Orders</p>
+      <h2>7</h2>
+      <span class="danger">Action required</span>
+    </div>
 
-    <!-- Description -->
-    <label>
-      Description
-      <textarea name="description" [(ngModel)]="product.description"></textarea>
-    </label>
+  </div>
 
-    <!-- Image -->
-    <label>
-      Product Image
-      <input type="file" (change)="onImageSelect($event)" />
-    </label>
+  <!-- ===============================
+       Sales Report
+  ================================ -->
+  <div class="card">
+    <h3>Sales Report</h3>
+    <p class="sub">Monthly sales revenue and order trends.</p>
 
-    <button type="submit" class="btn-primary" [disabled]="productForm.invalid">
-      Create Product
-    </button>
+    <div class="chart-placeholder">
+      📊 Chart will be here
+    </div>
+  </div>
 
-  </form>
-</section>
+  <!-- ===============================
+       My Products Table
+  ================================ -->
+  <div class="card">
+  <h3>My Products</h3>
+  <p class="sub">Manage your product listings and inventory.</p>
+
+  <table *ngIf="products.length > 0 && !loadingProducts">
+    <thead>
+      <tr>
+        <th>Product</th>
+        <th>Price</th>
+        <th>Stock</th>
+        <th>Status</th>
+      </tr>
+    </thead>
+
+    <tbody>
+      <tr *ngFor="let product of products">
+        <td>{{ product.name }}</td>
+        <td>${{ product.price }}</td>
+        <td>{{ product.stock }}</td>
+        <td>
+          <span
+            class="status"
+            [ngClass]="getStockStatus(product.stock)"
+          >
+            {{
+              product.stock === 0
+                ? 'Out of Stock'
+                : product.stock <= 10
+                ? 'Low Stock'
+                : 'In Stock'
+            }}
+          </span>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+
+  <p *ngIf="products.length === 0 && !loadingProducts" class="empty">
+    No products added yet.
+  </p>
+</div>
+
+  <!-- ===============================
+       Add Product
+  ================================ -->
+  <div class="card">
+    <h3>Add New Product</h3>
+    <p class="sub">Upload a new product to your store</p>
+
+    <form (ngSubmit)="createProduct()" #productForm="ngForm">
+
+      <div class="form-grid">
+
+        <!-- Product Name -->
+        <div class="form-group">
+          <label>Product Name</label>
+          <input type="text" name="name" [(ngModel)]="product.name" required />
+        </div>
+
+        <!-- Price -->
+        <div class="form-group">
+          <label>Price</label>
+          <input type="number" name="price" [(ngModel)]="product.price" placeholder="e.g. 4999" required />
+        </div>
+
+        <!-- Stock -->
+        <div class="form-group">
+          <label>Stock</label>
+          <input type="number" name="stock" [(ngModel)]="product.stock" placeholder="Available quantity" required />
+        </div>
+
+        <!-- Category -->
+        <select name="category" [(ngModel)]="product.category" required>
+          <option value="">Select Category</option>
+          <option value="electronics">Electronics</option>
+          <option value="smart phones">Smart Phones</option>
+          <option value="home & kitchen">Home & Kitchen</option>
+          <option value="books & media">Books & Media</option>
+        </select>
+        <!-- Brand -->
+        <div class="form-group">
+          <label>Brand</label>
+          <select name="brand" [(ngModel)]="product.brand" required>
+            <option value="">Select Brand</option>
+            <option>Apple</option>
+            <option>Samsung</option>
+            <option>Xiaomi</option>
+            <option>Oppo</option>
+            <option>Huawei</option>
+            <option>Other</option>
+          </select>
+        </div>
+
+      </div>
+
+      <!-- Description -->
+      <div class="form-group">
+        <label>Product Description</label>
+        <textarea name="description" [(ngModel)]="product.description" placeholder="Write product details here..."
+          required></textarea>
+      </div>
+
+      <!-- Image -->
+      <div class="form-group">
+        <label>Product Image</label>
+        <input type="file" (change)="onImageSelect($event)" accept="image/*" required />
+      </div>
+
+      <button type="submit" [disabled]="productForm.invalid || creatingProduct">
+        {{ creatingProduct ? 'Adding...' : 'Add Product' }}
+      </button>
+
+    </form>
+  </div>
+</div>

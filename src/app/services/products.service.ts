@@ -32,8 +32,4 @@ export class ProductService {
   getProductById(id: string) {
     return this.http.get<any>(`${this.API_URL}/${id}`);
   }
-
-    createProduct(formData: FormData) {
-  return this.http.post('http://localhost:5000/api/products', formData);
-}
 }
