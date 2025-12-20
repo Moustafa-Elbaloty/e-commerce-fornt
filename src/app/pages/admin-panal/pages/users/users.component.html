@@ -1,0 +1,49 @@
+<div class="users-page">
+
+  <h1>Users Management</h1>
+
+  <div *ngIf="loading" class="loading">
+    Loading users...
+  </div>
+
+  <div *ngIf="error" class="error">
+    {{ error }}
+  </div>
+
+  <div class="table-wrapper" *ngIf="!loading && !error">
+
+    <table>
+      <thead>
+        <tr>
+          <th>#</th>
+          <th>Name</th>
+          <th>Email</th>
+          <th>Role</th>
+          <th>Status</th>
+        </tr>
+      </thead>
+
+      <tbody>
+        <tr *ngFor="let user of users; let i = index">
+          <td>{{ i + 1 }}</td>
+          <td>{{ user.name }}</td>
+          <td>{{ user.email }}</td>
+          <td>
+            <span class="role">{{ user.role }}</span>
+          </td>
+          <td>
+            <span
+              class="status"
+              [class.active]="!user.isBlocked"
+              [class.blocked]="user.isBlocked"
+            >
+              {{ user.isBlocked ? 'Blocked' : 'Active' }}
+            </span>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+
+  </div>
+
+</div>

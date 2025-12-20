@@ -1,0 +1,79 @@
+<div class="products-page">
+
+  <h1>Products Management</h1>
+
+  <!-- Loading -->
+  <div *ngIf="loading" class="loading">
+    Loading products...
+  </div>
+
+  <!-- Error -->
+  <div *ngIf="error" class="error">
+    {{ error }}
+  </div>
+
+  <!-- Table -->
+  <div class="table-wrapper" *ngIf="!loading && !error">
+
+    <table>
+      <thead>
+        <tr>
+          <th>#</th>
+          <th>Image</th>
+          <th>Name</th>
+          <th>Category</th>
+          <th>Brand</th>
+          <th>Stock</th>
+          <th>Price</th>
+          <th>Vendor</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+
+      <tbody>
+        <tr *ngFor="let product of products; let i = index">
+          <td>{{ i + 1 }}</td>
+
+          <!-- Product Image -->
+          <td>
+            <img
+              [src]="product.image || 'https://via.placeholder.com/60'"
+              alt="product image"
+              class="product-img"
+            />
+          </td>
+
+          <td>{{ product.name }}</td>
+          <td>{{ product.category }}</td>
+          <td>{{ product.brand }}</td>
+
+          <td>
+            <span
+              class="stock"
+              [class.in-stock]="product.stock > 0"
+              [class.out-stock]="product.stock === 0"
+            >
+              {{ product.stock }}
+            </span>
+          </td>
+
+          <td>${{ product.price }}</td>
+
+          <!-- ✅ Vendor Store Name -->
+          <td>{{ product.vendor?.storeName || '-' }}</td>
+
+          <td>
+            <button
+              class="delete-btn"
+              (click)="deleteProduct(product._id)"
+            >
+              Delete
+            </button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+
+  </div>
+
+</div>

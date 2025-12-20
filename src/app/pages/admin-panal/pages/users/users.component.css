@@ -1,0 +1,71 @@
+.users-page {
+  padding: 20px;
+}
+
+h1 {
+  margin-bottom: 20px;
+  font-size: 26px;
+}
+
+.loading {
+  padding: 15px;
+  background: #f1f1f1;
+  border-radius: 8px;
+}
+
+.error {
+  padding: 15px;
+  background: #ffe5e5;
+  color: #c0392b;
+  border-radius: 8px;
+}
+
+.table-wrapper {
+  background: #ffffff;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+th, td {
+  padding: 14px 16px;
+  text-align: left;
+  border-bottom: 1px solid #eee;
+}
+
+th {
+  background: #fafafa;
+  font-size: 14px;
+  text-transform: uppercase;
+  color: #777;
+}
+
+.role {
+  background: #ece9ff;
+  color: #5a4fcf;
+  padding: 4px 10px;
+  border-radius: 20px;
+  font-size: 13px;
+}
+
+.status {
+  padding: 4px 12px;
+  border-radius: 20px;
+  font-size: 13px;
+  font-weight: 500;
+}
+
+.status.active {
+  background: #e6ffed;
+  color: #2e7d32;
+}
+
+.status.blocked {
+  background: #ffe5e5;
+  color: #c0392b;
+}

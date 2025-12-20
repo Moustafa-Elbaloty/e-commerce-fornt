@@ -1,0 +1,36 @@
+<div class="dashboard-page">
+
+  <h1>Admin Dashboard</h1>
+
+  <div *ngIf="loading" class="loading">
+    Loading dashboard data...
+  </div>
+
+  <div *ngIf="error" class="error">
+    {{ error }}
+  </div>
+
+  <div class="dashboard-grid" *ngIf="!loading && !error">
+
+    <div class="stat-card">
+      <h3>Total Users</h3>
+      <p>{{ stats.totalUsers }}</p>
+    </div>
+
+    <div class="stat-card">
+      <h3>Total Orders</h3>
+      <p>{{ stats.totalOrders }}</p>
+    </div>
+
+    <div class="stat-card">
+      <h3>Total Products</h3>
+      <p>{{ stats.totalProducts }}</p>
+    </div>
+
+    <div class="stat-card">
+      <h3>Total Revenue</h3>
+      <p>${{ stats.totalRevenue }}</p>
+    </div>
+
+  </div>
+</div>

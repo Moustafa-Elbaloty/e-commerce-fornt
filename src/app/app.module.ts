@@ -12,7 +12,6 @@ import { AppComponent } from './app.component';
 import { LoginComponent } from './pages/login/login.component';
 import { NavbarComponent } from './components/navbar/navbar.component';
 import { HeroComponent } from './components/hero/hero.component';
-import { ProductsComponent } from './components/products/products.component';
 import { CategoriesComponent } from './components/categories/categories.component';
 import { PromoComponent } from './components/promo/promo.component';
 import { FooterComponent } from './components/footer/footer.component';
@@ -25,6 +24,12 @@ import { ProductsPageComponent } from './pages/products-page/products-page.compo
 import { MyordersComponent } from './pages/myorders/myorders.component';
 import { ProductDetailsComponent } from './pages/product-details/product-details.component';
 import { PaymentResultComponent } from './pages/payment-result/payment-result.component';
+import { AdminPanalComponent } from './pages/admin-panal/admin-panal.component';
+import { UsersComponent } from './pages/admin-panal/pages/users/users.component';
+import { DashboardComponent } from './pages/admin-panal/pages/dashboard/dashboard.component';
+import { OrdersComponent } from './pages/admin-panal/pages/orders/orders.component';
+import { ProductsComponent } from './pages/admin-panal/pages/products/products.component';
+
 
 @NgModule({
   declarations: [
@@ -45,6 +50,10 @@ import { PaymentResultComponent } from './pages/payment-result/payment-result.co
     MyordersComponent,
     ProductDetailsComponent,
     PaymentResultComponent,
+    AdminPanalComponent,
+    UsersComponent,
+    DashboardComponent,
+    OrdersComponent,
   ],
   imports: [
     BrowserModule,

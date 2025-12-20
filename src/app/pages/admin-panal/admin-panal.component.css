@@ -1,0 +1,82 @@
+/* ================= ADMIN PANEL LAYOUT ================= */
+
+.admin-dashboard {
+  display: flex;
+  min-height: 100vh;
+  background: #f5f6fa;
+}
+
+/* ===== Sidebar ===== */
+.sidebar {
+  width: 240px;
+  background: #1e1e2f;
+  color: #fff;
+  padding: 20px 0;
+}
+
+.sidebar .logo {
+  font-size: 20px;
+  font-weight: bold;
+  text-align: center;
+  margin-bottom: 30px;
+  color: #fff;
+}
+
+.sidebar nav {
+  display: flex;
+  flex-direction: column;
+}
+
+.sidebar nav a {
+  padding: 14px 20px;
+  color: #cfcfe4;
+  text-decoration: none;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 15px;
+  transition: background 0.3s, color 0.3s;
+}
+
+.sidebar nav a i {
+  width: 20px;
+  text-align: center;
+}
+
+.sidebar nav a:hover {
+  background: #2d2d44;
+  color: #fff;
+}
+
+/* Active Link */
+.sidebar nav a.active {
+  background: #4b7bec;
+  color: #fff;
+}
+
+/* ===== Main Content ===== */
+.main-content {
+  flex: 1;
+  padding: 25px;
+  overflow-y: auto;
+}
+
+/* ================= RESPONSIVE ================= */
+@media (max-width: 768px) {
+  .sidebar {
+    width: 70px;
+  }
+
+  .sidebar .logo {
+    display: none;
+  }
+
+  .sidebar nav a {
+    justify-content: center;
+    padding: 15px 0;
+  }
+
+  .sidebar nav a span {
+    display: none;
+  }
+}
