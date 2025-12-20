@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 
-// ===== Public Pages =====
+// ===== Pages =====
 import { HomeComponent } from './pages/home/home.component';
 import { LoginComponent } from './pages/login/login.component';
 import { ProfileComponent } from './pages/profile/profile.component';
@@ -13,47 +13,26 @@ import { ProductsPageComponent } from './pages/products-page/products-page.compo
 import { ProductDetailsComponent } from './pages/product-details/product-details.component';
 import { PaymentResultComponent } from './pages/payment-result/payment-result.component';
 
-
 const routes: Routes = [
   // ===== Public =====
   { path: '', component: HomeComponent },
   { path: 'login', component: LoginComponent },
 
+  // ===== Products =====
   { path: 'products', component: ProductsPageComponent },
   { path: 'products/:id', component: ProductDetailsComponent },
 
-  { path: 'profile', component: ProfileComponent, canActivate: [AuthGuard] },
+  // ===== User =====
+  { path: 'profile', component: ProfileComponent },
   { path: 'cart', component: CartComponent },
   { path: 'checkout', component: CheckoutComponent },
   { path: 'myorders', component: MyordersComponent },
+  { path: 'change-password', component: ChangePasswordComponent },
+
+  // ===== Payment =====
   { path: 'payment-result', component: PaymentResultComponent },
 
-  {
-    path: 'adminPanal',
-    component: AdminPanalComponent,
-    canActivate: [AdminGuard], // إضافة الحماية
-  },
-  {
-    path: 'change-password',
-    component: ChangePasswordComponent,
-    canActivate: [AuthGuard],
-  },
-
-  // ===== Admin Panel =====
-  {
-    path: 'adminPanal',
-    component: AdminPanalComponent,
-    canActivate: [AdminGuard],
-    children: [
-      { path: 'dashboard', component: DashboardComponent },
-      { path: 'users', component: UsersComponent },
-      { path: 'products', component: ProductsComponent },
-      { path: 'orders', component: OrdersComponent },
-      { path: '', redirectTo: 'dashboard', pathMatch: 'full' },
-    ],
-  },
-
-  // ===== Vendor =====
+  // ===== Vendor (Lazy Loading) =====
   {
     path: 'vendor',
     loadChildren: () =>
