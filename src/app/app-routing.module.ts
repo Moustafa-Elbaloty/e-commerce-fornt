@@ -13,18 +13,6 @@ import { ProductsPageComponent } from './pages/products-page/products-page.compo
 import { ProductDetailsComponent } from './pages/product-details/product-details.component';
 import { PaymentResultComponent } from './pages/payment-result/payment-result.component';
 
-// ===== Admin Layout =====
-import { AdminPanalComponent } from './pages/admin-panal/admin-panal.component';
-
-// ===== Admin Pages =====
-import { DashboardComponent } from './pages/admin-panal/pages/dashboard/dashboard.component';
-import { UsersComponent } from './pages/admin-panal/pages/users/users.component';
-import { ProductsComponent } from './pages/admin-panal/pages/products/products.component';
-import { OrdersComponent } from './pages/admin-panal/pages/orders/orders.component';
-
-// ===== Guards =====
-import { AuthGuard } from './guards/auth.guard';
-import { AdminGuard } from './guard/admin.guard';
 
 const routes: Routes = [
   // ===== Public =====
@@ -37,9 +25,14 @@ const routes: Routes = [
   { path: 'profile', component: ProfileComponent, canActivate: [AuthGuard] },
   { path: 'cart', component: CartComponent },
   { path: 'checkout', component: CheckoutComponent },
-  { path: 'myorders', component: MyordersComponent, canActivate: [AuthGuard] },
+  { path: 'myorders', component: MyordersComponent },
   { path: 'payment-result', component: PaymentResultComponent },
 
+  {
+    path: 'adminPanal',
+    component: AdminPanalComponent,
+    canActivate: [AdminGuard], // إضافة الحماية
+  },
   {
     path: 'change-password',
     component: ChangePasswordComponent,
