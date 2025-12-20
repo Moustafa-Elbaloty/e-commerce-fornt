@@ -20,6 +20,7 @@ export class LoginComponent {
     name: '',
     email: '',
     password: '',
+    phone: '',
     isVendor: false,
     storeName: ''
   };
@@ -95,34 +96,65 @@ export class LoginComponent {
       });
   }
 
- 
+  // ======================================================
+  // Register
+  // ======================================================
   register() {
-    if (!this.registerData.name || !this.registerData.email || !this.registerData.password) {
+    // basic validation
+    if (!this.registerData.name || !this.registerData.email || !this.registerData.password || !this.registerData.phone) {
       alert('Please fill all required fields');
       return;
     }
 
-    if (this.registerData.isVendor) {
-      if (!this.registerData.storeName || !this.vendorFiles.idCard || !this.vendorFiles.commercialRegister) {
-        alert('Vendor must upload required documents');
-        return;
-      }
+    /**
+     * ============================
+     * 🟢 User Register (JSON)
+     * ============================
+     */
+    if (!this.registerData.isVendor) {
+      const payload = {
+        name: this.registerData.name,
+        email: this.registerData.email,
+        password: this.registerData.password,
+        phone: this.registerData.phone
+      };
+
+      this.authService.register(payload).subscribe({
+        next: () => {
+          alert('Registration successful, check your email');
+          this.showLogin();
+        },
+        error: (err) => {
+          alert(err.error?.message || 'Registration failed');
+        }
+      });
+
+      return;
+    }
+
+    /**
+     * ============================
+     * 🟡 Vendor Register (FormData)
+     * ============================
+     */
+    if (!this.registerData.storeName || !this.vendorFiles.idCard || !this.vendorFiles.commercialRegister) {
+      alert('Vendor must upload required documents');
+      return;
     }
 
     const formData = new FormData();
+    formData.append('name', this.registerData.name);
+    formData.append('email', this.registerData.email);
+    formData.append('password', this.registerData.password);
+    formData.append('phone', this.registerData.phone);
+    formData.append('storeName', this.registerData.storeName);
 
-    Object.keys(this.registerData).forEach(key => {
-      formData.append(key, this.registerData[key]);
-    });
-
-    if (this.registerData.isVendor) {
-      formData.append('idCard', this.vendorFiles.idCard as File);
-      formData.append('commercialRegister', this.vendorFiles.commercialRegister as File);
-    }
+    formData.append('idCard', this.vendorFiles.idCard);
+    formData.append('commercialRegister', this.vendorFiles.commercialRegister);
 
     this.authService.register(formData).subscribe({
       next: () => {
-        alert('Registration successful, waiting for review');
+        alert('Vendor registration successful, waiting for review');
         this.showLogin();
       },
       error: (err) => {
@@ -131,7 +163,9 @@ export class LoginComponent {
     });
   }
 
-
+  // ======================================================
+  // Login
+  // ======================================================
   login() {
     if (!this.loginData.email || !this.loginData.password) {
       alert('Please fill all fields');
@@ -148,6 +182,9 @@ export class LoginComponent {
     });
   }
 
+  // ======================================================
+  // File Change
+  // ======================================================
   onFileChange(event: Event, type: 'idCard' | 'commercialRegister') {
     const input = event.target as HTMLInputElement;
     if (input.files && input.files.length > 0) {
@@ -155,7 +192,9 @@ export class LoginComponent {
     }
   }
 
-
+  // ======================================================
+  // UI Helpers
+  // ======================================================
   showLogin() {
     this.container.nativeElement.classList.remove('active');
   }
