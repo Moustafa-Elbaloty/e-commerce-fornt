@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ProductService } from '../../services/products.service';
+import { CartService } from '../../services/cart.service';
 
 export interface Product {
   _id?: string;
@@ -12,6 +13,7 @@ export interface Product {
   category?: string;
   rating?: number;
   brand?: string;
+  stock?: number;
 }
 
 @Component({
@@ -23,6 +25,7 @@ export class ProductsPageComponent implements OnInit {
   // products
   products: Product[] = [];
   loading = false;
+  product: Product | null = null;
 
   // pagination
   currentPage = 1;
@@ -41,7 +44,8 @@ export class ProductsPageComponent implements OnInit {
   constructor(
     private productService: ProductService,
     private route: ActivatedRoute,
-    private router: Router
+    private router: Router,
+    private cartService: CartService
   ) {}
 
   ngOnInit(): void {
@@ -80,6 +84,7 @@ export class ProductsPageComponent implements OnInit {
         category: this.selectedCategory,
         minPrice: this.minPrice,
         maxPrice: this.maxPrice,
+        brand: this.selectedBrands.join(','),
       })
       .subscribe({
         next: (res: any) => {
@@ -162,10 +167,6 @@ export class ProductsPageComponent implements OnInit {
     this.isSidebarActive = !this.isSidebarActive;
   }
 
-  addToCart(product: Product): void {
-    console.log('Added to cart:', product);
-  }
-
   private updateQuery(params: any): void {
     this.router.navigate([], {
       queryParams: {
@@ -213,6 +214,25 @@ export class ProductsPageComponent implements OnInit {
     this.updateQuery({
       page: 1,
       brand: null,
+    });
+  }
+  quantity = 1;
+
+  // ===============================
+  // Cart
+  // ===============================
+  addToCart(product: Product, event: Event): void {
+    event.stopPropagation();
+    event.preventDefault();
+    if (!product._id) return;
+
+    this.cartService.addToCart(product._id, 1).subscribe({
+      next: () => {
+        alert(`✅ ${product.name} added to cart`);
+      },
+      error: () => {
+        alert('❌ Failed to add product');
+      },
     });
   }
 }

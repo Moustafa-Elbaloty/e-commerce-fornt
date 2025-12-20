@@ -120,10 +120,10 @@ export class ProductDetailsComponent implements OnInit, OnDestroy {
 
     this.cartService.addToCart(this.product._id, this.quantity).subscribe({
       next: () => {
-        console.log('Product added to cart');
+        alert(`✅ ${this.product?.name} added to cart`);
       },
-      error: (err) => {
-        console.error('Failed to add to cart', err);
+      error: () => {
+        alert('❌ Failed to add product');
       },
     });
   }
