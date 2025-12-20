@@ -36,7 +36,9 @@ import { DashboardComponent } from './pages/admin-panal/pages/dashboard/dashboar
 import { UsersComponent } from './pages/admin-panal/pages/users/users.component';
 import { ProductsComponent } from './pages/admin-panal/pages/products/products.component';
 import { OrdersComponent } from './pages/admin-panal/pages/orders/orders.component';
-
+import { AboutComponent } from './pages/about/about.component';
+import { ForgotPasswordComponent } from './pages/forgot-password/forgot-password.component';
+import { ResetPasswordComponent } from './pages/reset-password/reset-password.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -46,7 +48,7 @@ import { OrdersComponent } from './pages/admin-panal/pages/orders/orders.compone
     FooterComponent,
     HeroComponent,
     CategoriesComponent,
-    PromoComponent,
+    PromoComponent,ForgotPasswordComponent, ResetPasswordComponent    ,
 
     // pages
     HomeComponent,
@@ -65,7 +67,8 @@ import { OrdersComponent } from './pages/admin-panal/pages/orders/orders.compone
     DashboardComponent,
     UsersComponent,
     ProductsComponent,
-    OrdersComponent
+    OrdersComponent,
+    AboutComponent
   ],
   imports: [
     BrowserModule,

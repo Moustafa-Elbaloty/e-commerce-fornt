@@ -12,7 +12,9 @@ import { ChangePasswordComponent } from './pages/change-password/change-password
 import { ProductsPageComponent } from './pages/products-page/products-page.component';
 import { ProductDetailsComponent } from './pages/product-details/product-details.component';
 import { PaymentResultComponent } from './pages/payment-result/payment-result.component';
-
+import { AboutComponent } from './pages/about/about.component';
+import { ForgotPasswordComponent } from './pages/forgot-password/forgot-password.component';
+import { ResetPasswordComponent } from './pages/reset-password/reset-password.component';
 // Admin
 import { AdminPanalComponent } from './pages/admin-panal/admin-panal.component';
 import { DashboardComponent } from './pages/admin-panal/pages/dashboard/dashboard.component';
@@ -30,6 +32,7 @@ const routes: Routes = [
   { path: 'login', component: LoginComponent },
   { path: 'products', component: ProductsPageComponent },
   { path: 'products/:id', component: ProductDetailsComponent },
+  { path: 'about', component: AboutComponent },
 
   // ================= AUTH =================
   {
@@ -56,7 +59,15 @@ const routes: Routes = [
     path: 'change-password',
     component: ChangePasswordComponent,
     canActivate: [AuthGuard],
-  },
+  }
+,{
+  path: 'reset-password/:token',
+  component: ResetPasswordComponent
+},{
+  path: 'forgot-password',
+  component: ForgotPasswordComponent
+},
+
 
   // ================= PAYMENT =================
   {
