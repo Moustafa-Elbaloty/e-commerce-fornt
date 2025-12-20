@@ -36,6 +36,7 @@ import { DashboardComponent } from './pages/admin-panal/pages/dashboard/dashboar
 import { UsersComponent } from './pages/admin-panal/pages/users/users.component';
 import { ProductsComponent } from './pages/admin-panal/pages/products/products.component';
 import { OrdersComponent } from './pages/admin-panal/pages/orders/orders.component';
+import { AboutComponent } from './pages/about/about.component';
 
 @NgModule({
   declarations: [
@@ -65,7 +66,8 @@ import { OrdersComponent } from './pages/admin-panal/pages/orders/orders.compone
     DashboardComponent,
     UsersComponent,
     ProductsComponent,
-    OrdersComponent
+    OrdersComponent,
+    AboutComponent
   ],
   imports: [
     BrowserModule,
