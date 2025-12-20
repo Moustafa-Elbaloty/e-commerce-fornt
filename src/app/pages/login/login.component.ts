@@ -100,61 +100,65 @@ export class LoginComponent {
   // Register
   // ======================================================
   register() {
-    // basic validation
-    if (!this.registerData.name || !this.registerData.email || !this.registerData.password || !this.registerData.phone) {
+    if (
+      !this.registerData.name ||
+      !this.registerData.email ||
+      !this.registerData.password ||
+      !this.registerData.phone
+    ) {
       alert('Please fill all required fields');
       return;
     }
 
-    /**
-     * ============================
-     * 🟢 User Register (JSON)
-     * ============================
-     */
-    if (!this.registerData.isVendor) {
-      const payload = {
-        name: this.registerData.name,
-        email: this.registerData.email,
-        password: this.registerData.password,
-        phone: this.registerData.phone
-      };
+    // =========================
+    // 🏪 Vendor
+    // =========================
+    if (this.registerData.isVendor) {
+      if (
+        !this.registerData.storeName ||
+        !this.vendorFiles.idCard ||
+        !this.vendorFiles.commercialRegister
+      ) {
+        alert('Vendor must upload required documents');
+        return;
+      }
 
-      this.authService.register(payload).subscribe({
+      const formData = new FormData();
+      formData.append('name', this.registerData.name);
+      formData.append('email', this.registerData.email);
+      formData.append('password', this.registerData.password);
+      formData.append('phone', this.registerData.phone);
+      formData.append('storeName', this.registerData.storeName);
+
+      formData.append('idCard', this.vendorFiles.idCard);
+      formData.append('commercialRegister', this.vendorFiles.commercialRegister);
+
+      this.authService.registerVendor(formData).subscribe({
         next: () => {
-          alert('Registration successful, check your email');
+          alert('Vendor registered, waiting for admin approval');
           this.showLogin();
         },
         error: (err) => {
-          alert(err.error?.message || 'Registration failed');
+          alert(err.error?.message || 'Vendor registration failed');
         }
       });
 
       return;
     }
 
-    /**
-     * ============================
-     * 🟡 Vendor Register (FormData)
-     * ============================
-     */
-    if (!this.registerData.storeName || !this.vendorFiles.idCard || !this.vendorFiles.commercialRegister) {
-      alert('Vendor must upload required documents');
-      return;
-    }
+    // =========================
+    // 👤 User
+    // =========================
+    const payload = {
+      name: this.registerData.name,
+      email: this.registerData.email,
+      password: this.registerData.password,
+      phone: this.registerData.phone
+    };
 
-    const formData = new FormData();
-    formData.append('name', this.registerData.name);
-    formData.append('email', this.registerData.email);
-    formData.append('password', this.registerData.password);
-    formData.append('phone', this.registerData.phone);
-    formData.append('storeName', this.registerData.storeName);
-
-    formData.append('idCard', this.vendorFiles.idCard);
-    formData.append('commercialRegister', this.vendorFiles.commercialRegister);
-
-    this.authService.register(formData).subscribe({
+    this.authService.registerUser(payload).subscribe({
       next: () => {
-        alert('Vendor registration successful, waiting for review');
+        alert('Registration successful, check your email');
         this.showLogin();
       },
       error: (err) => {
