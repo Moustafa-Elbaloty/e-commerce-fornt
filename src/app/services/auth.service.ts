@@ -22,11 +22,19 @@ export class AuthService {
     this.updateRoles();
   }
 
-  // ================= AUTH =================
-  register(data: any): Observable<any> {
-    return this.http.post(`${this.baseUrl}/register`, data);
+  // ================= REGISTER =================
+
+  // 👤 User Register (JSON)
+  registerUser(data: any): Observable<any> {
+    return this.http.post(`${this.baseUrl}/register-user`, data);
   }
 
+  // 🏪 Vendor Register (FormData)
+  registerVendor(data: FormData): Observable<any> {
+    return this.http.post(`${this.baseUrl}/register-vendor`, data);
+  }
+
+  // ================= LOGIN =================
   login(data: any): Observable<any> {
     return this.http.post<any>(`${this.baseUrl}/login`, data).pipe(
       tap((res) => {
@@ -46,7 +54,7 @@ export class AuthService {
     this.user = user;
     localStorage.setItem('token', token);
     localStorage.setItem('user', JSON.stringify(user));
-    this.updateRoles(); // ✅ مهم جدًا
+    this.updateRoles();
   }
 
   private loadUserFromStorage() {
