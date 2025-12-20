@@ -1,0 +1,51 @@
+.users-page {
+  padding: 20px;
+}
+
+h1 {
+  margin-bottom: 15px;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 15px;
+}
+
+th, td {
+  padding: 12px;
+  border-bottom: 1px solid #e0e0e0;
+}
+
+th {
+  background-color: #f5f5f5;
+  text-align: left;
+}
+
+.btn {
+  padding: 6px 12px;
+  margin-right: 8px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 14px;
+}
+
+.btn.approve {
+  background-color: #4caf50;
+  color: white;
+}
+
+.btn.reject {
+  background-color: #f44336;
+  color: white;
+}
+
+.loading {
+  margin-top: 15px;
+}
+
+.error {
+  color: red;
+  margin-top: 10px;
+}

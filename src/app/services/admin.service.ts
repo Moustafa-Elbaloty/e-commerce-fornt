@@ -61,6 +61,36 @@ export class AdminService {
   }
 
   // ===============================
+  // 🟢 Vendors (NEW)
+  // ===============================
+
+  // GET /api/admin/vendors/pending
+  getPendingVendors(): Observable<any[]> {
+    return this.http.get<any[]>(
+      `${this.apiUrl}/vendors/pending`,
+      { headers: this.getHeaders() }
+    );
+  }
+
+  // PUT /api/admin/vendors/:id/approve
+  approveVendor(id: string): Observable<any> {
+    return this.http.put(
+      `${this.apiUrl}/vendors/${id}/approve`,
+      {},
+      { headers: this.getHeaders() }
+    );
+  }
+
+  // PUT /api/admin/vendors/:id/reject
+  rejectVendor(id: string): Observable<any> {
+    return this.http.put(
+      `${this.apiUrl}/vendors/${id}/reject`,
+      {},
+      { headers: this.getHeaders() }
+    );
+  }
+
+  // ===============================
   // Orders
   // GET /api/admin/orders
   // ===============================

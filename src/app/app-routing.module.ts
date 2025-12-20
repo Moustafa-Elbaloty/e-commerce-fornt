@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 
-// Pages
+// ================= PUBLIC PAGES =================
 import { HomeComponent } from './pages/home/home.component';
 import { LoginComponent } from './pages/login/login.component';
 import { ProfileComponent } from './pages/profile/profile.component';
@@ -15,14 +15,16 @@ import { PaymentResultComponent } from './pages/payment-result/payment-result.co
 import { AboutComponent } from './pages/about/about.component';
 import { ForgotPasswordComponent } from './pages/forgot-password/forgot-password.component';
 import { ResetPasswordComponent } from './pages/reset-password/reset-password.component';
-// Admin
+
+// ================= ADMIN =================
 import { AdminPanalComponent } from './pages/admin-panal/admin-panal.component';
 import { DashboardComponent } from './pages/admin-panal/pages/dashboard/dashboard.component';
 import { UsersComponent } from './pages/admin-panal/pages/users/users.component';
 import { ProductsComponent } from './pages/admin-panal/pages/products/products.component';
 import { OrdersComponent } from './pages/admin-panal/pages/orders/orders.component';
+import { VendorsComponent } from './pages/admin-panal/pages/vendors/vendors.component';
 
-// Guards
+// ================= GUARDS =================
 import { AuthGuard } from './guards/auth.guard';
 import { AdminGuard } from './guard/admin.guard';
 
@@ -59,15 +61,15 @@ const routes: Routes = [
     path: 'change-password',
     component: ChangePasswordComponent,
     canActivate: [AuthGuard],
-  }
-,{
-  path: 'reset-password/:token',
-  component: ResetPasswordComponent
-},{
-  path: 'forgot-password',
-  component: ForgotPasswordComponent
-},
-
+  },
+  {
+    path: 'reset-password/:token',
+    component: ResetPasswordComponent,
+  },
+  {
+    path: 'forgot-password',
+    component: ForgotPasswordComponent,
+  },
 
   // ================= PAYMENT =================
   {
@@ -76,7 +78,7 @@ const routes: Routes = [
     canActivate: [AuthGuard],
   },
 
-  // ================= ADMIN =================
+  // ================= ADMIN PANEL =================
   {
     path: 'adminPanal',
     component: AdminPanalComponent,
@@ -87,14 +89,19 @@ const routes: Routes = [
       { path: 'users', component: UsersComponent },
       { path: 'products', component: ProductsComponent },
       { path: 'orders', component: OrdersComponent },
+
+      // ✅ VENDORS PAGE
+      { path: 'vendors', component: VendorsComponent },
     ],
   },
-  // ================= Vendor =================
+
+  // ================= VENDOR =================
   {
     path: 'vendor',
     loadChildren: () =>
       import('./vendor/vendor.module').then((m) => m.VendorModule),
   },
+
   // ================= FALLBACK =================
   { path: '**', redirectTo: '' },
 ];

@@ -39,6 +39,7 @@ import { OrdersComponent } from './pages/admin-panal/pages/orders/orders.compone
 import { AboutComponent } from './pages/about/about.component';
 import { ForgotPasswordComponent } from './pages/forgot-password/forgot-password.component';
 import { ResetPasswordComponent } from './pages/reset-password/reset-password.component';
+import { VendorsComponent } from './pages/admin-panal/pages/vendors/vendors.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -68,7 +69,8 @@ import { ResetPasswordComponent } from './pages/reset-password/reset-password.co
     UsersComponent,
     ProductsComponent,
     OrdersComponent,
-    AboutComponent
+    AboutComponent,
+    VendorsComponent
   ],
   imports: [
     BrowserModule,

@@ -1,0 +1,46 @@
+<div class="users-page">
+
+  <h1>Pending Vendors</h1>
+
+  <div *ngIf="loading" class="loading">
+    Loading vendors...
+  </div>
+
+  <div *ngIf="error" class="error">
+    {{ error }}
+  </div>
+
+  <table *ngIf="!loading && vendors.length > 0">
+    <thead>
+      <tr>
+        <th>#</th>
+        <th>Name</th>
+        <th>Email</th>
+        <th>Phone</th>
+        <th>Actions</th>
+      </tr>
+    </thead>
+
+    <tbody>
+      <tr *ngFor="let vendor of vendors; let i = index">
+        <td>{{ i + 1 }}</td>
+        <td>{{ vendor.name }}</td>
+        <td>{{ vendor.email }}</td>
+        <td>{{ vendor.phone }}</td>
+        <td>
+          <button class="btn approve" (click)="approveVendor(vendor)">
+            Approve
+          </button>
+          <button class="btn reject" (click)="rejectVendor(vendor)">
+            Reject
+          </button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+
+  <p *ngIf="!loading && vendors.length === 0">
+    🎉 No pending vendors
+  </p>
+
+</div>
