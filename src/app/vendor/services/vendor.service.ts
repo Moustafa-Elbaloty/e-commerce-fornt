@@ -7,6 +7,7 @@ import { Observable } from 'rxjs';
 })
 export class VendorService {
   private apiUrl = 'http://localhost:5000/api/vendor';
+  private productUrl = 'http://localhost:5000/api/products';
 
   constructor(private http: HttpClient) {}
 
@@ -32,7 +33,6 @@ export class VendorService {
   private API = 'http://localhost:5000/api/vendor';
   getVendorProducts(): Observable<any> {
     return this.http.get(`${this.API}/products`);
-    
   }
   // =========================
   // Dashboard
@@ -46,4 +46,6 @@ export class VendorService {
   createProduct(data: FormData) {
     return this.http.post(`${this.API_URL}/addProduct`, data);
   }
+
+  
 }

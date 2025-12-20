@@ -2,6 +2,14 @@ import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
 
+/* ===============================
+   Interfaces
+================================ */
+export interface UpdateProductResponse {
+  success: boolean;
+  data: any;
+}
+
 @Injectable({
   providedIn: 'root',
 })
@@ -36,7 +44,7 @@ export class ProductService {
     if (options?.maxPrice !== undefined)
       params = params.set('maxPrice', options.maxPrice);
     if (options?.brand) params = params.set('brand', options.brand);
-    if (options?.q) params = params.set('q', options.q); // 🔥
+    if (options?.q) params = params.set('q', options.q); // 🔍 search
 
     return this.http.get<any>(this.API_URL, { params });
   }
@@ -66,5 +74,22 @@ export class ProductService {
   // ===============================
   getProductById(id: string) {
     return this.http.get<any>(`${this.API_URL}/${id}`);
+  }
+
+  // ===============================
+  // ❌ Delete product
+  // ===============================
+  deleteProduct(id: string) {
+    return this.http.delete(`${this.API_URL}/${id}`);
+  }
+
+  // ===============================
+  // ✏️ Update product (image optional)
+  // ===============================
+  updateProduct(id: string, data: any) {
+    return this.http.put<UpdateProductResponse>(
+      `${this.API_URL}/${id}`,
+      data
+    );
   }
 }
